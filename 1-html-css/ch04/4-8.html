@@ -1,0 +1,184 @@
+<!-- 부모가 스크롤이 되야 스티키가 되는거임 -->
+
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    header,
+    nav,
+    .banner,
+    article,
+    footer,
+    aside {
+      background-color: rgb(211, 170, 116);
+    }
+
+    body {
+      margin: 0;
+    }
+
+    div.wrapper {
+      width: 700px;
+      margin: 0 auto;
+    }
+
+    nav {
+      position: sticky;
+      top: 0.5rem;
+      z-index: 9999;
+    }
+
+    /* 스크롤박스 외부 원래 문서 배치
+    스크롤박스 내부 top,left */
+
+    /* calc: 너비값 계산해서 줄 수 있음. 계산부호+-들은 꼭 앞뒤로 띄어쓰기 해야함. 안그러면 인식못함*/
+
+    nav ul {
+      padding: 0px;
+      text-align: center;
+      padding-bottom: 1rem;
+    }
+
+    nav li {
+      display: inline-block;
+      margin-left: 2rem;
+    }
+
+    nav li:first-child {
+      margin-left: 0;
+    }
+
+    article {
+      float: left;
+      margin-bottom: 1rem;
+    }
+
+    section {
+      scroll-margin-top: 10rem;
+    }
+
+    /* 스크롤 안쪽으로 들어왔을 때 마진값 적용 */
+
+    aside {
+      width: 200px;
+      left: calc(((100% - 700px)/2 + 700px + 1rem));
+      position: fixed;
+      top: 4rem;
+    }
+
+
+    footer {
+      clear: both;
+    }
+
+    /* footer margin top 안먹음, div 같은 상위테그 걸어야함 */
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Header</h1>
+    </header>
+    <nav>
+      <h1>Nav</h1>
+      <ul>
+        <li><a href="#menu-1">menu1</a></li>
+        <li><a href="#menu-2">menu2</a></li>
+        <li><a href="#menu-3">menu3</a></li>
+      </ul>
+    </nav>
+    <article>
+      <section id="menu-1">
+        <h2>menu1</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum, iste delectus! Repellendus quaerat beatae
+          harum aspernatur nostrum libero tempore consequuntur fugit et, sequi reprehenderit sed officiis dicta adipisci
+          cum quasi.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum, iste delectus! Repellendus quaerat beatae
+          harum aspernatur nostrum libero tempore consequuntur fugit et, sequi reprehenderit sed officiis dicta adipisci
+          cum quasi.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum, iste delectus! Repellendus quaerat beatae
+          harum aspernatur nostrum libero tempore consequuntur fugit et, sequi reprehenderit sed officiis dicta adipisci
+          cum quasi.
+        </p>
+      </section>
+      <section id="menu-2">
+        <h2>menu2</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam eius maiores quibusdam debitis quos
+          aspernatur
+          recusandae sequi in veniam at nemo amet placeat accusantium autem, vel exercitationem dolore distinctio!
+          Ipsum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam eius maiores quibusdam debitis quos
+          aspernatur
+          recusandae sequi in veniam at nemo amet placeat accusantium autem, vel exercitationem dolore distinctio!
+          Ipsum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum, iste delectus! Repellendus quaerat beatae
+          harum aspernatur nostrum libero tempore consequuntur fugit et, sequi reprehenderit sed officiis dicta adipisci
+          cum quasi.
+        </p>
+      </section>
+      <section id="menu-3">
+        <h2>menu3</h2>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius, quisquam eligendi. Pariatur ad totam et libero
+          consequuntur omnis ipsum dolores iste quas sed, quidem perspiciatis eligendi maiores autem, unde amet.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam eius maiores quibusdam debitis quos
+          aspernatur
+          recusandae sequi in veniam at nemo amet placeat accusantium autem, vel exercitationem dolore distinctio!
+          Ipsum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum, iste delectus! Repellendus quaerat beatae
+          harum aspernatur nostrum libero tempore consequuntur fugit et, sequi reprehenderit sed officiis dicta adipisci
+          cum quasi.
+        </p>
+      </section>
+    </article>
+
+    <footer>
+      <h3>footer</h3>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto suscipit magni, ex doloremque harum ipsum
+        eum
+        natus iusto quam cupiditate nisi dolore excepturi nobis vitae asperiores. Rem provident delectus veniam?
+      </p>
+    </footer>
+  </div>
+
+  <aside>
+    <h1>aside</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur dolorem distinctio error sunt facilis
+      ipsum reiciendis perferendis repellendus iure tenetur soluta rem animi eaque et, reprehenderit molestias rerum
+      modi cum?
+    </p>
+  </aside>
+</body>
+
+</html>
+
+
+<!-- 수업내용 필기 21-07-
+
+
+
+
+
+-->

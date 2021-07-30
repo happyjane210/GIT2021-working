@@ -1,0 +1,16 @@
+position: static   block/inline
+
+
+
+
+html, css/javascript   초급
+react  중급
+
+sass, tyescript, webpack, babel(build) 고급
+reacet-native, electoron -  최고 고급
+
+
+java, os, database 초급
+spring, spring cloud (백앤드) 중급(중고급)
+===================== 우리는 여기까지 감
+devops(배포/운영), jenkins/container

@@ -1,0 +1,68 @@
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            height: 2000px;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+
+        /* absolute: 절대적인
+        문서 기준으로 특정위치에 요소를 배치할 수 있음 
+        클래스 두개 줘서 복합클래스로 썼음.*/
+
+        .red {
+            background-color: red;
+            left: 10px;
+            top: 10px;
+
+            z-index: 200;
+        }
+
+        .green {
+            background-color: green;
+            left: 50px;
+            top: 50px;
+
+            z-index: 100;
+        }
+
+        .blue {
+            background-color: blue;
+            left: 90px;
+            top: 90px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <h1>고정 위치입니다.</h1>
+    <div class="box red"></div>
+    <div class="box green"></div>
+    <div class="box blue"></div>
+</body>
+
+</html>
+
+
+<!-- 수업내용 필기 21-07-
+
+테크 작성 순서에 따라 배치됨
+
+z-index : z 높이 축
+x 가로, y 세로, z 높이
+
+z-index 값이 클수록 다른애들보다 앞으로옴.
+가장 위에 있어야 하는 팝업창 같은 경우는 9999를 입력.
+팝업창 밑에 회색영역 9990 z 축.
+
+
+
+-->
