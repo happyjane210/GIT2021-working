@@ -3,17 +3,32 @@
 <body>
 
     <script>
-        let result;
+        //===========================================================
 
-        if (a + b < 4) {
-            result = '미만';
+        let login = prompt("직책을 입력하세요.", " ");
+
+        if (login == "직원") {
+            alert("안녕하세요.");
+        } else if (login == "임원") {
+            alert("환영합니다!");
         } else {
-            result = '이상';
+            alert("로그인이 필요합니다.");
         }
-        //--변환--
-        let result = a + b < 4 ? "미만" : "이상";
 
         //===========================================================
+
+        let login = prompt("직책을 입력하세요.", " ");
+
+
+
+
+    </script>
+
+</body>
+
+</html>
+
+<!-- 
 
         let login = prompt('직책을 입력하세요.', ' ')
 
@@ -25,10 +40,9 @@
             message = '로그인이 필요합니다.';
         } else {
             message = '';
+            alert(message)
         }
-        alert(message)
 
-        //--변환--
         let message = (login == '직원') ? '안녕하세요.' :
             (login == '임원') ? '환영합니다.' :
                 (login == '') ? '로그인이 필요합니다.' :
@@ -36,10 +50,4 @@
 
 
 
-
-
-    </script>
-
-</body>
-
-</html>
+ -->
