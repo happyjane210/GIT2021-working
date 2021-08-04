@@ -4,13 +4,13 @@
 
     <script>
         console.log('2' > 1); //true
-        console.log('01' > 1); //true
+        console.log('01' > 1); //false
 
         console.log('01' == 1);  //true  숫자 있으니까 숫자로 바꿈
         console.log('01' == '1'); //false 둘다 문자, 사전식 비교
 
         console.log(true == '1');  //true
-        console.log(false == '0');  //true 자동 형변환 됨
+        console.log(false == '0');  //true 자동 형변환 됨 , "0" => true
         // true = 1 , false = 0
 
         let a = 0;
@@ -27,7 +27,7 @@
 
 <!-- 
 
-    비교연산에 들어가면 숫자 string은 number로 바뀜
+    비교연산에 들어가면 숫자로 이루어진 string은 number로 바뀜
     + 는 결합의 의미가 강함, 문자열기준
     그외 연산들은 대부분 숫자기준
     비교연산의 값은 언제나 Boolean 값, true or false

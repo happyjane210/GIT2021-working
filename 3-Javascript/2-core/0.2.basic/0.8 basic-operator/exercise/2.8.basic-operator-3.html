@@ -1,0 +1,67 @@
+<html>
+
+<body>
+
+    <script>
+
+        "" + 1 + 0
+        // "" + 1 = "1"
+        // "1" + 0 = "10"
+
+        "" - 1 + 0      // -1 빼기는 문자->숫자 변환 연산
+
+        true + false    // 1
+
+        6 / "3"         // 2
+
+        "2" * "3"       // 6
+
+        4 + 5 + "px"
+        // 4 + 5 = 9
+        // 9 + "px" = "9px"
+
+        "$" + 4 + 5
+        // "$" + 4 = "$4"
+        // "$4" + 5 = "$45"
+
+        "4" - 2         // 2
+
+        "4px" - 2
+        // Number("4px") = NaN
+        // NaN - 2 = NaN
+
+        7 / 0
+        // 0 으로 나누면 infinity 무한대
+
+        "  -9  " + 5    //"  -9  " + "5" = "  -9  5"
+
+        "  -9  " - 5    // -9 -5 = -14
+
+        null + 1        // null = 0, 0 + 1 = 1
+
+        undefined + 1   //  NaN
+        " \t \n" - 2    //  \t: 탭, \n: 엔터 == 공백
+        // "    " - 2 = -2
+
+    </script>
+
+</body>
+
+</html>
+
+
+<!-- 
+
+    ** string + string = string
+       string + number(문자로 변환) = string (string이 숫자나 값이 없을 때)
+    ** + 제외 [ - , * , / ] 등은 string->number 변환해서 계산.
+
+
+
+    # string->number 변환시 규칙
+    undefined => NaN
+    null => 0
+    true => 1  /  false => 0
+    string:  "" => 0  /  " " => 1  / 변환실패 => NaN
+
+ -->
