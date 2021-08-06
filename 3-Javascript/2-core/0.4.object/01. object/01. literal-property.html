@@ -1,0 +1,46 @@
+<html>
+
+<body>
+
+    <script>
+
+
+        //2.  속성(property):값() // key-value pair (키-값 쌍)
+        let user1 = {
+            name: "John",
+            age: 30,
+        };
+
+        // 3.  속성에 접근해서 값 가져오기
+        // 객체명.속성명   <= 기본
+        // 객체명["속성명"]  <=  필요할때
+        console.log(user1.name);
+        console.log(user1["age"]);
+
+        // 4. 새로운 속성을 추가함
+        // 객체.새로운속성명 =  값 ;
+        user1.isAdmin = true;
+        user1["email"] = "jjoon0210@daum.net";
+        console.log(user1);
+        console.log("---속성 추가---");
+
+        // 5. 속성을 제거
+        // delete 객체.속성명;
+        // delete 객체["email"]
+        delete user1.isAdmin;
+        delete user1["email"];
+        delete user1.age;
+        console.log(user1);
+        console.log("---속성 제거---");
+
+
+    </script>
+</body>
+
+</html>
+
+<!-- 객체, object
+    여러가지 자료형의 데이터를 담을 수 있는 자료구조
+    객체를 생성하고 빈 객체로 초기화
+    속성값 바꿀때 let 보다 const 더 좋을 수 있음.
+ -->
