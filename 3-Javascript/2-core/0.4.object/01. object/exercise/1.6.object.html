@@ -10,6 +10,7 @@
 
 <body>
     <script>
+        // 함수 두배 만들기 
         let bill = {
             menu1: "pasta",
             menu1price: 12000,
@@ -22,7 +23,9 @@
         };
 
         function multyPrice(bill) {
+            // 객체에 모든 속성값을 탐색
             for (let list in bill) {
+                // 속성 값이 숫자인지 확인, menu1price,menu2price
                 if (typeof bill[list] === "number") {
                     bill[list] *= 2;
                 }
