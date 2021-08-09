@@ -17,18 +17,19 @@
             sayHi() {
                 // 'this'는 '현재 객체'를 나타냅니다.
                 alert(this.name);
-            }
-            sayHiAndBye() {
+            },
+            sayHii() {
                 this.sayHi();
                 alert(`Hello, ${this.name}!`);
-            }
-            sayHiAndBye() {
-                this.sayHi();
-                alert(`Bye, $(this.name)!`)
-            }
+                this.sayBye();
+            },
+            sayBye() {
+
+                alert(`Bye, ${this.name}!`);
+            },
         };
 
-        user.sayHi(); // John
+        user.sayHii(); // John
     </script>
 </body>
 

@@ -1,0 +1,26 @@
+<html>
+
+<body>
+    <script>
+        let arr = [100, -9, 2, -3, 5];
+        let bigNum = arr[0] + arr[1];
+        for (let i = 1, j = 2; i < arr.length - 1; i++, j++) {
+            if (arr[i] + arr[j] > bigNum) {
+                bigNum = arr[i] + arr[j];
+            }
+        }
+        //console.log(“bigNum = ” + bigNum);
+        let lastBigNum = 0;
+        for (let index of arr) {
+            if (index < bigNum) {
+                lastBigNum = bigNum;
+            } else if (bigNum > index) {
+                lastBigNum = index;
+            }
+        }
+        console.log(lastBigNum);
+    </script>
+
+</body>
+
+</html>

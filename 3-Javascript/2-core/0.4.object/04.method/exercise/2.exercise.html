@@ -42,14 +42,29 @@
                 return this.first + this.second;
             },
 
+            mns() {
+                return this.first - this.second;
+            },
+
             mul() {
                 return this.first * this.second;
-            }
-        }
+            },
+
+            div() {
+                return this.first / this.second;
+            },
+
+            pow() {
+                return this.first ** this.second;
+            },
+        };
 
         calculator.read();
-        alert(calculator.sum());
-        alert(calculator.mul());
+        alert("더한 값은 " + calculator.sum() + " 입니다.");
+        alert("뺀 값은 " + calculator.mns() + " 입니다.")
+        alert("곱한 값은 " + calculator.mul() + " 입니다.");
+        alert("나눈 값은 " + calculator.div() + " 입니다.");
+        alert("제곱값은 " + calculator.pow() + " 입니다.")
 
         console.log(typeof calculator.first);
 

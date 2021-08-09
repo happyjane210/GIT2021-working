@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 콜 스택 (call stack) : 함수 호출 -> 실행 stack 자료구조에 넣어서 실행됨
+
+        function a() {
+            b();
+            console.log("a");
+        }
+
+        function b() {
+            c();
+            console.log("b");
+        }
+
+        function c() {
+            console.log("c");
+        }
+
+        a();
+        // a() 함수는 b() 함수 실행하고
+        // b() 함수는 c() 함수 실행하고
+        // c() 함수는 콘솔 "c"
+        // b() 올라와서 콘솔 "b"
+        // a() 올라와서 콘솔 "a"
+    </script>
+</body>
+
+</html>

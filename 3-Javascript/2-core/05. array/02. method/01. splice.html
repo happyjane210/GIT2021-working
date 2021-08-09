@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // delete 요소 하나만 지우고 싶을때
+        let arr = ["I", "go", "home"];
+
+        delete arr[1]; // "go"를 삭제합니다.
+
+        alert(arr[1]); // undefined
+
+
+        // delete를 써서 요소를 지우고 난 후 배열 --> arr = ["I",  , "home"];
+        alert(arr.length); // 3
+    </script>
+</body>
+
+</html>
+
+<!-- 
+    splice: 요소 삭제,  배열 splice(시작위치, 삭제할 개수) / 배열splice(시작위치) : 위치부터 마지막 요소까지 삭제
+ -->
