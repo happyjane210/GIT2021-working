@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <title>첫글자 대문자로 변경하기</title>
+</head>
+
+<body>
+    <script>
+        let name = "john"
+
+        let unFirst = (name) => {
+            name = "J" + name[1] + name[2] + name[3];
+            return name
+        }
+        // let unFirst = ("john") => {
+        //     name = "J" + name[1] + name[2] + name[3];
+        //     return name
+        // };
+        console.log(unFirst("john"));
+
+
+        // let unFirst = (str) => {
+        //     if (!str) return str;
+        //     return str[0].toUpperCase() + str.slice(1);
+        // }
+
+        // console.log(unFirst("john"));
+    </script>
+</body>
+
+</html>
