@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const array1 = [5, 12, 8, 130, 44];
+        const found = array1.find(element => element > 10);
+
+        let users = [
+            { id: 1, name: "John" },
+            { id: 2, name: "Pete" },
+            { id: 3, name: "Mary" },
+        ]
+
+        find(판별함수)
+        //판별함수의 반환값이 true인 요소를 찾음 // item.id == 여기에 true에 해당되는 애들이 반환됨
+        let user = users.find(item => item.id == 1);
+        console.log(user.name);
+        // ==
+        (item) => {
+            return item.id == 1;
+            console.log(user.name);
+        }
+
+    </script>
+</body>
+
+</html>
