@@ -9,6 +9,7 @@
         let name = "john"
 
         let unFirst = (name) => {
+            if (!name) return name;
             name = "J" + name[1] + name[2] + name[3];
             return name
         }
@@ -20,11 +21,13 @@
 
 
         // let unFirst = (str) => {
-        //     if (!str) return str;
+        //     if (!str) return str;  
+                //-> unFirst("john")이 빈문자열일때 오류가 나지 않고 빈문자열 출력되게 하기위함.
         //     return str[0].toUpperCase() + str.slice(1);
         // }
 
         // console.log(unFirst("john"));
+
     </script>
 </body>
 
