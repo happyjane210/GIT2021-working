@@ -3,7 +3,7 @@
 <body>
     <form name="search">
         <label>Search the site:
-            <input type="text" name="search">
+            <input type="text" name="search" value="here">
         </label>
         <input type="submit" value="Search!">
     </form>
@@ -38,6 +38,38 @@
 
         <input type="submit" value="Search!">
     </form>
+
+    <script>
+        // 1.
+        let ttt = document.body.querySelector('#age-table');
+        console.log(ttt);
+
+        // 2.
+        let lll = document.body.querySelectorAll('#age-list label');
+        console.log(lll);
+
+        // 3.
+        let ddd = document.querySelector('tr td');
+        console.log(ddd);
+
+        // 4. 
+        let nnn = document.getElementsByName("search")[0];
+        console.log(nnn);
+
+        // 5.
+        let fff = document.body.querySelector('form>input');
+        console.log(fff);
+
+        // 6.
+        let ppp = document.querySelectorAll('form>input')[1];
+        console.log(ppp);
+    </script>
 </body>
 
 </html>
+<!-- 
+    td label
+    td>label
+    #age-list>label
+    #age-list label
+ -->
