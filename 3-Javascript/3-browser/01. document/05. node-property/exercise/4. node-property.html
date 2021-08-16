@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM 계층 구조와 'document'</title>
+</head>
+
+<body>
+    <script>
+        console.log(document);
+        console.log(document.constructor.name);
+        // 클래스 이름을 얻기위해서 .constructor.name
+
+        // 계층구조 파악
+        console.log(HTMLDocument.prototype.constructor.name);
+        console.log(HTMLDocument.prototype.__proto__.constructor.name);
+        console.log(HTMLDocument.prototype.__proto__.__proto__.constructor.name);
+    </script>
+</body>
+
+</html>
