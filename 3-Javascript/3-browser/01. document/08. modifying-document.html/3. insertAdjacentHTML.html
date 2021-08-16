@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>insertAdjacentHTML</title>
+    <style>
+        .alert {
+            padding: 15px;
+            border: 1px solid #d6e9c6;
+            border-radius: 4px;
+            color: #3c763d;
+            background-color: #dff0d8;
+        }
+    </style>
+</head>
+
+<body>
+    elem.insertAdjacentHTML('where', 'html') <br>
+
+    'where'
+    'beforebegin' – elem 바로 앞에 html을 삽입합니다.<br>
+    'afterbegin' – elem의 첫 번째 자식 요소 바로 앞에 html을 삽입합니다.<br>
+    'beforeend' – elem의 마지막 자식 요소 바로 다음에 html을 삽입합니다.<br>
+    'afterend' – elem 바로 다음에 html을 삽입합니다.<br>
+
+    insertAdjacentText : html 테그 대신 text문자그대로 삽입한다.<br>
+
+    <div id="div"></div>
+    <script>
+        div.insertAdjacentHTML('beforebegin', '<p>안녕하세요.</p>');
+        div.insertAdjacentHTML('afterend', '<p>안녕히 가세요.</p>');
+
+
+        let div = document.createElement('div');
+        div.className = "alert";
+        div.innerHTML = "<strong>안녕하세요!</strong> 중요 메시지를 확인하셨습니다.";
+
+        document.body.append(div);
+        //setTimeout(() => div.remove(), 1000);
+
+
+
+
+
+    </script>
+</body>
+
+</html>

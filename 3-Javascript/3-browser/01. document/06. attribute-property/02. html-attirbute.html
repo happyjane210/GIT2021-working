@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="elem" about="Elephant"></div>
+
+
+
+    <script>
+        console.log(elem.getAttribute('About'));    //Elephant  getAttribute(' 대소문자 구분하지 않음 ')
+        elem.setAttribute("test", 123);     // 속성 추가  setAttribute("name", value) => 모든 값은 문자로 변환함
+        console.log(elem.outerHTML);        // 추가된 모든 속성 확인
+
+        // 속성 전체 나열하기, 반복, 열거 가능함 iterable
+        for (let attr of elem.attributes) {
+            console.log(`${attr.name} = ${attr.value}`);
+        };
+    </script>
+</body>
+
+</html>
