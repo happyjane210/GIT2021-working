@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <title>Hide self</title>
+</head>
+
+<body>
+
+    <input type="button" id="btn" value="click to hide text">
+
+
+    <script>
+        function hide() {
+            btn.hidden = true;
+        };
+
+        btn.addEventListener('click', hide)
+    </script>
+</body>
+
+</html>
+
+<!-- 2021-- 
+해답
+<input type="button" onclick="this.hidden=true" value="Click to hide">
+
+ -->

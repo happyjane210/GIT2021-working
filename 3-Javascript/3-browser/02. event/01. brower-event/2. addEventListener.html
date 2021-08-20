@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <title>addEventListener</title>
+</head>
+
+<body>
+    <div style="width: 40rem;">
+        웹 표준에 관여하는 개발자들은 오래전부터 이 문제를 인지하고, <br>
+        addEventListener 와 removeEventListener 라는<br>
+        특별한 메서드를 이용해 핸들러를 관리하자는 대안을 제시했습니다.<br>
+        핸들러를 여러 개 할당할 수 있도록 말이죠.<br><br>
+        문법: element.addEventListener(event, handler, [options]);<br>
+        핸들러 삭제: element.removeEventListener(event, handler, [options]);<br>
+    </div>
+    <hr>
+
+    <input type="button" value="here" id="put">
+    <script>
+        function handle() {
+            alert('OUTPUT')
+        }
+
+        function test1() {
+            alert('두번째 테스트입니다.')
+        };
+
+        function test2() {
+            alert('세번째 테스트입니다.')
+        };
+
+        put.addEventListener('click', handle); // alert('OUTPUT')
+        put.removeEventListener('click', handle); // 이벤트 삭제
+        put.onclick = () => alert('테스트입니다.')
+        put.addEventListener('click', test1);
+        put.addEventListener('click', test2);
+        // 이렇게 여러번 하면 층층이 이벤트가 쌓임
+
+        // 이런건 onclick처럼 바로 요소(id)에 쓸수 없음
+        document.addEventListener('DOMContentLoaded', function () { alert('DOM 완성!') })
+    </script>
+</body>
+
+</html>
+
+<!-- 2021-- 
+
+
+ -->

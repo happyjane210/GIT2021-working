@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>localStorage</title>
+</head>
+
+<body>
+    localStorage.setItem(key, value) – 키-값 쌍을 보관합니다. <br>
+    - key 값은 항상 문자열 또는 문자열로 변환 가능한 열
+    - 저장하면 사용자가 저장공간을 삭제할때까지 남아있음
+
+    localStorage.getItem(key) – 키에 해당하는 값을 받아옵니다.<br>
+    localStorage.removeItem(key) – 키와 해당 값을 삭제합니다.<br>
+    localStorage.clear() – 모든 것을 삭제합니다.<br>
+    localStorage.key(index) – 인덱스(index)에 해당하는 키를 받아옵니다.<br>
+    localStorage.length – 저장된 항목의 개수를 얻습니다.<br>
+
+    <script>
+        setTimeout(() => {
+
+            localStorage.setItem('name', 'jason')
+        }, 3000)
+
+        // 로컬스토리지에서 값을 읽어오기
+        const name = localStorage.getItem("name");
+        console.log(name);
+
+    </script>
+</body>
+
+</html>

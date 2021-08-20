@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>이벤트 객체</title>
+</head>
+
+<body>
+    event.type = click<br>
+    event.currentTarget = [object HTMLButtonElement] , this와 같음<br>
+    event.clientX : event.clientY = 29:19 <br>
+    <hr>
+
+    <button id="test">click here</button>
+
+    <!-- html 에서도 핸들러 안에 접근 가능 -->
+    <input type="button" onclick="alert(event.type)" value="이벤트 타입">
+
+    <script>
+        test.onclick = function (event) {
+            console.log(event.type + '이벤트가' + event.currentTarget + '에서 발생했습니다.');
+            console.log('이벤트 발생 좌표는' + event.clientX + ':' + event.clientY + '입니다.');
+        }
+
+    </script>
+</body>
+
+</html>
+
+<!-- 2021-- 
+
+
+ -->

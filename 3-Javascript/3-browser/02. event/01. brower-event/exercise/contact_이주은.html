@@ -96,6 +96,7 @@
                 formInput.insertAdjacentHTML("afterend", alertDiv);
 
                 return;
+
             } else if (!inputArray[2].value) {
 
                 const alertDiv = /*html*/`
@@ -108,7 +109,6 @@
 
                 return;
             }
-
 
             for (let index of inputArray) {
                 console.log(index.value);
@@ -126,6 +126,8 @@
 
             formInput.reset();
 
+
+
             const removebtn = document.querySelector('.remove');
             removebtn.addEventListener('click', remove);
         };
@@ -133,7 +135,9 @@
         function remove(event) {
             const tr = event.target.parentNode.parentNode;
             tr.remove();
+
         };
+
 
 
     </script>
