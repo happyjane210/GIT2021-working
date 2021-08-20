@@ -3,6 +3,7 @@
 //   속성명: 타입;
 //   속성명: 타입;
 // }
+// interface:선택적 속성명
 interface User {
     firstname: string;
     lastname?: string; // 속성명?, optional(필수값이 아닌) 속성
@@ -17,6 +18,7 @@ function printName(obj: User) {
 function printNames(arr: User[]) {
     for (let obj of arr) {
         console.log(obj.firstname + " " + obj.lastname);
+
     }
 }
 
@@ -30,5 +32,7 @@ const users: User[] = [
     { firstname: "Gildong", lastname: "Hong" },
 ];
 
-printName(user);
+delete.
+
+    printName(user);
 printNames(users);

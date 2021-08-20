@@ -10,3 +10,4 @@ function identity<Type>(arg: Type): Type {
 
 let output1 = identity<string>("Typescript");
 let output2 = identity<number>(1);
+
