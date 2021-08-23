@@ -5,34 +5,31 @@
 // }
 // interface:선택적 속성명
 interface User {
-    firstname: string;
-    lastname?: string; // 속성명?, optional(필수값이 아닌) 속성
+  firstname: string;
+  lastname?: string; // 속성명?, optional(필수값이 아닌) 속성
 }
 
 function printName(obj: User) {
-    console.log(obj.firstname + " " + obj.lastname);
+  console.log(obj.firstname + " " + obj.lastname);
 }
 
 // 타입명[]
 // number[], string[], User[]
 function printNames(arr: User[]) {
-    for (let obj of arr) {
-        console.log(obj.firstname + " " + obj.lastname);
-
-    }
+  for (let obj of arr) {
+    console.log(obj.firstname + " " + obj.lastname);
+  }
 }
 
 const user: User = {
-    firstname: "John",
-    // lastname: "Smith",
+  firstname: "John",
+  // lastname: "Smith",
 };
 
 const users: User[] = [
-    { firstname: "John", lastname: "Smith" },
-    { firstname: "Gildong", lastname: "Hong" },
+  { firstname: "John", lastname: "Smith" },
+  { firstname: "Gildong", lastname: "Hong" },
 ];
 
-delete.
-
-    printName(user);
+printName(user);
 printNames(users);

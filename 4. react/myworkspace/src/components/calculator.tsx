@@ -1,7 +1,4 @@
-//1.
 // Calculator 컴포넌트
-// prompt 로 입력값 두번 받음
-// a= promt,b= promt
 
 import { useState } from "react";
 
@@ -29,9 +26,16 @@ const Calculator = () => {
 
     console.log(`${a}${op}${b}`);
 
+    // eval(문자열)
+    // 문자열이 자바스크립트코드로 실행할 수 있으면 실행
     // const code = `alert(${a}${op}${b})`;
     // eval(code);
+    // eslint-disable-next-line
     setResult(eval(`${a}${op}${b}`));
+
+    // state 값에 변동이 없으면 컴포넌트를 업데이트하지 않음
+    // 기존 result == 20
+    // 변동 result == 20, 컴포넌트를 업데이트하지 않음
   };
 
   return (
