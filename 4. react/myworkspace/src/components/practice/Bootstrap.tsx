@@ -2,9 +2,9 @@ const BootStrap = () => {
   return (
     <div>
       <button className="btn btn btn-primary">Primary</button>
-      <button className="btn btn btn-danger">Danger</button>
+      <button className="btn btn btn-danger">danger</button>
       <div className="card" style={{ width: "18rem" }}>
-        <img src="..." className="card-img-top" alt="penguin" />
+        <img src="..." className="card-img-top" alt="..." />
         <div className="card-body">
           <h5 className="card-title">Card title</h5>
           <p className="card-text">
