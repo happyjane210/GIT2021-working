@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <title>Contact</title>
+</head>
+
+<body style="width: 700px;" class="mx-auto">
+    <h2 class="text-center my-5">CONTACT LIST</h2>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+
+    <form id="form-input" class="d-flex" onsubmit="return false">
+        <input type="text" class="form-control me-2 text" placeholder="NAME">
+        <input type="text" class="form-control me-2 text" placeholder="010-XXXX-XXXX">
+        <input type="text" class="form-control me-2 text" placeholder="e-mail@mail.com">
+        <button id="btn-add" type="button" class="btn btn-outline-primary text-nowrap">ADD</button>
+    </form>
+
+    <table class="table table-striped my-5">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>NAME</th>
+                <th>PHONE</th>
+                <th>E-MAIL</th>
+                <th>UNDO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="tr-input">
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        const inputText = document.querySelectorAll('.text');
+        const inputArray = Array.from(inputText);
+
+        const addbutton = document.querySelector('#btn-add');
+        const trList = document.querySelector('#tr-input');
+        const formInput = document.querySelector('#form-input');
+        let number = 1;
+
+
+        addbutton.addEventListener('click', add);
+
+        formInput.addEventListener("keyup", (event) => {
+            // 엔터키를 입력했을 때만 화면에 추가하도록 함
+            if (event.keyCode == 13) {
+                add(event);
+            }
+        });
+
+
+        function add() {
+
+            if (!inputArray[0].value && !inputArray[1].value && !inputArray[2].value) {
+
+                const alertDiv = /*html*/`
+          <div class="alert alert-danger alert-dismissible my-2" role="alert" id="liveAlert">
+            Please Enter Your Information.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>    
+          `;
+                formInput.insertAdjacentHTML("afterend", alertDiv);
+
+                return;
+            } else if (!inputArray[0].value) {
+
+                const alertDiv = /*html*/`
+          <div class="alert alert-danger alert-dismissible my-2" role="alert" id="liveAlert">
+            Please Enter Your Name.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>    
+          `;
+                formInput.insertAdjacentHTML("afterend", alertDiv);
+
+                return;
+            } else if (!inputArray[1].value) {
+
+                const alertDiv = /*html*/`
+          <div class="alert alert-danger alert-dismissible my-2" role="alert" id="liveAlert">
+            Please Enter Your Phone Number.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>    
+          `;
+                formInput.insertAdjacentHTML("afterend", alertDiv);
+
+                return;
+            } else if (!inputArray[2].value) {
+
+                const alertDiv = /*html*/`
+          <div class="alert alert-danger alert-dismissible my-2" role="alert" id="liveAlert">
+            Please Enter Your E-mail.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>    
+          `;
+                formInput.insertAdjacentHTML("afterend", alertDiv);
+
+                return;
+            }
+
+
+            for (let index of inputArray) {
+                console.log(index.value);
+            }
+
+            const tdInput = /*html*/ `
+            <td><b>${number++}</b></td>
+            <td>${inputArray[0].value}</td>
+            <td>${inputArray[1].value}</td>
+            <td>${inputArray[2].value}</td>
+            <td><button type="button" class="btn btn-outline-secondary btn-sm remove">DELETE</button></td>
+            `
+
+            trList.insertAdjacentHTML('afterend', tdInput);
+
+            formInput.reset();
+
+            const removebtn = document.querySelector('.remove');
+            removebtn.addEventListener('click', remove);
+        };
+
+        function remove(event) {
+            const tr = event.target.parentNode.parentNode;
+            tr.remove();
+        };
+
+
+    </script>
+</body>
+
+</html>
+
+<!-- || inputArray[1].value != Number -->
