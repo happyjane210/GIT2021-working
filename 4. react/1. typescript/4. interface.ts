@@ -11,6 +11,12 @@ interface User {
 
 function printName(obj: User) {
   console.log(obj.firstname + " " + obj.lastname);
+  Object.keys(obj).forEach((key) => {
+    console.log(key);
+  });
+  for (let prop in obj) {
+    console.log(prop);
+  }
 }
 
 // 타입명[]

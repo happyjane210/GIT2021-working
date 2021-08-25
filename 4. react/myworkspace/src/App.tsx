@@ -86,7 +86,13 @@ function App() {
           {/* Suspense 컴포넌트로 로딩중에 보여줄 화면을 처리하는 것 */}
           {/* fallback={로딩중 보여줄 컴포넌트} */}
 
-          <Suspense fallback={<div>Loading....</div>}>
+          <Suspense
+            fallback={
+              <div>
+                <h1 style={{ color: "tomato" }}>Loading....⏳⏳⏳</h1>
+              </div>
+            }
+          >
             <Switch>
               {/* Switch 영역에 컴포넌트가 로딩됨 */}
               {/* 해당 경로에 대해서 로딩할 컴포넌트 */}

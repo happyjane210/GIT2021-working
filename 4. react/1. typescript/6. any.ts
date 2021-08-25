@@ -1,3 +1,6 @@
+// any타입
+// 웬만하면 권장하지 않음 , 동적타칩이 필요할때 사용
+// 객체
 const obj: any = {};
 obj.name = "hong";
 obj["phone"] = "1099293498";

@@ -128,7 +128,7 @@ const Feed = () => {
               <img src={item.url} className="card-img-top" alt={item.content} />
             ) : (
               <video className="card-img-top" controls>
-                <source src={item.url} type="video/*"></source>
+                <source src={item.url} type="video/mp4"></source>
               </video>
             ))}
 
