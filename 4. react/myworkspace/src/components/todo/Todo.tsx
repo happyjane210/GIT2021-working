@@ -99,7 +99,9 @@ const Todo = () => {
 
   return (
     <>
-      <h2 className="text-center my-5">할 일 관리</h2>
+      <h2 className="text-center my-5">
+        <b>할 일 관리</b>
+      </h2>
 
       {isEdit && (
         <TodoEditModal // 리액트에서 컴포넌트는 함수, 반환하는 값이 jsx.Element
@@ -134,7 +136,7 @@ const Todo = () => {
         />
         <button
           type="button"
-          className="btn btn-primary text-nowrap"
+          className="btn btn-outline-primary text-nowrap"
           onClick={() => {
             add(null);
           }}

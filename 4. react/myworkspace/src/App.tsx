@@ -65,7 +65,7 @@ function App() {
       {/* main container */}
       <div style={{ width: "900px" }} className="mx-auto">
         <nav
-          style={{ width: "200px", height: "100vh" }}
+          style={{ width: "200px", height: "100vh", color: "coral" }}
           className="position-fixed"
         >
           <ul>
