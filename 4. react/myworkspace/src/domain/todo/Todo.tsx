@@ -1,13 +1,8 @@
+import produce from "immer";
 import { useRef, useState } from "react";
-import Alert from "./base/Alert";
-
-interface TodoState {
-  id: number;
-  memo: string | undefined;
-  createTime: number;
-  modifyTime?: number;
-  isEdit?: boolean; //수정모드인지 여부
-}
+import Alert from "../../components/Alert";
+import TodoEditModal from "./TodoEditModal";
+import { TodoState } from "./type"; // ./type (뒤에) 뭐가 없으면 폴더 안에 index.ts/js/tsx 등을 로딩함
 
 const getTimeString = (unixTime: number) => {
   //Locale: timeZone, currency 등
@@ -22,6 +17,9 @@ const Todo = () => {
     { id: 2, memo: "환영합니다🎉", createTime: new Date().getTime() },
     { id: 1, memo: "안녕하세요😄", createTime: new Date().getTime() },
   ]);
+
+  // 수정팝업을 띄울지 아닐지
+  const [isEdit, setIsEdit] = useState(false);
 
   const [isError, setIsError] = useState(false);
 
@@ -59,23 +57,69 @@ const Todo = () => {
     setTodoList(todoList.filter((item) => item.id !== id));
   };
 
-  const edit = (id: number, mod: boolean) => {
-    setTodoList(
-      todoList.map((item) => {
-        if (item.id === id) {
-          item.isEdit = mod;
-        }
+  // 컴포넌트가 업데이트 되도 유지할수있는 변수
+  // useRef 무언가 참고하는 변수
+  const eidtItem = useRef<TodoState>({ id: 0, memo: "", createTime: 0 });
 
-        return item;
-      })
-    );
+  // 모달팝업을 true 띄우기, false 닫기
+  const edit = (item: TodoState) => {
+    eidtItem.current = item;
+    setIsEdit(true);
   };
 
-  const save = (id: number) => {};
+  // 7. todo 변수값을 eidtItem에 받아서 함수 실행
+  const save = (eidtItem: TodoState) => {
+    setTodoList(
+      // state 업데이트
+      produce((state) => {
+        // item 이라는 변수 생성        전체아이디 중에서 === 변경 해당 아이디와 같은 id찾음 => 변경된 id 찾아서
+        const item = state.find((item) => item.id === eidtItem.id);
+        if (item) {
+          // 해당 id 찾고 변경된 텍스트값으로 memo 변환
+          item.memo = eidtItem.memo;
+        }
+      })
+    );
+
+    // 모달창닫기
+    setIsEdit(false);
+  };
+
+  // const edit = (id: number, mod: boolean) => {
+  //   setTodoList(
+  //     todoList.map((item) => {
+  //       if (item.id === id) {
+  //         item.isEdit = mod;
+  //       }
+
+  //       return item;
+  //     })
+  //   );
+  // };
 
   return (
     <>
-      <h2 className="text-center my-5">할 일 관리</h2>
+      <h2 className="text-center my-5">
+        <b>할 일 관리</b>
+      </h2>
+
+      {isEdit && (
+        <TodoEditModal // 리액트에서 컴포넌트는 함수, 반환하는 값이 jsx.Element
+          item={eidtItem.current} // ModalProp 리액트에서 prop은 매개변수임
+          onClose={() => {
+            setIsEdit(false);
+          }}
+          onSave={(editItem) => {
+            save(editItem);
+            // 1. onSave 속성으로 이 함수를 TodoEditModal({item,onClose,onSave}) 로 통째로 전달  : [Props Down]
+            // 6. 저쪽 한바퀴 돌고 todo 객체 내용을 editItem에 담아서 save() 함수 실행
+            // 6. TodoState 의 [id 기존, memo 수정된 텍스트입력값, createTime 기존 ] -> save() 함수에 반영
+          }}
+        />
+      )}
+      {/* isEdit state가 true 일 때만 Modal창 보임 
+      onClose 속성으로 함수를 TodoEditModal 의 속성으로 보냄*/}
+
       <form
         className="d-flex"
         ref={formRef}
@@ -92,7 +136,7 @@ const Todo = () => {
         />
         <button
           type="button"
-          className="btn btn-primary text-nowrap"
+          className="btn btn-outline-primary text-nowrap"
           onClick={() => {
             add(null);
           }}
@@ -138,49 +182,24 @@ const Todo = () => {
               )}
             </div>
 
-            {!item.isEdit && (
-              <button
-                className="btn btn-outline-secondary btn-sm ms-2 me-1 text-nowrap"
-                onClick={() => {
-                  edit(item.id, true);
-                }}
-              >
-                수정
-              </button>
-            )}
+            <button
+              className="btn btn-outline-secondary btn-sm ms-2 me-1 text-nowrap"
+              onClick={() => {
+                edit(item); // 수정창 모달팝업 띄우기
+              }}
+            >
+              수정
+            </button>
+            {/* 수정 버튼 누르면 edit 함수로 가서 기본값false 인 isEdit state를 true로 바꾸고 창에 보여짐 */}
 
-            {!item.isEdit && (
-              <button
-                className="btn btn-outline-secondary btn-sm  text-nowrap"
-                onClick={() => {
-                  del(item.id);
-                }}
-              >
-                삭제
-              </button>
-            )}
-
-            {item.isEdit && (
-              <button
-                className="btn btn-outline-secondary btn-sm ms-2 me-1 text-nowrap"
-                onClick={() => {
-                  save(item.id);
-                }}
-              >
-                저장
-              </button>
-            )}
-
-            {item.isEdit && (
-              <button
-                className="btn btn-outline-secondary btn-sm text-nowrap"
-                onClick={() => {
-                  edit(item.id, false);
-                }}
-              >
-                취소
-              </button>
-            )}
+            <button
+              className="btn btn-outline-secondary btn-sm  text-nowrap"
+              onClick={() => {
+                del(item.id);
+              }}
+            >
+              삭제
+            </button>
           </li>
         ))}
       </ul>

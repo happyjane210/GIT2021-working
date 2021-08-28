@@ -3,7 +3,7 @@ import { FeedState } from "./type/index";
 import FeedWithModal from "./FeedWithModal";
 import produce from "immer";
 import { stat } from "fs";
-import Alert from "../base/Alert";
+import Alert from "../../components/Alert";
 
 const getTimeString = (unixTime: number) => {
   const dateTime = new Date(unixTime);
@@ -93,9 +93,9 @@ const Feed = () => {
 
   const eidtItem = useRef<FeedState>({
     id: 0,
-    url: "", //
-    type: "", //
-    content: "", //
+    url: "", //변
+    type: "", //변
+    content: "", //변
     createTime: 0,
   });
 
@@ -214,7 +214,7 @@ const Feed = () => {
               수정
             </button>
             <button
-              className="btn btn-outline-secondary "
+              className="btn btn-outline-secondary"
               onClick={(e) => {
                 e.preventDefault();
                 del(item.id);

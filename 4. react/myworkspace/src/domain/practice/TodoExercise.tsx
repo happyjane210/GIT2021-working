@@ -5,7 +5,7 @@
 
 import { is } from "immer/dist/internal";
 import React, { useRef, useState } from "react";
-import Alert from "../base/Alert";
+import Alert from "../../components/Alert";
 
 // 한건에 대한 타입
 interface TodoState {
