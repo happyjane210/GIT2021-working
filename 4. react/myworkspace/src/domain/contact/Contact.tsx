@@ -54,8 +54,11 @@ const Contact = () => {
     setConList(conList.filter((item) => item.id !== id));
   };
 
-  const edit = (item: ContactState) => {
-    setIsEdit(true);
+  const edit = (paramItem: ContactState) => {
+    const item = conList.find((item) => item.id === paramItem.id);
+    if (item) {
+      setIsEdit(true);
+    }
   };
 
   return (

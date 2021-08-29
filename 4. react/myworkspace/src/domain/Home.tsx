@@ -1,9 +1,9 @@
 const Home = () => {
   return (
-    <>
-      <h1 className="text-center my-5" style={{ color: "pink" }}>
+    <div style={{ width: "40vw" }} className="mx-auto">
+      <h2 className="text-center my-5" style={{ color: "pink" }}>
         🌺Welcome to Home Component🌺
-      </h1>
+      </h2>
       <div style={{ color: "yellowgreen" }}>
         <br />
         <div>
@@ -22,7 +22,7 @@ const Home = () => {
           <b>This is Home Component</b>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

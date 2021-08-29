@@ -7,8 +7,8 @@
 }
 
 // 값에" " 들어가면 안됨 nav
-.menu-drawar {
-  width: 200px; // 메뉴 너비
+.drawer-menu {
+  width: $drawer-menu-width;
   height: 100vh;
   top: $app-bar-height;
 }
@@ -16,7 +16,7 @@
 //main
 .content-container {
   padding: 1rem;
-  margin-left: $drawar-menu-width;
+  margin-left: $drawer-menu-width;
 }
 
 //실제로 클래스를 잘 먹었는지 확인해야함,

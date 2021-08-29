@@ -1,0 +1,21 @@
+@import "../../styles/app-variables.scss";
+
+$thumb-size: 24px;
+
+.thumb {
+  width: 24px;
+  height: 24px;
+  // (50px - 24px) / 2
+  margin-top: calc((#{$app-bar-height} - #{$thumb-size}) / 2);
+  background-position: "center";
+  background-repeat: "no-repeat";
+  background-size: "cover";
+  border-radius: "50%";
+}
+
+.username {
+  line-height: $app-bar-height;
+}
+
+// thumbnail image: 엄지손가락같은 작은 사진
+// 변수값으로 css 주려면 #{}

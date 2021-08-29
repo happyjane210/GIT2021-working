@@ -43,7 +43,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
 import Home from "./domain/Home";
-//import Navigation from "./Navigation";
+import Profile from "./domain/profile/Profile";
+//import Navigation from "./Navigatio";
 
 // SPA ( Single Page Application)
 // - 페이지 파일이 1개, index.html
@@ -64,9 +65,12 @@ function App() {
     <Router>
       {/* main container */}
       <div className="mx-auto">
-        {/* nav의 top 이 app bar만큼 와야함 */}
-        <header className="bg-primary app-bar shadow">App Bar</header>
-        <nav className="menu-drawar position-fixed bg-light shadow-sm">
+        {/* nav의 top 이 app bar만큼 와야함 
+        d-flex justify-content-end  profile 오른쪽으로 정렬*/}
+        <header className="app-bar d-flex justify-content-end bg-primary shadow">
+          <Profile />
+        </header>
+        <nav className="drawer-menu position-fixed bg-light shadow-sm">
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -84,7 +88,7 @@ function App() {
             </li>
           </ul>
         </nav>
-        <main style={{ marginLeft: "200px" }}>
+        <main className="content-container">
           {/* 홈페이지 메인 메뉴가 오른쪽으로 200만큼 가있음 */}
           {/* Suspense 컴포넌트로 로딩중에 보여줄 화면을 처리하는 것 */}
           {/* fallback={로딩중 보여줄 컴포넌트} */}

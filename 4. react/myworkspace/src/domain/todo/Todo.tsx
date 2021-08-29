@@ -98,7 +98,7 @@ const Todo = () => {
   // };
 
   return (
-    <>
+    <div style={{ width: "40vw" }} className="mx-auto">
       <h2 className="text-center my-5">
         <b>할 일 관리</b>
       </h2>
@@ -203,7 +203,7 @@ const Todo = () => {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 

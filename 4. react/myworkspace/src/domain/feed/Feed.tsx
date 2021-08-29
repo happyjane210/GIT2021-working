@@ -1,9 +1,21 @@
 import React, { useRef, useState } from "react";
-import { FeedState } from "./type/index";
+import { FeedState } from "../feed/type";
 import FeedWithModal from "./FeedWithModal";
 import produce from "immer";
-import { stat } from "fs";
+//import { stat } from "fs";
 import Alert from "../../components/Alert";
+
+// interface FeedState {
+//   // 틀  ? 는 쓸수도 있고 안쓸수도 있고,  물음표 없는 건 꼭써야함
+//   id: number;
+//   url: string | undefined;
+//   type: string | undefined;
+//   content?: string | undefined;
+//   dataUrl?: string | undefined;
+//   createTime: number;
+//   modifytime?: number;
+//   isEdit?: boolean;
+// } ㅋ
 
 const getTimeString = (unixTime: number) => {
   const dateTime = new Date(unixTime);
@@ -125,7 +137,7 @@ const Feed = () => {
   };
 
   return (
-    <>
+    <div style={{ width: "40vw" }} className="mx-auto">
       <h2 className="text-center my-5">
         <b>🎨 FEED 🎨</b>
       </h2>
@@ -172,7 +184,6 @@ const Feed = () => {
           </button>
         </div>
       </form>
-
       {isError && (
         <Alert
           message={"파일이나 텍스트를 포스팅하세요."}
@@ -182,7 +193,7 @@ const Feed = () => {
           }}
         />
       )}
-
+      div style={{ width: "40vw" }} className="mx-auto"
       {/* map 배열: 배열 요소를 하나씩 꺼내서 한바퀴 돌리고, 다음 요소 꺼내서 돌리고*/}
       {feedList.map((item) => (
         <div className="card mt-1" key={item.id}>
@@ -225,7 +236,7 @@ const Feed = () => {
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
