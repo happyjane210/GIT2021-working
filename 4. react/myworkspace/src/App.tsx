@@ -55,10 +55,10 @@ import Profile from "./domain/profile/Profile";
 
 //Lazy-Loading 처리
 // 컴포넌트를 방문하는 시점에 로딩함
-
 const Todo = lazy(() => import("./domain/todo/Todo"));
 const Feed = lazy(() => import("./domain/feed/Feed"));
 const Contact = lazy(() => import("./domain/contact/Contact"));
+
 // React == 컴포넌트 개발 라이브러리
 function App() {
   return (
@@ -84,7 +84,7 @@ function App() {
               <Link to="/Feed">Feed</Link>
             </li>
             <li>
-              <Link to="Contact">Contact</Link>
+              <Link to="/Contact">Contact</Link>
             </li>
           </ul>
         </nav>
@@ -103,8 +103,9 @@ function App() {
             <Switch>
               {/* Switch 영역에 컴포넌트가 로딩됨 */}
               {/* 해당 경로에 대해서 로딩할 컴포넌트 */}
+              {/* exact 공부하기 매우 중요 라우터 관련 */}
               <Route path="/" component={Home} exact />
-              <Route path="/todo" component={Todo}></Route>
+              <Route path="/todo" component={Todo} />
               <Route path="/Feed" component={Feed} />
               <Route path="/Contact" component={Contact} />
             </Switch>

@@ -7,10 +7,10 @@ $thumb-size: 24px;
   height: 24px;
   // (50px - 24px) / 2
   margin-top: calc((#{$app-bar-height} - #{$thumb-size}) / 2);
-  background-position: "center";
-  background-repeat: "no-repeat";
-  background-size: "cover";
-  border-radius: "50%";
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
 }
 
 .username {

@@ -1,6 +1,5 @@
 // 일반적인 컴포넌트는 소문자, 리액트 컴포넌트는 대문자로 시작함
-
-import { pic } from "../../common/data/index";
+import { pic } from "../../common/data";
 import style from "./Profile.module.scss";
 
 const Profile = () => {

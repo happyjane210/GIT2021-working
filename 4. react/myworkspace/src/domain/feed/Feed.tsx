@@ -15,7 +15,7 @@ import Alert from "../../components/Alert";
 //   createTime: number;
 //   modifytime?: number;
 //   isEdit?: boolean;
-// } ㅋ
+// }
 
 const getTimeString = (unixTime: number) => {
   const dateTime = new Date(unixTime);
@@ -171,7 +171,6 @@ const Feed = () => {
             type="file"
             className="form-control me-1"
             accept="image/*, video/*"
-            onChange={() => {}}
           />
           <button
             className="btn btn-outline-dark text-nowrap"

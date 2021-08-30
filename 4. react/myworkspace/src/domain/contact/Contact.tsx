@@ -1,3 +1,4 @@
+import produce from "immer";
 import React, { useRef, useState } from "react";
 import Alert from "../../components/Alert";
 
@@ -19,7 +20,10 @@ const Contact = () => {
   const inputRef1 = useRef<HTMLInputElement>(null);
   const inputRef2 = useRef<HTMLInputElement>(null);
   const inputRef3 = useRef<HTMLInputElement>(null);
-
+  //2가지 기존거를 쓴다. 2. 새로운 ref를 쓴다. <되는데 버그 터짐>
+  //해보면 도움이 된다 왜냐 내가 이문제로 선생님한테 2번 빠꾸 먹고 고쳐서 3트만에 성곡한 부분
+  //쌤 투두를 참고하세요
+  // 다 알려줬음 쌤이 알려주면 독푸는 거라 그래서 ㄷㄷ;
   const formRef = useRef<HTMLFormElement>(null);
 
   const add = (e: React.KeyboardEvent<HTMLInputElement> | null) => {
@@ -54,15 +58,19 @@ const Contact = () => {
     setConList(conList.filter((item) => item.id !== id));
   };
 
-  const edit = (paramItem: ContactState) => {
-    const item = conList.find((item) => item.id === paramItem.id);
-    if (item) {
-      setIsEdit(true);
-    }
+  const edit = (id: number, isEdit: boolean) => {
+    setConList(
+      produce((state) => {
+        const item = state.find((item) => item.id === id);
+        if (item) {
+          item.isEdit = isEdit;
+        }
+      })
+    );
   };
 
   return (
-    <>
+    <div style={{ width: "50vw" }} className="mx-auto">
       <div>
         <h2 className="text-center my-5">
           <b>CONTACT LIST</b>
@@ -150,10 +158,10 @@ const Contact = () => {
                       <button
                         className="btn btn-outline-success btn-sm me-md-1"
                         onClick={() => {
-                          edit(item); // 수정창 모달팝업 띄우기
+                          edit(item.id, true); // 수정창 모달팝업 띄우기
                         }}
                       >
-                        EDIT
+                        수정
                       </button>
                       <button
                         className="btn btn-outline-secondary btn-sm"
@@ -161,7 +169,7 @@ const Contact = () => {
                           del(item.id);
                         }}
                       >
-                        DELETE
+                        삭제
                       </button>
                     </td>
                   </tr>
@@ -171,19 +179,34 @@ const Contact = () => {
                   <tr>
                     <td>{item.id}</td>
                     <td>
-                      <input type="text" />
+                      <input
+                        type="text"
+                        defaultValue={item.name}
+                        className="form-control me-2 text"
+                      />
                     </td>
                     <td>
-                      <input type="text" />
+                      <input
+                        type="text"
+                        defaultValue={item.phone}
+                        className="form-control me-2 text"
+                      />
                     </td>
                     <td>
-                      <input type="text" />
+                      <input
+                        type="text"
+                        defaultValue={item.email}
+                        className="form-control me-2 text"
+                      />
                     </td>
                     <td>
-                      <button></button>
-                    </td>
-                    <td>
-                      <button></button>
+                      <button className="btn btn-outline-success btn-sm me-md-1">
+                        저장
+                      </button>
+
+                      <button className="btn btn-outline-secondary btn-sm">
+                        취소
+                      </button>
                     </td>
                   </tr>
                 )}
@@ -192,7 +215,7 @@ const Contact = () => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,5 +1,3 @@
-import { read } from "@popperjs/core";
-import { url } from "inspector";
 import { useRef, useState } from "react";
 import { FeedState } from "./type/index";
 
