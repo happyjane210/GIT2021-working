@@ -1,43 +1,39 @@
-import React, { useRef, useState } from "react";
-import { FeedState } from "../feed/type";
+import { useRef, useState } from "react";
+import { FeedState } from "./type";
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
 import FeedWithModal from "./FeedWithModal";
-import produce from "immer";
-//import { stat } from "fs";
 import Alert from "../../components/Alert";
-
-// interface FeedState {
-//   // 틀  ? 는 쓸수도 있고 안쓸수도 있고,  물음표 없는 건 꼭써야함
-//   id: number;
-//   url: string | undefined;
-//   type: string | undefined;
-//   content?: string | undefined;
-//   dataUrl?: string | undefined;
-//   createTime: number;
-//   modifytime?: number;
-//   isEdit?: boolean;
-// }
+import produce from "immer";
+import style from "../profile/Profile.module.scss";
 
 const getTimeString = (unixTime: number) => {
+  const now = new Date();
+  now.getTime();
+  const day = 24 * 60 * 60 * 1000;
   const dateTime = new Date(unixTime);
-  return `${dateTime.toLocaleDateString()} ${dateTime.toLocaleTimeString()}`;
+
+  return unixTime - new Date().getTime() >= day
+    ? dateTime.toLocaleDateString()
+    : dateTime.toLocaleTimeString();
+  // 현재시간 보다 24시간 이전이면 날짜를 보여주고
+  // 현재시간 보다 24시간 미만이면 시간을 보여줌
 };
 
 const Feed = () => {
+  const profile = useSelector((state: RootState) => state.profile);
+
   const [isEdit, setIsEdit] = useState(false);
   const [isError, setIsError] = useState(false);
   const [feedList, setFeedList] = useState<FeedState[]>([]);
-  // state 배열타입 FeedState 타입 콜백함수,setFeedList 통해서만 바뀔수있음
-  // setState : ()없는 콜백함수, 변환함수, 변환하는 값을 feedList 본체로 보내줌
-  const formRef = useRef<HTMLFormElement>(null); //HTMLFormElement 객체 타입
+
+  const formRef = useRef<HTMLFormElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  console.log(textareaRef);
-  console.log(textareaRef.current?.value);
-
   const add = (e: React.KeyboardEvent<HTMLInputElement> | null) => {
     if (e) {
-      if (e.code !== "Enter") return; // 엔터를 누르면 입력이 됨  근데 작동안되는거 같음
+      if (e.code !== "Enter") return;
     }
 
     if (!textareaRef.current?.value && !fileRef.current?.files?.length) {
@@ -45,23 +41,14 @@ const Feed = () => {
       return;
     }
 
-    // fileRef 안에 current 안에 files 의 길이
-    // 파일은 배열, 여러개 담을수 있고 배열 길이가 있음
-    // fileRef 에 뭔가 존재하면 if 실행함
     if (fileRef.current?.files?.length) {
       const text = textareaRef.current?.value;
       const file = fileRef.current?.files[0];
-      const reader = new FileReader(); //base64로 읽는 기능
-      reader.readAsDataURL(file); //base64로 바꿔주는 능력
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
 
       reader.onload = () => {
-        // 그 결과물을 로드 해줌
-        post(
-          // 함수
-          reader.result?.toString() /*base64 1번값*/,
-          file.type /*사진 이면 image/png 2번값*/,
-          text // 3번째값
-        );
+        post(reader.result?.toString(), file.type, text);
       };
     } else {
       post(undefined, undefined, undefined);
@@ -71,68 +58,58 @@ const Feed = () => {
   };
 
   const post = (
-    dataUrl: string | undefined, //base64   매개변수
-    fileType: string | undefined, //image/png   매개변수
-    inputText: string | undefined //text   매개변수
+    dataUrl: string | undefined,
+    fileType: string | undefined,
+    inputText: string | undefined
   ) => {
-    // data 객체인데 타입이 FeedState
     const data: FeedState = {
-      // feedList 안에 값이 있으면 기존 배열 id에 +1을 해주고 123 순으로 쌓는다;
-      //0보다 작으면(기존값 없으면) 1로 만든다, 첫번재 요소가 됨
       id: feedList.length > 0 ? feedList[0].id + 1 : 1,
       url: dataUrl?.toString(),
       type: fileType,
       content: inputText,
-      createTime: new Date().getTime(), // 현재시간을 알려주는 매서드.
+      createTime: new Date().getTime(),
+      username: profile.username,
     };
     console.log(data);
 
     setFeedList([data, ...feedList]);
-    // 방금 위에서 만들어준 객체 data
-    // ... 스프레드 연산자: 사용하면 하나의 배열로 합쳐줌
-    // data 새값이 위로, ...feedList 기존 배열 밑으로 쌓임
   };
 
-  // id: 내가 클릭한 id 받음
   const del = (clikedId: number) => {
-    //                               전체아이디 [1,2,3,4,5]     클릭한 아이디  4
     setFeedList(feedList.filter((item) => item.id !== clikedId));
-    //                                  feedList = [1,2,3,5]
-    // filter  map 같은점: 모든 요소를 훑는다 / map 다른점: 한번 훑어서 조건에 맞는애를 내보냄
   };
 
-  //==================
+  //=================
 
-  const eidtItem = useRef<FeedState>({
+  const editItem = useRef<FeedState>({
     id: 0,
-    url: "", //변
-    type: "", //변
-    content: "", //변
+    url: "",
+    type: "",
+    content: "",
     createTime: 0,
+    username: profile.username,
   });
 
   const edit = (item: FeedState) => {
-    eidtItem.current = item;
+    editItem.current = item;
     setIsEdit(true);
   };
 
-  //==================
+  //=================
 
-  const save = (eidtItem: FeedState) => {
+  const handleSave = (editItem: FeedState) => {
     setFeedList(
       produce((state) => {
-        const item = state.find((item) => item.id === eidtItem.id);
+        const item = state.find((item: FeedState) => item.id === editItem.id);
         if (item) {
-          item.url = eidtItem.url;
-          item.type = eidtItem.type;
-          item.content = eidtItem.content;
-        } else if (!eidtItem.url) {
-          // 사진 선택 안하면 그대로 남겨두고 싶은데 모르겠음
+          item.url = editItem.url;
+          item.type = editItem.type;
+          item.content = editItem.content;
+        } else if (!editItem.url) {
           return;
         }
       })
     );
-
     setIsEdit(false);
   };
 
@@ -143,32 +120,32 @@ const Feed = () => {
       </h2>
       {isEdit && (
         <FeedWithModal
-          item={eidtItem.current}
+          item={editItem.current}
           onClose={() => {
             setIsEdit(false);
           }}
-          onSave={(eidtItem) => {
-            save(eidtItem);
+          onSave={(editItem) => {
+            handleSave(editItem);
           }}
         />
       )}
-      <form // JSX 태그 / HTMl 테그 아님, JSX코드는 아무런 능력없음, 이름이 form인거고, 실제 기능은 없음, 기능을 하기 위해 Ref 붙여줌
+      <form
         ref={formRef}
         className="mt-5"
         onSubmit={(e) => {
-          e.preventDefault(); // submit 에 기본 발동을 못하게 한다.
+          e.preventDefault();
         }}
       >
-        <textarea // 입력창
+        <textarea
           box-sizing="border-box"
-          className="form-control mb-1 w-100"
-          placeholder="Leave a message here"
+          className="form-control mb-1"
+          placeholder="Leave a message here..."
           ref={textareaRef}
         ></textarea>
         <div className="d-flex">
           <input
-            ref={fileRef}
             type="file"
+            ref={fileRef}
             className="form-control me-1"
             accept="image/*, video/*"
           />
@@ -183,42 +160,50 @@ const Feed = () => {
           </button>
         </div>
       </form>
+
       {isError && (
         <Alert
-          message={"파일이나 텍스트를 포스팅하세요."}
+          message={"파일이나 텍스트를 포스팅 하세요."}
           variant={"danger"}
           onClose={() => {
             setIsError(false);
           }}
         />
       )}
-      div style={{ width: "40vw" }} className="mx-auto"
-      {/* map 배열: 배열 요소를 하나씩 꺼내서 한바퀴 돌리고, 다음 요소 꺼내서 돌리고*/}
+
       {feedList.map((item) => (
-        <div className="card mt-1" key={item.id}>
-          {item.type &&
-            (item.type?.includes("image") ? (
-              <img src={item.url} className="card-img-top" alt={item.content} />
-            ) : (
-              <video className="card-img-top" controls>
-                <source src={item.url} type="video/mp4"></source>
-              </video>
-            ))}
-
+        <div className="card mt-3" key={item.id}>
+          <div className="d-flex card-header">
+            <div
+              className={`${style.thumb} me-1`}
+              style={{ backgroundImage: `url(${profile.image})` }}
+            ></div>
+            <span className={`${style.username} `}>{profile.username}</span>
+          </div>
           <div className="card-body">
-            <p className="card-text">{item.content}</p>
+            {item.type &&
+              (item.type?.includes("image") ? (
+                <img
+                  src={item.url}
+                  alt={item.content}
+                  className="card-img-top"
+                />
+              ) : (
+                <video className="card-img-top" controls>
+                  <source src={item.url} type="video/mp4" />
+                </video>
+              ))}
 
-            <span className="text-secondary">
-              {getTimeString(
-                item.modifytime ? item.modifytime : item.createTime
-              )}
+            <p className="card-text">{item.content}</p>
+            <span>
+              - {item.username}, {getTimeString(item.createTime)}
             </span>
           </div>
-          <div className="d-grid gap-2 d-md-flex justify-content-md-end me-3 mb-3">
+          <div className="d-grid gap-2 d-flex justify-content-end me-3 mb-3">
             <button
-              className="btn btn-outline-success  me-md-1"
+              className="btn btn-outline-success me-md-1"
               onClick={() => {
-                edit(item); // 수정 모달팝업 띄우기
+                edit(item);
               }}
             >
               수정

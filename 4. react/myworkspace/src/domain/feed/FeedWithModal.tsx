@@ -1,3 +1,4 @@
+import { profile } from "console";
 import { useRef, useState } from "react";
 import { FeedState } from "./type/index";
 
@@ -40,6 +41,7 @@ const FeedWithModal = ({ item, onClose, onSave }: ModalProp) => {
       type: type, // 새로운 type
       content: textareaRef.current?.value, // 수정한 텍스트
       createTime: item.createTime,
+      username: item.username,
     };
 
     onSave(feed);
@@ -59,7 +61,7 @@ const FeedWithModal = ({ item, onClose, onSave }: ModalProp) => {
         <div className="modal-dialog">
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h5 className="modal-title">✒Edit Post✒</h5>
+              <h3 className="modal-title">👀 Edit Post 🐾</h3>
               <button
                 type="button"
                 className="btn-close"

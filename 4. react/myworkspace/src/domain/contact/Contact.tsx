@@ -15,11 +15,12 @@ const Contact = () => {
     { id: 1, name: "Name", phone: "010-1234-5678", email: "example@123.com" },
   ]);
   const [isError, setIsError] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
 
   const inputRef1 = useRef<HTMLInputElement>(null);
   const inputRef2 = useRef<HTMLInputElement>(null);
   const inputRef3 = useRef<HTMLInputElement>(null);
+  const rowRef = useRef<HTMLTableRowElement>(null);
+  const inputEdit = useRef<HTMLInputElement>(null);
   //2가지 기존거를 쓴다. 2. 새로운 ref를 쓴다. <되는데 버그 터짐>
   //해보면 도움이 된다 왜냐 내가 이문제로 선생님한테 2번 빠꾸 먹고 고쳐서 3트만에 성곡한 부분
   //쌤 투두를 참고하세요
@@ -69,8 +70,34 @@ const Contact = () => {
     );
   };
 
+  const save = (id: number) => {
+    const inputName = rowRef.current
+      ?.querySelectorAll("td")[1]
+      .querySelector("input");
+    const inputPhone = rowRef.current
+      ?.querySelectorAll("td")[2]
+      .querySelector("input");
+    const inputEmail = rowRef.current
+      ?.querySelectorAll("td")[3]
+      .querySelector("input");
+
+    console.log(inputName);
+
+    setConList(
+      produce((state) => {
+        const item = state.find((item) => item.id === id);
+        if (item) {
+          item.name = inputName?.value;
+          item.phone = inputPhone?.value;
+          item.email = inputEmail?.value;
+          item.isEdit = false;
+        }
+      })
+    );
+  };
+
   return (
-    <div style={{ width: "50vw" }} className="mx-auto">
+    <div style={{ width: "60vw" }} className="mx-auto">
       <div>
         <h2 className="text-center my-5">
           <b>CONTACT LIST</b>
@@ -158,7 +185,7 @@ const Contact = () => {
                       <button
                         className="btn btn-outline-success btn-sm me-md-1"
                         onClick={() => {
-                          edit(item.id, true); // 수정창 모달팝업 띄우기
+                          edit(item.id, true); // 수정창 띄우기
                         }}
                       >
                         수정
@@ -176,12 +203,13 @@ const Contact = () => {
                 )}
 
                 {item.isEdit && (
-                  <tr>
+                  <tr ref={rowRef}>
                     <td>{item.id}</td>
                     <td>
                       <input
                         type="text"
                         defaultValue={item.name}
+                        ref={inputEdit}
                         className="form-control me-2 text"
                       />
                     </td>
@@ -189,6 +217,7 @@ const Contact = () => {
                       <input
                         type="text"
                         defaultValue={item.phone}
+                        ref={inputEdit}
                         className="form-control me-2 text"
                       />
                     </td>
@@ -196,15 +225,26 @@ const Contact = () => {
                       <input
                         type="text"
                         defaultValue={item.email}
+                        ref={inputEdit}
                         className="form-control me-2 text"
                       />
                     </td>
                     <td>
-                      <button className="btn btn-outline-success btn-sm me-md-1">
+                      <button
+                        className="btn btn-outline-success btn-sm me-md-1"
+                        onClick={() => {
+                          save(item.id);
+                        }}
+                      >
                         저장
                       </button>
 
-                      <button className="btn btn-outline-secondary btn-sm">
+                      <button
+                        className="btn btn-outline-secondary btn-sm"
+                        onClick={() => {
+                          edit(item.id, false);
+                        }}
+                      >
                         취소
                       </button>
                     </td>

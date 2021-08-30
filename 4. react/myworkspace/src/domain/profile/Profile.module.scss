@@ -1,11 +1,12 @@
 @import "../../styles/app-variables.scss";
 
 $thumb-size: 24px;
+$profile-image-size: 100px;
 
 .thumb {
-  width: 24px;
-  height: 24px;
-  // (50px - 24px) / 2
+  width: $thumb-size;
+  height: $thumb-size;
+  // calc((50px - 24px) / 2) == 13px
   margin-top: calc((#{$app-bar-height} - #{$thumb-size}) / 2);
   background-position: center;
   background-repeat: no-repeat;
@@ -17,5 +18,10 @@ $thumb-size: 24px;
   line-height: $app-bar-height;
 }
 
-// thumbnail image: 엄지손가락같은 작은 사진
-// 변수값으로 css 주려면 #{}
+.thumb-large {
+  width: $profile-image-size;
+  height: $profile-image-size;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

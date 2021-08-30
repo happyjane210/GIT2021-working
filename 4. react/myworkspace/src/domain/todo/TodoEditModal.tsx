@@ -23,6 +23,7 @@ const TodoEditModal = ({ item, onClose, onSave }: ModalProp) => {
     // 새로운 todo 객체를 만들어서 기존 값을 수정함
     const todo: TodoState = {
       id: item.id, // 기존값
+      username: item.username,
       memo: inputRef.current?.value, // 수정된 텍스트 입력값  <- 여기만 수정
       createTime: item.createTime, // 기존
     };

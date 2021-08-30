@@ -41,10 +41,12 @@
 import "./App.scss";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import { Provider } from "react-redux"; // react 앱에 redux store를 제공함
+import { store } from "./store"; // redux store
 
 import Home from "./domain/Home";
 import Profile from "./domain/profile/Profile";
-//import Navigation from "./Navigatio";
+//import Navigation from "./Navigation";
 
 // SPA ( Single Page Application)
 // - 페이지 파일이 1개, index.html
@@ -62,57 +64,61 @@ const Contact = lazy(() => import("./domain/contact/Contact"));
 // React == 컴포넌트 개발 라이브러리
 function App() {
   return (
-    <Router>
-      {/* main container */}
-      <div className="mx-auto">
-        {/* nav의 top 이 app bar만큼 와야함 
+    <Provider store={store}>
+      <Router>
+        {/* main container */}
+        <div className="mx-auto">
+          {/* nav의 top 이 app bar만큼 와야함 
         d-flex justify-content-end  profile 오른쪽으로 정렬*/}
-        <header className="app-bar d-flex justify-content-end bg-primary shadow">
-          <Profile />
-        </header>
-        <nav className="drawer-menu position-fixed bg-light shadow-sm">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
+          <header className="app-bar d-flex justify-content-end bg-primary shadow">
+            <Profile />
+          </header>
+          <nav className="drawer-menu position-fixed bg-light shadow-sm">
+            <h3 className="ms-2">MY WORKSPACE</h3>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
 
-            <li>
-              <Link to="/Todo">Todo</Link>
-            </li>
+              <li>
+                <Link to="/Todo">Todo</Link>
+              </li>
 
-            <li>
-              <Link to="/Feed">Feed</Link>
-            </li>
-            <li>
-              <Link to="/Contact">Contact</Link>
-            </li>
-          </ul>
-        </nav>
-        <main className="content-container">
-          {/* 홈페이지 메인 메뉴가 오른쪽으로 200만큼 가있음 */}
-          {/* Suspense 컴포넌트로 로딩중에 보여줄 화면을 처리하는 것 */}
-          {/* fallback={로딩중 보여줄 컴포넌트} */}
+              <li>
+                <Link to="/Feed">Feed</Link>
+              </li>
 
-          <Suspense
-            fallback={
-              <div>
-                <h1 style={{ color: "tomato" }}>Loading....⏳⏳⏳</h1>
-              </div>
-            }
-          >
-            <Switch>
-              {/* Switch 영역에 컴포넌트가 로딩됨 */}
-              {/* 해당 경로에 대해서 로딩할 컴포넌트 */}
-              {/* exact 공부하기 매우 중요 라우터 관련 */}
-              <Route path="/" component={Home} exact />
-              <Route path="/todo" component={Todo} />
-              <Route path="/Feed" component={Feed} />
-              <Route path="/Contact" component={Contact} />
-            </Switch>
-          </Suspense>
-        </main>
-      </div>
-    </Router>
+              <li>
+                <Link to="/Contact">Contact</Link>
+              </li>
+            </ul>
+          </nav>
+          <main className="content-container">
+            {/* 홈페이지 메인 메뉴가 오른쪽으로 200만큼 가있음 */}
+            {/* Suspense 컴포넌트로 로딩중에 보여줄 화면을 처리하는 것 */}
+            {/* fallback={로딩중 보여줄 컴포넌트} */}
+
+            <Suspense
+              fallback={
+                <div>
+                  <h1 style={{ color: "tomato" }}>Loading....⏳⏳⏳</h1>
+                </div>
+              }
+            >
+              <Switch>
+                {/* Switch 영역에 컴포넌트가 로딩됨 */}
+                {/* 해당 경로에 대해서 로딩할 컴포넌트 */}
+                {/* exact 공부하기 매우 중요 라우터 관련 */}
+                <Route path="/" component={Home} exact />
+                <Route path="/Todo" component={Todo} />
+                <Route path="/Feed" component={Feed} />
+                <Route path="/Contact" component={Contact} />
+              </Switch>
+            </Suspense>
+          </main>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 
