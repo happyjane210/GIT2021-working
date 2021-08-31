@@ -1,4 +1,3 @@
-import { profile } from "console";
 import { useRef, useState } from "react";
 import { FeedState } from "./type/index";
 

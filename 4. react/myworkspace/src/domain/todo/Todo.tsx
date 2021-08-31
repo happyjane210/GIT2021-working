@@ -5,7 +5,7 @@ import { TodoState } from "./type"; // ./type (뒤에) 뭐가 없으면 폴더 �
 import TodoEditModal from "./TodoEditModal";
 import Alert from "../../components/Alert";
 import produce from "immer";
-import style from "../profile/Profile.module.scss";
+//import style from "../profile/Profile.module.scss";
 
 const getTimeString = (unixTime: number) => {
   const now = new Date(); // 현재날짜-시간객체
@@ -138,13 +138,13 @@ const Todo = () => {
       </h2>
 
       {/* Feed 에 profile 추가 */}
-      <div className="d-flex">
+      {/* <div className="d-flex card-header">
         <div
           className={`${style.thumb} me-1`}
           style={{ backgroundImage: `url(${profile.image})` }}
         ></div>
         <span className={`${style.username} `}>{profile.username}</span>
-      </div>
+      </div> */}
       {/* Feed 에 profile 추가 */}
 
       {isEdit && (

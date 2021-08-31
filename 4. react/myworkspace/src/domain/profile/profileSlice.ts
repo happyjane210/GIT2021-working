@@ -2,7 +2,7 @@
 // 관리하고 처리할 수 있는 모듈 = slice라고 함 (여러개중 하나)
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { pic } from "../../common/data";
+import { pic } from "./index";
 
 // state 타입 내보내기, 외부에서 이것을 가져다 씀
 export interface ProfileState {

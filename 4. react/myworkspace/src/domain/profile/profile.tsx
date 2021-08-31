@@ -95,7 +95,7 @@ const Profile = () => {
         {isShow && (
           <div
             className="dropdown-menu d-flex flex-column align-items-center border py-3"
-            style={{ right: "-30px", width: "180px" }}
+            style={{ right: "-30px", width: "180px", zIndex: "-moz-initial" }}
           >
             {/* 보기 모드 */}
             {!isEdit && (

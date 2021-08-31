@@ -3,9 +3,9 @@ import { FeedState } from "./type";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import FeedWithModal from "./FeedWithModal";
-import Alert from "../../components/Alert";
+import Alert from "./Alert";
 import produce from "immer";
-import style from "../profile/Profile.module.scss";
+import style from "./Profile.module.scss";
 
 const getTimeString = (unixTime: number) => {
   const now = new Date();

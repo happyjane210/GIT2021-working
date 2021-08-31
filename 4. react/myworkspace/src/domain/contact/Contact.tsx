@@ -19,7 +19,7 @@ const Contact = () => {
   const inputRef1 = useRef<HTMLInputElement>(null);
   const inputRef2 = useRef<HTMLInputElement>(null);
   const inputRef3 = useRef<HTMLInputElement>(null);
-  const rowRef = useRef<HTMLTableRowElement>(null);
+  const tbodyRef = useRef<HTMLTableSectionElement>(null);
   const inputEdit = useRef<HTMLInputElement>(null);
   //2가지 기존거를 쓴다. 2. 새로운 ref를 쓴다. <되는데 버그 터짐>
   //해보면 도움이 된다 왜냐 내가 이문제로 선생님한테 2번 빠꾸 먹고 고쳐서 3트만에 성곡한 부분
@@ -70,26 +70,19 @@ const Contact = () => {
     );
   };
 
-  const save = (id: number) => {
-    const inputName = rowRef.current
-      ?.querySelectorAll("td")[1]
-      .querySelector("input");
-    const inputPhone = rowRef.current
-      ?.querySelectorAll("td")[2]
-      .querySelector("input");
-    const inputEmail = rowRef.current
-      ?.querySelectorAll("td")[3]
-      .querySelector("input");
-
-    console.log(inputName);
+  const save = (id: number, index: number) => {
+    //tbody에서 몇번째 tr인지 명시를 해줘야함
+    const tr = tbodyRef.current?.querySelectorAll("tr")[index];
+    const inputName = tr?.querySelectorAll("input"); //NodeList
+    const inputArr = Array.prototype.slice.call(inputName); //NodeList ->Array
 
     setConList(
       produce((state) => {
         const item = state.find((item) => item.id === id);
         if (item) {
-          item.name = inputName?.value;
-          item.phone = inputPhone?.value;
-          item.email = inputEmail?.value;
+          item.name = inputArr[0].value;
+          item.phone = inputArr[1].value;
+          item.email = inputArr[2].value;
           item.isEdit = false;
         }
       })
@@ -170,8 +163,8 @@ const Contact = () => {
               <th>FUNCTION</th>
             </tr>
           </thead>
-          <tbody>
-            {conList.map((item) => (
+          <tbody ref={tbodyRef}>
+            {conList.map((item, index) => (
               <>
                 {!item.isEdit && (
                   <tr>
@@ -203,7 +196,7 @@ const Contact = () => {
                 )}
 
                 {item.isEdit && (
-                  <tr ref={rowRef}>
+                  <tr>
                     <td>{item.id}</td>
                     <td>
                       <input
@@ -211,6 +204,12 @@ const Contact = () => {
                         defaultValue={item.name}
                         ref={inputEdit}
                         className="form-control me-2 text"
+                        onKeyPress={(e) => {
+                          if (e) {
+                            if (e.code !== "Enter") return;
+                          }
+                          save(item.id, index);
+                        }}
                       />
                     </td>
                     <td>
@@ -219,6 +218,12 @@ const Contact = () => {
                         defaultValue={item.phone}
                         ref={inputEdit}
                         className="form-control me-2 text"
+                        onKeyPress={(e) => {
+                          if (e) {
+                            if (e.code !== "Enter") return;
+                          }
+                          save(item.id, index);
+                        }}
                       />
                     </td>
                     <td>
@@ -227,13 +232,19 @@ const Contact = () => {
                         defaultValue={item.email}
                         ref={inputEdit}
                         className="form-control me-2 text"
+                        onKeyPress={(e) => {
+                          if (e) {
+                            if (e.code !== "Enter") return;
+                          }
+                          save(item.id, index);
+                        }}
                       />
                     </td>
                     <td>
                       <button
                         className="btn btn-outline-success btn-sm me-md-1"
                         onClick={() => {
-                          save(item.id);
+                          save(item.id, index);
                         }}
                       >
                         저장
