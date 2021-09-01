@@ -15,7 +15,7 @@ const FeedWithModal = ({ item, onClose, onSave }: ModalProp) => {
   const fileRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const add = (e: null) => {
+  const add = () => {
     // 모달창에서 선택한 파일
     if (fileRef.current?.files?.length) {
       const file = fileRef.current?.files[0];
@@ -33,7 +33,7 @@ const FeedWithModal = ({ item, onClose, onSave }: ModalProp) => {
     }
   };
 
-  const save = () => {
+  const save = (url2: string | undefined) => {
     const feed: FeedState = {
       id: item.id, //기존값
       url: url2, // 새로운 url
@@ -41,6 +41,7 @@ const FeedWithModal = ({ item, onClose, onSave }: ModalProp) => {
       content: textareaRef.current?.value, // 수정한 텍스트
       createTime: item.createTime,
       username: item.username,
+      image: item.image,
     };
 
     onSave(feed);
@@ -74,13 +75,15 @@ const FeedWithModal = ({ item, onClose, onSave }: ModalProp) => {
             </div>
             <div className="modal-body" key={item.id}>
               <input
+                aria-describedby="inputGroupFileAddon04"
+                aria-label="Upload"
                 type="file"
+                accept="image/png, image/jpeg, video/mp4"
                 ref={fileRef}
                 className="form-control me-1"
-                accept="image/*, video/*"
                 onChange={(e) => {
                   e.preventDefault();
-                  add(null);
+                  add();
                 }}
               />
 
@@ -140,11 +143,11 @@ const FeedWithModal = ({ item, onClose, onSave }: ModalProp) => {
                 type="button"
                 className="btn btn-outline-warning"
                 onClick={() => {
-                  save();
+                  save(url2);
                   // 3. 세이브 버튼 클릭하면 save() 함수 실행  [event 발생]
                 }}
               >
-                Save changes
+                Save
               </button>
             </div>
           </div>

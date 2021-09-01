@@ -69,6 +69,7 @@ const Feed = () => {
       content: inputText,
       createTime: new Date().getTime(),
       username: profile.username,
+      image: profile.image,
     };
     console.log(data);
 
@@ -88,6 +89,7 @@ const Feed = () => {
     content: "",
     createTime: 0,
     username: profile.username,
+    image: profile.image,
   });
 
   const edit = (item: FeedState) => {
@@ -100,13 +102,11 @@ const Feed = () => {
   const handleSave = (editItem: FeedState) => {
     setFeedList(
       produce((state) => {
-        const item = state.find((item: FeedState) => item.id === editItem.id);
+        const item = state.find((item) => item.id === editItem.id);
         if (item) {
           item.url = editItem.url;
           item.type = editItem.type;
           item.content = editItem.content;
-        } else if (!editItem.url) {
-          return;
         }
       })
     );
@@ -176,9 +176,9 @@ const Feed = () => {
           <div className="d-flex card-header">
             <div
               className={`${style.thumb} me-1`}
-              style={{ backgroundImage: `url(${profile.image})` }}
+              style={{ backgroundImage: `url(${item.image})` }}
             ></div>
-            <span className={`${style.username} `}>{profile.username}</span>
+            <span className={`${style.username} `}>{item.username}</span>
           </div>
           <div className="card-body">
             {item.type &&
