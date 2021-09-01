@@ -1,7 +1,0 @@
- ssh -i "myworkspace.pem" ubuntu@ec2-15-165-17-21.ap-northeast-2.compute.amazonaws.com
- => cmd 에서 서버 접속 명령어
-
-ec2-15-165-17-21.ap-northeast-2.compute.amazonaws.com 
- => 서버주소
-
-
