@@ -60,6 +60,8 @@ import Profile from "./domain/profile/Profile";
 const Todo = lazy(() => import("./domain/todo/Todo"));
 const Feed = lazy(() => import("./domain/feed/Feed"));
 const Contact = lazy(() => import("./domain/contact/Contact"));
+const Photo = lazy(() => import("./domain/photo/Photo"));
+const PhotoCreate = lazy(() => import("./domain/photo/PhotoCreate"));
 
 // React == 컴포넌트 개발 라이브러리
 function App() {
@@ -91,6 +93,10 @@ function App() {
               <li>
                 <Link to="/Contact">Contact</Link>
               </li>
+
+              <li>
+                <Link to="/Photo">Photo</Link>
+              </li>
             </ul>
           </nav>
           <main className="content-container">
@@ -110,9 +116,16 @@ function App() {
                 {/* 해당 경로에 대해서 로딩할 컴포넌트 */}
                 {/* exact 공부하기 매우 중요 라우터 관련 */}
                 <Route path="/" component={Home} exact />
+                {/* exact 안써주면 밑에 애들도 "/" 까지만 읽고 홈컴포넌트 로딩함 
+                     정확히 "/"만 입력했을때 홈컴포넌트 실행 */}
                 <Route path="/Todo" component={Todo} />
                 <Route path="/Feed" component={Feed} />
                 <Route path="/Contact" component={Contact} />
+                <Route path="/Photo" component={Photo} exact />
+                <Route path="/Photo/Create" component={PhotoCreate} />
+                {/* exact :  정확이 path경로와 일치할 때만 로딩해라, 속성 : true|false  */}
+                {/* 정확히 "/Photo" 만 입력했을 때 포토 실행 */}
+                {/* /Photo & /Photo/create  이름이 겹치는 부분이 있기때문에 내부 교집합을 exact로 바운더리 처리 해줌*/}
               </Switch>
             </Suspense>
           </main>
