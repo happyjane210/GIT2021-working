@@ -1,0 +1,50 @@
+2021-09-01 수
+
+
+커뮤니티 - feed, forum
+개인화 - todo, contact, photo
+
+
+// Route 의 exact 
+
+// useHistory( )
+컴포넌트 이동을 코드로 제어할 수 있음
+---------------------------
+const history = useHistory();
+
+onClick={() => {
+            history.push("/Photo/Create");
+          }}
+---------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

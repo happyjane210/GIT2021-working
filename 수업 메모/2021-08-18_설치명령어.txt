@@ -1,0 +1,109 @@
+=========명령어=======================
+* 프로젝트로 쓸 폴더는 따로 만들지 않고 명령어로 설치하면 만들어진다.
+
+현위치 여기로 바꿔줌
+cd 설치하려는폴더위치
+
+뭔가 설치하기 전에 우선 종료
+Ctrl + C
+
+-----------여기서부터 설치------------------------
+
+react 설치 (빈파일 위치에서 설치함, 프로젝트명 대문자 안됨 오류남)
+npx create-react-app react-tsx --template typescript
+
+build 설치
+npm run build
+
+**** 프로젝트 위치로 이동해서 깔아야함 안그럼 오류남
+	ex) react-practice(folder) \ react-tsx(project folder)
+	react-tsx <= 이게 프로젝트 폴더라서 이곳에서 깔아야함
+
+
+bootstrap 설치
+npm install bootstrap @popperjs/core
+
+node.js sass 설치
+npm install node-sass
+
+router-dom 설치
+npm install @types/react-router-dom
+npm install react-router-dom
+
+immer 설치
+npm install immer
+
+
+
+1번 npm install -g typescript
+2번 npm install -g ts-node
+3번 npm install -g @types/node
+
+====================================
+react에서 중요한거
+
+prop
+state
+Ref
+====================================
+
+typescript : javascript 의 상위 호환버전(superset)
+원래 javascript에 타입이라는 걸 추가함.
+
+js: 형식의 유연성으로 데이터 다루기는 좋음 (변환, 동적으로 구조만듦)
+형식이 없으므로 인한 오류 발생 가능성
+
+실행될 때는 jsvascript 변환한 다음에 실행
+
+=========================
+LTS (Long Term Support)
+-오랜기간 동안 지원
+보안 업데이트, 버그픽스
+3-5년을썼음
+
+=========================
+
+REACT
+
+/node_modules: javascript 라이브러리
+ - npm install 로 설치되는 위치.
+
+package.json
+ - 앱 설명
+ - 사용하는 라이브러리 목록
+ -  실행 스크립트
+
+gitignore
+ - git 으로 형상관리 제외할 항목
+ - /node_modules 제외
+ 설치할 라이브러리는 형상관리를 하지 않음
+
+npm install
+package.json, lock.json 파일을 보고 추가모듈을 설치함
+
+클론 하면 라이브러리는 없는데, npm install 를 cmd창에 입력하면 두 파일 보고 라이브러리 설치해줌
+
+. npm start
+: 개발모드로 프로젝트 (코드려러개)를 실행
+=> 코드를 수정할 때마다 서버를 재가동함
+
+npm build
+: 배포용으로 프로젝트를 필드함
+
+(build) : 실제로 상용서비스에서 사용할 빌드
+
+
+개발모드에서 실행구조:
+/public/index.html 을 로딩함
+/src/index.tsx 를 로딩함
+
+
+==========================================
+
+REACT
+
+Function Component 대문자로 시작함
+JSX Element 를 반환함
+js 함수인데, JSX Element를 반환함 == Component
+리액스에서 컴포넌트는 JSX Element 를 렌더링 하는 함수
+

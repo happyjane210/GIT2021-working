@@ -1,0 +1,58 @@
+2021-08-13
+
+alert(window.innerHeight): 창 내부 높이
+
+
+// 배경색 1초 바꿨다가 원상복귀
+// document.body.style.background = "green";
+// setTimeout(() => document.body.style.background = "", 1000);
+===================================================
+
+부트스트랩: css 같은 꾸미기 템플릿을 끌고와서 링크 걸어 놓는것.
+====================================================
+모든 노드 출력 +text node
+for (let node of document.body.childNodes) {
+    console.log(node);
+};
+
+요소 노드만 출력 element node
+for (let elem of document.body.children) {
+    console.log(elem);
+};
+=========================================================
+document.documentElement	<HTML>
+
+document.body	parent Element
+                        
+previous Element Sibling            <DIV>children        next Element Sibling
+
+		first Element Child		last Element Child
+=======================================================
+// 테이블 탐색
+<table> 
+<caption> : 표 상단 머릿말, 항상 tbody 위에 들어가야함
+
+table.rows  = <tr>
+table.caption = <caption>
+table.tHead = <thead>
+table.tFoot = <tfoot>
+table.tBodies = 여러가지 <tbody> 요소 컬렉션, table에 최소 한개는 있어야함
+
+tbody.rows  각 구역안의 <tr>
+thead.rows
+tfoot.rows
+
+tr.cells = <tr> 안에 <td> <th>(제목셀,굵은글씨,시멘틱) 컬렉션 반환
+tr.sectionRowIndex = <tr> 표세로열이 <thead><tbody><tfoot> 에서 몇번째 줄에 있는지 반환
+tr.rowIndex = table 안에서 <tr>이 몇번째 줄인지 반환
+
+td.cellIndex = <tr> 안에서 (한줄) <td>,<th> 가 몇번째 열인지 숫자를 반환
+=========================================================
+    // 상위요소.querySelector("CSS선택자");     // 첫번째만 선택
+    // 상위요소.querySelectorAll("CSS선택자");  // 여러개를 선택
+    //const text = document.querySelector('input[type="text"]');
+ ( 올수 있는 것 )
+1. id 호출 ( "#idname")
+2. html 태그 ( "div" )
+3. class name ( ". classname" )
+4. 태그 [속성명 = "속성값"]   

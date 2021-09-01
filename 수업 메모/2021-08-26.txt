@@ -1,0 +1,27 @@
+2021-08-26 목
+
+=================================
+모달 닫기버튼 제어:
+todo
+
+isEdit
+
+Modal 
+여기서 닫기버튼 누르면 isEdit state 값을 false 로 바꿔주는 함수 바꿔야함
+onClose = () => {
+setIsEdit ( false )
+}
+
+event-up :
+자식 컴포넌트에서 이벤트 발생하면
+부모로부터 받은 함수를 실행
+
+props-down & event up 프론트앤드 아키텍쳐 패턴
+=================================
+		 매개변수  return type
+{ onClose }: { onClose : (  ) => void }
+              :  { 함수속성 } 
+
+
+
+내가 할 테스크 시간 측정을 정확히 해야함

@@ -1,0 +1,16 @@
+2021-08-23
+
+unix time,
+epoch time,
+posix time
+: 1970년 1월 1일부터 ms(밀리세컨드 1/1000)단위의 표기법
+: 전세계 공통, 변화된 시간은 같음
+
+UTC(GMT) 표준시
+: UTC + 900
+
+
+Locale
+ - 한국
+ - timezone, Seoul
+ - 

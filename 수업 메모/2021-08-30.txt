@@ -1,0 +1,76 @@
+2021-08-30 월
+
+global state (전역 상태)
+
+* 프론트앤드는 화면 구현이 아니고 클라이언트 개발.
+
+Flux는 facebook에서 클라이언트 측 웹 어플리케이션을 만들기위해서
+사용하는 어플리케이션 아키텍쳐.
+단방향 데이터 흐름을 활용해 뷰 컴포넌트를 구성하는 React를 보완하는 역할을 한다.
+
+Flux => 클라이언트 데이터 관리 아키텍쳐 (큰 규모의 구조) /  디자인 (작은 규모의 구조)
+      => 단방향 데이터
+      => 추상적인, 이론적, 원리적
+
+Redux => Flux 패턴을 라이브러리(js/ts) 로 만들어 놓은 것, 실제로 쓸수있게
+         => ActionCreator : 액션객체를 생성하는 함수
+         => Action : 액션타입(명령, command pattern),  페이로드(매개변수) 구조의 객체
+         => Dispatcher : 액션타입과 페이로드를 받아서 리듀서를 실행
+         => Reducer : 기존 state 와 액션의 페이로드로 state 변경
+
+React-Redux:  React에서 Redux를 쓸수있게 만들어 놓은것
+
+
+
+
+
+Action -> Dispatcher -> Store -> View
+
+* View에서 Action객체 Dispatcher 를 넘기면 / Dispatcher 가 Store 를 변경
+
+
+Action : state 변경정보
+
+Dispatcher : state 변경, 
+dispatch(ing): Dispatcher에 Actions를 전달하는 행위
+
+Store : 스테이트(state)를 저장하는 저장소
+
+View컴포넌트
+
+================================================
+
+redux, 라이브러리 설치 (@ 가 붙으면 파일이 앞쪽으로 설치됨)
+npm install @reduxjs/toolkit react-redux
+
+================================================
+
+global state (전역상태) 저장소
+
+프론트엔드 state : UI 처리 바뀌게 하는 변수
+    -> 모달 팝업상태 (보이고, 안보이고), 연락처 목록상태 (10개 보이고, 5개 보이고, 수정모드)
+
+백엔드엔드 state : 비즈니스 로직 처리가 바뀌게 하는 데이터
+    -> 주문상태 (주문요청, 결제, 결제확인, 배송중, 배송완료)
+    -> 승인상태 (제출, 검토중, 반려, 승인)
+
+
+* slice : 
+redux store (리덕스 저장소)에 하나의 state를
+관리하고 처리할 수 있는 모듈 = slice라고 함 (여러개중 하나)
+
+
+화살표 함수에  { } 없으면 리턴값임.
+
+cosnt 변수명 = 함수명( ( 매개변수 ) => { 함수 실행문 } )
+cosnt 변수명 = 함수명( ( 매개변수 ) => 리턴값 )
+
+
+
+
+
+
+
+
+
+

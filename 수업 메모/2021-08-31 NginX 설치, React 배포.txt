@@ -1,0 +1,169 @@
+//새 키 페어 생성
+RSA선택
+새 키페어 이름 => 키 페어 다운로드 => 인스턴스 시작
+
+//새로고침 누르면 진행상황 볼 수 있음
+상태검사 초기화가 없어져야 서버에 들어갈수있음
+
+//다운로드 된 .pem 파일을 React 폴더로 옮겨준다
+깃에 커밋할 때 함께 커밋되어 노출되지 않도록
+.gitignore 에 *.pem 올려준다
+
+
+//이제 pem 이 있는 폴더 경로가 설정된 커멘드창을 띄우고
+서버에 접속하는 명령어를 적어보자 
+
+//이 주소 커멘드는 잘 보관하기
+ ssh -i "practice.pem" ubuntu@ec2-13-125-238-199.ap-northeast-2.compute.amazonaws.com
+여기서 실행해야함
+C:\Users\juh22\OneDrive\문서\Github\react-practice\react-tsx>
+
+==========================================
+여기서부터 커멘드 창
+
+1. NGINX 세팅 (순서대로 명령어 입력)
+
+// react 애플리케이션 배포 경로 생성
+cd ~
+mkdir web
+mkdir web/myworkspace
+
+
+
+** 홈 디렉토리에서 설치 해야함.
+// NginX 설치
+sudo apt update
+sudo apt install nginx
+
+
+// 기본설정 삭제
+sudo rm /etc/nginx/sites-available/default
+sudo rm /etc/nginx/sites-enabled/default
+
+
+// 설정 파일 생성
+sudo vi /etc/nginx/sites-available/myworkspace.conf
+
+
+파일 편집기 열리면 이거 붙여넣기
+
+
+// 설정 내용 입력(i) 및 저장(esc -> wq!)
+server {
+  listen 80;				
+  location / {   
+    root   /home/ubuntu/web/myworkspace;              
+    index  index.html index.htm;                                   
+    try_files $uri /index.html;
+  }
+}
+
+** http 프로토콜의 기본 포트가 80번 포트
+ ** /web/myworkspace 는 내가 설정한 경로&디렉토리명
+서버가 여기서 부터 시작된다고 설정해줌
+//라인모드에서 저장,강제종료
+ : wq!    
+
+
+// 심볼릭 링크 생성  - 바로가기 만들기
+sudo ln -s /etc/nginx/sites-available/myworkspace.conf /etc/nginx/sites-enabled/myworkspace.conf
+
+
+// NginX 서버 재가동 (종료, 시작, 상태)
+sudo systemctl stop nginx
+sudo systemctl start nginx
+sudo systemctl status nginx
+
+======여기서부터 aws========================================================
+
+
+기본 포트는 22,
+http, 80번 포트 열어
+
+// 네트워크 보안 설정
+EC2 보안그룹: 80포트
+보안 그룹 -> Edit inboutn rules -> http, 0.0.0.0/0, NginX -> 규칙 저장
+
+
+
+=====끝====빌드하고 서버에 배포==VS code============================================
+
+
+1. vs code에서 npm run build (기존 빌드파일 없어야함, 있다면 지워)
+
+
+-----메모---------------
+scp  :  (secure copy)
+ - 보안 프로토콜로 [파일 전송]할 때 사용
+ssh :  (secure shell)
+ - 보안 프로토콜로 원격에 있는 컴퓨터에 [명령어를 보낼 때] 사용
+ ** build 이하 파일들을 서버 web/myworkspace 로 보냄
+
+shell : 명령어 해석기
+사용자가 입력하는 명령어를 해석해서
+
+ssh / scp : 컴퓨터에 내장돼있음
+--------------------
+ 
+
+
+2. 터미널 scp 명령어 입력
+scp -i "myworkspace.pem" -r ./build/* ubuntu@ec2-15-165-17-21.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/web/myworkspace
+  => 서버로 build의 모든 파일을 ubuntu@서버주소 로 보낸다. :/home/ubuntu/web/myworkspace 서버 절대경로
+
+
+
+3. cmd 에서 build파일들 잘들어갔는지 확인하기 (위치는 myworkspace)
+* cat index.html    (build 안에 index 파일 내용보기 , 확인)
+* cmd - myworkspace 에서 ls 하면 build에 있는 파일이 나와야함
+
+
+
+4. VS => package.json   파일 내부에 배포 주소 입력
+"scripts" : {
+"deploy": "scp -i \"myworkspace.pem\" -r ./build/* ubuntu@ec2-15-165-17-21.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/web/myworkspace"
+}
+
+* deploy(배포) 주소 입력하기,
+  안에 "" 있어서 오류남, 옆에 \ 백슬레시 붙여주기
+
+
+
+5. vs terminal
+npm run deploy   입력
+
+* package.json 에 npm deploy 로 명령어 등록
+* 이렇게 하면 명령어 다시 안쳐도 됨 (scp -i ~~~)
+
+
+
+***** 5-1. 빌드 완료한 서버는 vs code 로컬에서 수정해도 변하지 않음.
+	local 에서 수정 완료한 후, 다시 빌드, 서버 등록하면 변경됨
+명령어: 
+npm run build      최적화된 build파일 생성
+npm run deploy     최적화된 build파일을 서버에 배포
+
+
+
+*** 5-2. 업로드 성공한 기존 파일 삭제
+ssh -i "myworkspace.pem" -r ./build/* ubuntu@ec2-15-165-17-21.ap-northeast-2.compute.amazonaws.com "sudo rm -rf /home/ubuntu/web/myworkspace/*"
+
+
+
+* 5-3. nginX 접속 로그 확인
+tail -f /var/log/nginx/access.log
+   => 파일의 뒤쪽부분 조회하는 명령어(기본 10줄)
+
+tail -f 파일경로
+   => 파일에 내용이 추가될때마다 화면 표시
+
+
+퍼블릭 DNS(IPv4) 복사해서 서버에 내가 만들고 있던 React 잘 올라갔는지 확인.
+
+
+------------
+2번째 도메인 명령어
+scp -i "practice.pem" -r ./build/* ubuntu@ec2-13-125-238-199.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/web/practice
+
+"deploy": "scp -i \"practice.pem\" -r ./build/* ubuntu@ec2-13-125-238-199.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/web/practice"
+-------------

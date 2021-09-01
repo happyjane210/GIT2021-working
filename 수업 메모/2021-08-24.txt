@@ -1,0 +1,68 @@
+2021-08-24 화
+
+없는 라이브러리 확인하고 다운받아줌
+npm install
+
+쌤 깃 클론 하기 (복사말고)
+
+=========================================
+수요일 평가 지필문제 답(선택형 숫자만 써)
+
+1. Virtual DOM Tree
+
+2. JSX Element
+
+3. Single Page Application (SPA)
+
+4. Lazy Loading
+
+5. 타입 추론, Type Inference
+
+6. !default
+
+(7/8 서술형)
+7. state 선언
+ const [keywords, setKeywords] = useState<String[]>([]);
+
+8. ref 선언
+const inputRef = useRef<HTMLInputElement>(null);
+
+9. 단위 테스트 (Unit Test)
+
+10. ESlint
+
+
+
+immer 사용해
+
+==============================
+
+filereader 쓸것
+
+오후 5시 46분 쌤 코드 잠시 나옴
+
+===============================
+
+React == 컴포넌트 개발 라이브러리
+컴포넌트: JSX Element 를 반환하는 함수
+              재사용 하기 위해서 따로 써둠
+
+prop (프로퍼티): 화면 렌더링 결과에 영향을 미치는 변수,
+외부에서 매개변수로 옴
+
+state : 화면에 렌더링 결과에 영향을 미치는 변수,
+내부에서 선언함.
+state 변수는 직접 변경불가(immutable, 불변성)
+옆에 쓴 변경함수로 변경해야함.
+
+**state
+const [state명, state변경함수명] = useState(초기값);
+state 변경함수로만 변경할 수 있음
+
+
+rsc 자동완성
+
+
+===========================
+수업 영상리뷰 진도:
+2021-08-19 목    2:51:43    Calculator
