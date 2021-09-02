@@ -94,8 +94,8 @@ const Profile = () => {
         {/* 프로필 상세보기 */}
         {isShow && (
           <div
-            className="dropdown-menu d-flex flex-column align-items-center border py-3"
-            style={{ right: "-30px", width: "180px", zIndex: "-moz-initial" }}
+            className="bg-white dropdown-menu d-flex flex-column align-items-center border py-3"
+            style={{ right: "-30px", width: "180px", zIndex: 1000 }}
           >
             {/* 보기 모드 */}
             {!isEdit && (

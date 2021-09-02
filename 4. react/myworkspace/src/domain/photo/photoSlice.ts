@@ -12,7 +12,7 @@ export interface PhotoItem {
   title: string;
   description?: string;
   photoUrl: string;
-  createTime: number;
+  createTime: string;
 }
 // 얘도 외부에서 쓸수있도록 export 해줘야함
 
@@ -32,7 +32,7 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
-      createTime: new Date().getTime(),
+      createTime: new Date().toLocaleTimeString(),
     },
     {
       id: 5,
@@ -41,7 +41,7 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
-      createTime: new Date().getTime(),
+      createTime: new Date().toLocaleTimeString(),
     },
     {
       id: 4,
@@ -50,7 +50,7 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
-      createTime: new Date().getTime(),
+      createTime: new Date().toLocaleTimeString(),
     },
     {
       id: 3,
@@ -59,7 +59,7 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
-      createTime: new Date().getTime(),
+      createTime: new Date().toLocaleTimeString(),
     },
     {
       id: 2,
@@ -68,7 +68,7 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
-      createTime: new Date().getTime(),
+      createTime: new Date().toLocaleTimeString(),
     },
     {
       id: 1,
@@ -77,7 +77,7 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
-      createTime: new Date().getTime(),
+      createTime: new Date().toLocaleTimeString(),
     },
   ],
   isFetched: false,
@@ -89,6 +89,7 @@ const photoSlice = createSlice({
   name: "photo",
   initialState, // 변수명, 속성명이 똑같음
   reducers: {
+    // 14. reducer 함수 생성
     // state 와 action을 받는 리듀서
     //     action의 타입이  페이로드액션매개변수 <페이로드 타입>
     //PayloadAction<payload 타입>
@@ -104,6 +105,7 @@ const photoSlice = createSlice({
   },
 });
 
+// 14. action export
 export const { addPhoto } = photoSlice.actions;
 
 // 2. 슬라이스 리듀서를 밖으로 공유함

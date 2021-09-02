@@ -2,7 +2,7 @@ import produce from "immer";
 import React, { useRef, useState } from "react";
 import Alert from "../../components/Alert";
 
-interface ContactState {
+interface ContactLineState {
   id: number;
   name: string | undefined;
   phone: string | undefined;
@@ -11,7 +11,7 @@ interface ContactState {
 }
 
 const Contact = () => {
-  const [conList, setConList] = useState<ContactState[]>([
+  const [conList, setConList] = useState<ContactLineState[]>([
     { id: 1, name: "Name", phone: "010-1234-5678", email: "example@123.com" },
   ]);
   const [isError, setIsError] = useState(false);
@@ -41,7 +41,7 @@ const Contact = () => {
       return;
     }
 
-    const con: ContactState = {
+    const con: ContactLineState = {
       id: conList.length > 0 ? conList[0].id + 1 : 1,
       name: inputRef1.current?.value,
       phone: inputRef2.current?.value,

@@ -62,8 +62,9 @@ const Feed = lazy(() => import("./domain/feed/Feed"));
 const Contact = lazy(() => import("./domain/contactLine/ContactLine"));
 const Photo = lazy(() => import("./domain/photo/Photo"));
 const PhotoCreate = lazy(() => import("./domain/photo/PhotoCreate"));
-// const PhotoDetail = lazy(() => import("./domain/photo/PhotoDetail"));
-
+const ContactMemo = lazy(() => import("./domain/contactMemo/ContactMemo"));
+const ContactCreate = lazy(() => import("./domain/contactMemo/ContactCreate"));
+const ContactDetail = lazy(() => import("./domain/contactMemo/ContactDetail"));
 // React == 컴포넌트 개발 라이브러리
 function App() {
   return (
@@ -90,13 +91,16 @@ function App() {
               <li>
                 <Link to="/Feed">Feed</Link>
               </li>
+              <li>
+                <Link to="/Photo">Photo</Link>
+              </li>
 
               <li>
                 <Link to="/Contact">Contact-inLine</Link>
               </li>
 
               <li>
-                <Link to="/Photo">Photo</Link>
+                <Link to="/ContactMemo">Contact-Manager</Link>
               </li>
             </ul>
           </nav>
@@ -121,10 +125,19 @@ function App() {
                      정확히 "/"만 입력했을때 홈컴포넌트 실행 */}
                 <Route path="/Todo" component={Todo} />
                 <Route path="/Feed" component={Feed} />
-                <Route path="/Contact" component={Contact} />
+                <Route path="/Contact" component={Contact} exact />
                 <Route path="/Photo" component={Photo} exact />
                 <Route path="/Photo/Create" component={PhotoCreate} />
-
+                <Route path="/ContactMemo" component={ContactMemo} exact />
+                <Route
+                  path="/ContactMemo/ContactCreate"
+                  component={ContactCreate}
+                  exact
+                />
+                <Route
+                  path="/ContactMemo/ContactDetail"
+                  component={ContactDetail}
+                />
                 {/* exact :  정확이 path경로와 일치할 때만 로딩해라, 속성 : true|false  */}
                 {/* 정확히 "/Photo" 만 입력했을 때 포토 실행 */}
                 {/* /Photo & /Photo/create  이름이 겹치는 부분이 있기때문에 내부 교집합을 exact로 바운더리 처리 해줌*/}

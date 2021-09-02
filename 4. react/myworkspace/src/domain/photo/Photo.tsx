@@ -10,8 +10,8 @@ const Photo = () => {
 
   return (
     <div>
-      <h2 className="text-center">
-        <b>Photos</b>
+      <h2 className="text-center my-5">
+        <b>PHOTOS</b>
       </h2>
       {/* 9. 추가버튼 -> 추가화면 */}
       <div className="d-flex justify-content-end my-2">
@@ -26,7 +26,7 @@ const Photo = () => {
         </button>
       </div>
       <div className="d-flex flex-wrap">
-        {/* 8. state 데이터 배열에 map 함수로 출력 */}
+        {/* 8. state 데이터 배열을 map 함수로 출력 */}
         {photo.data.map((item, index) => (
           <div
             key={`photo-item-${index}`}
@@ -50,10 +50,12 @@ const Photo = () => {
               // onClick={() => {
               //   history.push(`/photos/${item.id}`);
               // }}
+              // 사진 클릭하면 상세페이지 / 수정페이지
             />
 
             <div className="card-body">
               <h5 className="card-title">{item.title}</h5>
+              <p>{item.createTime}</p>
             </div>
           </div>
         ))}

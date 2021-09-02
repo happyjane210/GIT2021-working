@@ -1,5 +1,3 @@
-// 9. 추가할 화면 생성
-import { file } from "@babel/types";
 import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -7,9 +5,12 @@ import { AppDispatch, RootState } from "../../store";
 import { addPhoto, PhotoItem } from "./photoSlice";
 
 const PhotoCreate = () => {
+  // 11. 입력폼에 ref 객체 연결
   const titleInput = useRef<HTMLInputElement>(null);
   const descrTxta = useRef<HTMLTextAreaElement>(null);
   const fileInput = useRef<HTMLInputElement>(null);
+
+  // 12. 셀랙터, 디스패치, 히스토리 가져오기
 
   // 포토 데이터 배열 가져오기
   const photoData = useSelector((state: RootState) => state.photo.data);
@@ -33,7 +34,8 @@ const PhotoCreate = () => {
       const imageFile = fileInput.current.files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        // 추가할 객체 생성
+        // 12. 새로 추가할 객체 생성
+
         const item: PhotoItem = {
           // 기존 데이터의 id 중에서 가장 큰 것 +1
           id: photoData.length ? photoData[0].id + 1 : 1,
@@ -45,11 +47,11 @@ const PhotoCreate = () => {
           description: descrTxta.current?.value,
           photoUrl: reader.result ? reader.result.toString() : "",
           // 시스템 값 (작성일시, 수정일시, 수정한사람...)
-          createTime: new Date().getTime(),
+          createTime: new Date().toLocaleTimeString(),
         };
         console.log(item);
 
-        //  디스패칭
+        // *** 디스패칭
         // 1. addPhoto 함수에서 Action 객체를 생성함
         //   -> {type: "photo/addPhoto", payload:item}
         // 2. Action 객체를 Dispatcer에 전달함
@@ -65,6 +67,7 @@ const PhotoCreate = () => {
         // type: <photo />
         // payload: item
 
+        // 13. 디스패칭 dispatch(action함수)
         dispatch(addPhoto(item));
         // 예시, 둘다 가능
         // dispatch({
@@ -78,10 +81,11 @@ const PhotoCreate = () => {
     }
   };
 
+  // 9. 추가할 화면 생성
   return (
     <div style={{ width: "40vw" }} className="mx-auto">
-      <h2 className="text-center">
-        <b>Photos Create</b>
+      <h2 className="text-center my-5">
+        <b>Photos Creator</b>
       </h2>
       <form>
         <table className="table">
@@ -118,22 +122,22 @@ const PhotoCreate = () => {
       </form>
       <div>
         <button
-          className="btn btn-secondary float-start"
+          className="btn btn-outline-secondary float-start"
           onClick={() => {
             history.push("/photo");
           }}
         >
-          <i className="bi bi-grid-3x3-gap me-1"></i>
+          <i className="bi bi-grid-fill me-1"></i>
           목록
         </button>
         <button
-          className="btn btn-primary float-end"
+          className="btn btn-outline-primary float-end"
           onClick={() => {
             clickAdd();
           }}
         >
-          <i className="bi bi-check" />
           저장
+          <i className="bi bi-check ms-1" />
         </button>
       </div>
     </div>
