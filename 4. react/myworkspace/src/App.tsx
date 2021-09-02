@@ -59,9 +59,10 @@ import Profile from "./domain/profile/Profile";
 // 컴포넌트를 방문하는 시점에 로딩함
 const Todo = lazy(() => import("./domain/todo/Todo"));
 const Feed = lazy(() => import("./domain/feed/Feed"));
-const Contact = lazy(() => import("./domain/contact/Contact"));
+const Contact = lazy(() => import("./domain/contactLine/ContactLine"));
 const Photo = lazy(() => import("./domain/photo/Photo"));
 const PhotoCreate = lazy(() => import("./domain/photo/PhotoCreate"));
+// const PhotoDetail = lazy(() => import("./domain/photo/PhotoDetail"));
 
 // React == 컴포넌트 개발 라이브러리
 function App() {
@@ -72,11 +73,11 @@ function App() {
         <div className="mx-auto">
           {/* nav의 top 이 app bar만큼 와야함 
         d-flex justify-content-end  profile 오른쪽으로 정렬*/}
-          <header className="app-bar d-flex justify-content-end bg-primary shadow">
+          <header className="app-bar d-flex justify-content-end bg-primary shadow position-fixed">
             <Profile />
           </header>
           <nav className="drawer-menu position-fixed bg-light shadow-sm">
-            <h3 className="ms-2">MY WORKSPACE</h3>
+            <h4 className="ms-2 mt-2">MY WORKSPACE</h4>
             <ul>
               <li>
                 <Link to="/">Home</Link>
@@ -91,7 +92,7 @@ function App() {
               </li>
 
               <li>
-                <Link to="/Contact">Contact</Link>
+                <Link to="/Contact">Contact-inLine</Link>
               </li>
 
               <li>
@@ -106,7 +107,7 @@ function App() {
 
             <Suspense
               fallback={
-                <div>
+                <div className="mt-5">
                   <h1 style={{ color: "tomato" }}>Loading....⏳⏳⏳</h1>
                 </div>
               }
@@ -123,9 +124,11 @@ function App() {
                 <Route path="/Contact" component={Contact} />
                 <Route path="/Photo" component={Photo} exact />
                 <Route path="/Photo/Create" component={PhotoCreate} />
+
                 {/* exact :  정확이 path경로와 일치할 때만 로딩해라, 속성 : true|false  */}
                 {/* 정확히 "/Photo" 만 입력했을 때 포토 실행 */}
                 {/* /Photo & /Photo/create  이름이 겹치는 부분이 있기때문에 내부 교집합을 exact로 바운더리 처리 해줌*/}
+                {/* <Route path="/Photo/Detail" component={PhotoDetail} /> */}
               </Switch>
             </Suspense>
           </main>
