@@ -107,3 +107,24 @@ JSX Element 를 반환함
 js 함수인데, JSX Element를 반환함 == Component
 리액스에서 컴포넌트는 JSX Element 를 렌더링 하는 함수
 
+=========================================
+
+Redux 설치 명령어
+
+npx create-react-app react-redux-ts --template typescript
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
