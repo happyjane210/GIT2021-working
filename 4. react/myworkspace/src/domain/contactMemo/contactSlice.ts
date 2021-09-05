@@ -26,6 +26,7 @@ const initialState: ContactState = {
       name: "홍길동",
       phone: "02-1588-1588",
       email: "honggildong@123.com",
+      memo: "This is the second contact",
       createTime: new Date().toLocaleTimeString(),
     },
     {
@@ -33,6 +34,7 @@ const initialState: ContactState = {
       name: "Name",
       phone: "010-0000-0000",
       email: "example@123.com",
+      memo: "This is the first contact",
       createTime: new Date().toLocaleTimeString(),
     },
   ],
@@ -54,10 +56,31 @@ const contactSlice = createSlice({
 
       state.data.unshift(contact);
     },
+
+    removeContact: (state, action: PayloadAction<number>) => {
+      const id = action.payload;
+
+      state.data.splice(
+        state.data.findIndex((item) => item.id === id),
+        1
+      );
+    },
+
+    saveContact: (state, action: PayloadAction<ContactItem>) => {
+      const saveItem = action.payload;
+      const contactItem = state.data.find((item) => item.id === saveItem.id);
+
+      if (contactItem) {
+        contactItem.name = saveItem.name;
+        contactItem.phone = saveItem.phone;
+        contactItem.email = saveItem.email;
+        contactItem.memo = saveItem.memo;
+      }
+    },
   },
 });
 
-export const { addContact } = contactSlice.actions;
+export const { addContact, removeContact, saveContact } = contactSlice.actions;
 
 //2. contact 슬라이스 리듀서 밖으로 공유
 export default contactSlice.reducer;

@@ -12,6 +12,8 @@ export interface PhotoItem {
   title: string;
   description?: string;
   photoUrl: string;
+  fileType: string;
+  fileName: string;
   createTime: string;
 }
 // 얘도 외부에서 쓸수있도록 export 해줘야함
@@ -32,6 +34,8 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
+      fileType: "image/jpeg",
+      fileName: "SONO9438-3.jpg",
       createTime: new Date().toLocaleTimeString(),
     },
     {
@@ -41,6 +45,8 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
+      fileType: "image/jpeg",
+      fileName: "SONO9438-3.jpg",
       createTime: new Date().toLocaleTimeString(),
     },
     {
@@ -50,6 +56,8 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
+      fileType: "image/jpeg",
+      fileName: "SONO9438-3.jpg",
       createTime: new Date().toLocaleTimeString(),
     },
     {
@@ -59,6 +67,8 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
+      fileType: "image/jpeg",
+      fileName: "SONO9438-3.jpg",
       createTime: new Date().toLocaleTimeString(),
     },
     {
@@ -68,6 +78,8 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
+      fileType: "image/jpeg",
+      fileName: "SONO9438-3.jpg",
       createTime: new Date().toLocaleTimeString(),
     },
     {
@@ -77,6 +89,8 @@ const initialState: PhotoState = {
       title: "profile photo",
       description: "25ages moment",
       photoUrl: pic,
+      fileType: "image/jpeg",
+      fileName: "SONO9438-3.jpg",
       createTime: new Date().toLocaleTimeString(),
     },
   ],
@@ -89,10 +103,11 @@ const photoSlice = createSlice({
   name: "photo",
   initialState, // 변수명, 속성명이 똑같음
   reducers: {
-    // 14. reducer 함수 생성
+    // 14-1. reducer 함수 생성
     // state 와 action을 받는 리듀서
     //     action의 타입이  페이로드액션매개변수 <페이로드 타입>
     //PayloadAction<payload 타입>
+    // payload로 item 객체를 받음
     addPhoto: (state, action: PayloadAction<PhotoItem>) => {
       const photo = action.payload;
 
@@ -102,11 +117,39 @@ const photoSlice = createSlice({
       // 생성된 포토 카드를 데이터 앞에 쌓아줌
       state.data.unshift(photo);
     },
+    // payload 로 id 값을 받음
+    // action: PayloadAction<number>
+    // reducer 넘어오는 action payload있는 액션인데,
+    // payload 의 타입이 number 이다.
+    removePhoto: (state, action: PayloadAction<number>) => {
+      const id = action.payload;
+      // id에 해당하는 아이템의 index를 찾고 그 index로 splice 를 한다.
+      state.data.splice(
+        state.data.findIndex((item) => item.id === id),
+        1 // 한 건만 삭제를 한다
+      );
+    },
+
+    modifyPhoto: (state, action: PayloadAction<PhotoItem>) => {
+      // 생성해서 넘긴 객체
+      const modifyItem = action.payload;
+      // state에 있는 객체
+      const photoItem = state.data.find((item) => item.id === modifyItem.id);
+
+      // state에 있는 객체의 속성을 넘긴 객체의 속성으로 변경
+      if (photoItem) {
+        photoItem.title = modifyItem.title;
+        photoItem.description = modifyItem.description;
+        photoItem.photoUrl = modifyItem.photoUrl;
+        photoItem.fileName = modifyItem.fileName;
+        photoItem.fileType = modifyItem.fileType;
+      }
+    },
   },
 });
 
 // 14. action export
-export const { addPhoto } = photoSlice.actions;
+export const { addPhoto, removePhoto, modifyPhoto } = photoSlice.actions;
 
 // 2. 슬라이스 리듀서를 밖으로 공유함
 export default photoSlice.reducer;

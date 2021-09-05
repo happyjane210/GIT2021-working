@@ -60,11 +60,16 @@ import Profile from "./domain/profile/Profile";
 const Todo = lazy(() => import("./domain/todo/Todo"));
 const Feed = lazy(() => import("./domain/feed/Feed"));
 const Contact = lazy(() => import("./domain/contactLine/ContactLine"));
+
 const Photo = lazy(() => import("./domain/photo/Photo"));
 const PhotoCreate = lazy(() => import("./domain/photo/PhotoCreate"));
+const PhotoDetail = lazy(() => import("./domain/photo/PhotoDetail"));
+const PhotoEdit = lazy(() => import("./domain/photo/PhotoEdit"));
+
 const ContactMemo = lazy(() => import("./domain/contactMemo/ContactMemo"));
 const ContactCreate = lazy(() => import("./domain/contactMemo/ContactCreate"));
 const ContactDetail = lazy(() => import("./domain/contactMemo/ContactDetail"));
+const ContactEdit = lazy(() => import("./domain/contactMemo/ContactEdit"));
 // React == 컴포넌트 개발 라이브러리
 function App() {
   return (
@@ -78,7 +83,7 @@ function App() {
             <Profile />
           </header>
           <nav className="drawer-menu position-fixed bg-light shadow-sm">
-            <h4 className="ms-2 mt-2">MY WORKSPACE</h4>
+            <h4 className="ms-2 my-2">MY WORKSPACE</h4>
             <ul>
               <li>
                 <Link to="/">Home</Link>
@@ -127,7 +132,11 @@ function App() {
                 <Route path="/Feed" component={Feed} />
                 <Route path="/Contact" component={Contact} exact />
                 <Route path="/Photo" component={Photo} exact />
-                <Route path="/Photo/Create" component={PhotoCreate} />
+                <Route path="/Photo/Create" component={PhotoCreate} exact />
+                <Route path="/Photo/Detail/:id" component={PhotoDetail} />
+                <Route path="/Photo/Edit/:id" component={PhotoEdit} />
+                {/* 넘길때 id 매개 변수 받아서 감 */}
+
                 <Route path="/ContactMemo" component={ContactMemo} exact />
                 <Route
                   path="/ContactMemo/ContactCreate"
@@ -135,8 +144,12 @@ function App() {
                   exact
                 />
                 <Route
-                  path="/ContactMemo/ContactDetail"
+                  path="/ContactMemo/ContactDetail/:id"
                   component={ContactDetail}
+                />
+                <Route
+                  path="/ContactMemo/ContactEdit/:id"
+                  component={ContactEdit}
                 />
                 {/* exact :  정확이 path경로와 일치할 때만 로딩해라, 속성 : true|false  */}
                 {/* 정확히 "/Photo" 만 입력했을 때 포토 실행 */}

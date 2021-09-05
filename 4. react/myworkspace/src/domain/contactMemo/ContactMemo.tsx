@@ -45,7 +45,7 @@ const ContactMemo = () => {
               <tr
                 key={index}
                 onClick={() => {
-                  history.push("/ContactMemo/ContactDetail");
+                  history.push(`/ContactMemo/ContactDetail/${item.id}`);
                 }}
               >
                 <td>{item.id}</td>

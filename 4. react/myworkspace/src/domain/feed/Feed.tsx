@@ -180,6 +180,7 @@ const Feed = () => {
             ></div>
             <span className={`${style.username} `}>{item.username}</span>
           </div>
+
           <div className="card-body">
             {item.type &&
               (item.type?.includes("image") ? (

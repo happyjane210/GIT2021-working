@@ -23,6 +23,7 @@ const PhotoCreate = () => {
   // history 객체 가져오기
   const history = useHistory();
 
+  // 13. clickAdd 함수 만들기
   const clickAdd = () => {
     // console.log(titleInput.current?.value);
     // console.log(descrTxta.current?.value);
@@ -34,7 +35,7 @@ const PhotoCreate = () => {
       const imageFile = fileInput.current.files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        // 12. 새로 추가할 객체 생성
+        // 13. 새로 추가할 객체 생성
 
         const item: PhotoItem = {
           // 기존 데이터의 id 중에서 가장 큰 것 +1
@@ -46,6 +47,8 @@ const PhotoCreate = () => {
           title: titleInput.current ? titleInput.current.value : "",
           description: descrTxta.current?.value,
           photoUrl: reader.result ? reader.result.toString() : "",
+          fileType: imageFile.type,
+          fileName: imageFile.name,
           // 시스템 값 (작성일시, 수정일시, 수정한사람...)
           createTime: new Date().toLocaleTimeString(),
         };
@@ -67,7 +70,7 @@ const PhotoCreate = () => {
         // type: <photo />
         // payload: item
 
-        // 13. 디스패칭 dispatch(action함수)
+        // 14-2. 디스패칭 dispatch(action함수)
         dispatch(addPhoto(item));
         // 예시, 둘다 가능
         // dispatch({
