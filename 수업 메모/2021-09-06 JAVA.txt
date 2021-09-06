@@ -59,6 +59,9 @@ byte(1) < short(2) < int(4) < long(8) < float(4) < double(8)
 NaN, infinity 연산은 주의할것, 자바에서는 에러뜸
 
 
+char : 문자형, 한글자만 가질수있다 '' 단따옴표
+String : 문자참조형, 여러글자 쓸수있음, "" 반드시 쌍따옴표
+
 
 
 
