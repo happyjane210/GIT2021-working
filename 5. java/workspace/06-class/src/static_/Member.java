@@ -5,7 +5,7 @@ public class Member {
 	// static 필드
 	// Member 클래스 객체에서 모두 사용할 수 있는 변수 값
 	final static String SERVICE_NAME = "배달의 민족";   // 고정값
-	static int memberCount = 0;  // 변동값
+	static int memberCount = 0;  // 변동값, 회원수
 	
 	String name;
 	String id;

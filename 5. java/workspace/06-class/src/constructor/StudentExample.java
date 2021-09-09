@@ -34,7 +34,10 @@ public class StudentExample {
 		// 자바에서 객체를 생성하는 한가지 방법
 		// 생성자로 필드를 초기화하여 생성
 		Student s2 = new Student("smith", 30);   // student 객체가 만들어짐
-		System.out.println(s2.name + " " + s2.age);
+		s2.semester = 2;
+		s2.major = "경영";
+		System.out.println(s2.name + " " + s2.age + " " + s2.major + " " + s2.semester);
+
 		
 		// 다른 방법으로 객체 생성
 		Student s3 = new Student("이주은", 26, 3, "자바웹");   // student 객체가 만들어짐

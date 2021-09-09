@@ -21,6 +21,7 @@ public class Printer {
 		System.out.println(d);
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void println(String string) {
 		// TODO Auto-generated method stub
 		System.out.println(new Date().toLocaleString() + ":" +  string);

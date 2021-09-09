@@ -25,5 +25,10 @@ public class MemberExample {
 		Member.printNameWithServiceName(m2.name);
 		
 		System.out.println("È¸ÈÍ¼ö: " + Member.memberCount);
+		
+		
+		
+		singleton.Calculator calc = singleton.Calculator.getInstance();
+		System.out.println(calc.getAreaCircle(25));
 	}
 }

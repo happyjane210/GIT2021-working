@@ -22,7 +22,7 @@ public class Student {
 	// 매개변수가 없는 기본 생성자는 클래스에 내장됨
 	//생성자 (Constructor)
 	// 객체 생성시 초기화 역할 담당
-	Student() {
+	public Student() {
 		// 아무것도 처리안함
 		// 객체 생성만 함
 	}
@@ -37,10 +37,15 @@ public class Student {
 	}
 	// this: 만들어질 객체 필드에 접근
 	
-	Student(int age, String name) {
+	Student(String name, String major) {
 		
 	};
 	
+	Student(int age, String name) {
+		
+	}
+	
+	// 이름, 나이, 학기, 학과 받고 필드 초기화 및 객체 생성
 	Student(String name, int age, int semester, String major) {
 		this.name = name;
 		this.age = age;
