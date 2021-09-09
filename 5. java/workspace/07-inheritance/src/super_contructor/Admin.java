@@ -1,4 +1,4 @@
-package override;
+package super_contructor;
 
 // 사용자 중 관리자
 // 자식클래스 extends 부모클래스
@@ -10,7 +10,7 @@ public class Admin extends User {
 	
 	// 자식객체를 생성할 때 내부적으로 부모객체도 생성
 	
-	// public Admin () {
+	// public  () {
 	//   super();   // 기본 부모 생성자 호출
 	// }
 

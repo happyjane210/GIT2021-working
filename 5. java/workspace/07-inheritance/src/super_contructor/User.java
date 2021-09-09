@@ -1,4 +1,4 @@
-package override;
+package super_contructor;
 
 // »ç¿ëÀÚ
 
@@ -11,7 +11,7 @@ public class User {
 	
 	// @override
 	public void printUserInfo() {
-		System.out.println("\n" + name + ", " + phone);
+		System.out.println(name + ", " + phone);
 	}
 	
 	

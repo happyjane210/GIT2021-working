@@ -1,8 +1,9 @@
-package extends_keyword;
+package super_contructor;
 
-// 사용자 중에 멤버십이 있는 사용자
-public class Member extends User {
+// 사용자 중에 멤버십이 있는 사용자 (쿠팡 멤버십)
+public class Member extends User{
 	private int point;
+
 
 	public int getPoint() {
 		return point;
