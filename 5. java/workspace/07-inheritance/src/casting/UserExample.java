@@ -1,4 +1,4 @@
-package polymorphism;
+package casting;
 
 // 부모객체에 자식객체를 넣고 지정된 매서드를 사용할수있음
 
@@ -25,6 +25,7 @@ public class UserExample {
 		user.printUserInfo();
 		//추가 필드 및 메서드 사용, 부서번호
 		//user.setDeptNo("10001");
+		Admin admin2 = (Admin) user; 
 		
 		// 멤버십 멤버
 		user = new Member();
@@ -32,9 +33,29 @@ public class UserExample {
 		user.setId("kim");
 		user.setName("김쿠팡");
 		user.setPhone("010979789");
-		user.printUserInfo();
+		user.printUserInfo();   // 자식객체의 재정의 매서드가 호출됨
 		// 추가 필드 및 메서드 사용, 포인트
 		//user.setPoint(100000);
 		//user.printUserInfo();
+		
+		// 컴파일 타임에서는 오류가 발생하지 않지만 실행하면 오류남
+		// Admin  <- Member
+		// instanceof 연산을 통해 해당클래스와 객체가 맞는지 확인
+		// user객체가 Admin 타입의 인스턴스인지 확인
+		// 맞으면 
+		if(user instanceof Admin) {
+			Admin admin3 = (Admin) user;
+		}
+		// 모든클래스들의 최상위 부모가 object 클래스임
+		// extends 를 안쓰고 있지만 내부적으로 extends 되어있는 상태
+		Object object = new Object();
+		obj = user;
+		
+		// r강제로 형식 객체 변환을 할 때는 instance of 써야함
+		if(obj instanceof Admin) {
+			Admin admin4 = (Admin) obj;
+			System.out.println(admin4);
+		}
+		
 	}
 }

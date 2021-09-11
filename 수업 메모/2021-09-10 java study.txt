@@ -1,0 +1,27 @@
+
+
+Map : Key, value 로 저장
+
+탐색이 빠름
+
+
+그것을 담고있는 최상위 객체: 컬렉션
+
+Map method
+ . put( )
+ . get( )
+remove( ) 하나만 지움
+clear( ) 모두 지워버림
+isEmpty( )  -> 반환값 true, false
+containsKey( ) : 그 키를 갖고 있는지 불린으로 반환
+containsValue( ) : 그 벨류를 갖고있는지 불린으로 반환
+clone( ) 맵을 하나 더 만듬
+***   Set entrySet( ) 
+
+
+
+
+
+
+
+
