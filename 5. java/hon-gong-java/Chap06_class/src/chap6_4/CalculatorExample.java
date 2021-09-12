@@ -2,13 +2,13 @@ package chap6_4;
 
 import java.util.Scanner;
 
-public class CalcultorExercise {
+public class CalculatorExample {
 	public static void main(String[] args) {
 		Calculator calc = new Calculator();
 		Scanner scanner = new Scanner(System.in);
 		boolean run = true;
 
-
+		// 계산기를 키는부분
 		System.out.println("on/off로 전원을 제어하세요");
 		System.out.print("입력> ");		
 		
@@ -36,6 +36,7 @@ public class CalcultorExercise {
 			
 			String cal = scanner.next();
 			
+			// 계산 진행하는 부분
 			if(cal.equals("plus")) {
 				
 				System.out.println("숫자 x을(를) 입력하세요");
@@ -142,6 +143,7 @@ public class CalcultorExercise {
 //		System.out.println("result2: " + result2);
 		
 		//
+		// 코드의 중복이 많음
 		
 	}
 }
