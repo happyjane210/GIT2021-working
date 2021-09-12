@@ -1,22 +1,27 @@
 package exam;
 
 public class Account {
+	//filed
 	private String ano;
 	private String owner;
 	private int balance;
 	
-	public Account() {
+	//constructor
+	public Account(String ano ,String owner, int balance) {
 		this.ano = ano;
 		this.owner = owner;
 		this.balance = balance;
 	}
 	
+	
+
 	public String getAno() {
 		return ano;
 	}
 	
-	public void setAno(String ano) {
+	public String setAno(String ano) {
 		this.ano = ano;
+		return ano;
 	}
 	
 	
@@ -25,8 +30,9 @@ public class Account {
 		return owner;
 	}
 	
-	public void setOwner(String owner) {
+	public String setOwner(String owner) {
 		this.owner = owner;
+		return owner;
 	}
 	
 	
@@ -35,7 +41,24 @@ public class Account {
 		return balance;
 	}
 	
-	public void setBalance(int balance) {
-		this.balance = balance;
+	public int setBalance(int balance) {
+		return this.balance += balance;
+		
 	}
+	
+	
+	
+	// Method
+	public void withdraw(int withd) {
+		this.balance -= withd;
+	}
+
+
+
+
+
+
+
+	
+	
 }

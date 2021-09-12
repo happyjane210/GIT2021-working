@@ -12,6 +12,7 @@ public class MapExample {
 		
 		Scanner scanner = new Scanner(System.in);
 		
+		//   키       값
 		Map<Integer, Human> human = new HashMap<>();
 		
 		// 키값은 boolean, Integer, String 가능

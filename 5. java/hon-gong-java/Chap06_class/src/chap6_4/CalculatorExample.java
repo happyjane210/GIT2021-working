@@ -39,15 +39,9 @@ public class CalculatorExample {
 			// 계산 진행하는 부분
 			if(cal.equals("plus")) {
 				
-				System.out.println("숫자 x을(를) 입력하세요");
-				System.out.print("입력> ");
-				
-				int x = scanner.nextInt();
-				
-				System.out.println("숫자 y을(를) 입력하세요");
-				System.out.print("입력> ");
-				
-				int y = scanner.nextInt();
+				int x = calc.inputX(scanner);
+				int y = calc.inputY(scanner);
+
 
 				int resultP = calc.plus(x, y);
 				System.out.println("plus result: " + resultP);
@@ -58,15 +52,8 @@ public class CalculatorExample {
 				
 			} else if (cal.equals("minus")) {
 				
-				System.out.println("숫자 x을(를) 입력하세요");
-				System.out.print("입력> ");
-				
-				int x = scanner.nextInt();
-				
-				System.out.println("숫자 y을(를) 입력하세요");
-				System.out.print("입력> ");
-				
-				int y = scanner.nextInt();
+				int x = calc.inputX(scanner);
+				int y = calc.inputY(scanner);
 				
 				int resultM = calc.minus(x, y);
 				
@@ -78,15 +65,8 @@ public class CalculatorExample {
 				
 			} else if (cal.equals("divide")) {
 
-				System.out.println("숫자 x을(를) 입력하세요");
-				System.out.print("입력> ");
-				
-				int x = scanner.nextInt();
-				
-				System.out.println("숫자 y을(를) 입력하세요");
-				System.out.print("입력> ");
-				
-				int y = scanner.nextInt();
+				int x = calc.inputX(scanner);
+				int y = calc.inputY(scanner);
 				
 				double resultD = calc.divide(x, y);
 				
@@ -98,15 +78,8 @@ public class CalculatorExample {
 				
 			} else if (cal.equals("multy")) {
 				
-				System.out.println("숫자 x을(를) 입력하세요");
-				System.out.print("입력> ");
-				
-				int x = scanner.nextInt();
-				
-				System.out.println("숫자 y을(를) 입력하세요");
-				System.out.print("입력> ");
-				
-				int y = scanner.nextInt();
+				int x = calc.inputX(scanner);
+				int y = calc.inputY(scanner);
 				
 				int resultMU = calc.multy(x, y);
 				
@@ -146,4 +119,8 @@ public class CalculatorExample {
 		// 코드의 중복이 많음
 		
 	}
+
+	
+
+	
 }

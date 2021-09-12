@@ -1,5 +1,7 @@
 package chap6_4;
 
+import java.util.Scanner;
+
 public class Calculator {
 
 	// filed
@@ -34,4 +36,23 @@ public class Calculator {
 	void powerOff() {
 		System.out.println("전원을 끕니다.");
 	}
+	
+	
+	public int inputX(Scanner scanner) {
+		System.out.println("숫자 x을(를) 입력하세요");
+		System.out.print("입력> ");
+		
+		int x = scanner.nextInt();
+		return x;
+	}
+	
+	public int inputY(Scanner scanner) {
+		System.out.println("숫자 y을(를) 입력하세요");
+		System.out.println("입력> ");
+		
+		int y = scanner.nextInt();
+		return y;
+	}
+	
+	
 }
