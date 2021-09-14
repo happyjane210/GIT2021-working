@@ -1,0 +1,160 @@
+
+Spirng 환경 셋업
+
+// 단축키
+자동 import : Ctrl + 1 
+
+
+
+
+// Lombok
+
+// @Data
+  - 롬복 플러그인
+
+
+// 오른편에 Outline 꼭 나와있어야함
+
+
+// Contact
+얘네둘이 처리하는 방식이 다름
+redux 없이 inline-edit Contact
+  -> 수정모드는 구현하면 좋은데 없어도 됨.
+
+redux와 router로 페이지 이동 Contact
+  -> 수정모드 있어야함
+
+
+
+// Spring Boot App
+=> 여러가지 실행되고 있으면 오류뜸, 이전에 돌리던거 모두 정지 시켜야함
+
+
+
+// postman   -  서버 재시작하면 초기화됨
+ HTTP메서드 / 리소스URL  { 바디(옵션) }     <- 구조
+=> POST /todos {"memo" : " . . . "}
+=> GET todos
+
+
+// REST                     // REST API : 구현한 코드에 맞게 프로그램을 구현함
+1.  행위와 자원의 URL로 자원에 접근방법을 표현
+   -> 자원 ( 리소스, resource ) : * 객체, 메서드, * 테이블, 프로시저....
+           :  /todos   <- todos객체에 접근하겠다는뜻 , ( todo 목록에 접근하겠다고 이해하면됨 )
+   -> 행위( 메서드, method ) : HTTP Method ( GET, POST, PUT, DELTE )  기본적인 메서드
+           : 자원에 대해서 어떤 방식으로 접근하겠냐
+	:  GET  -> 리소스를 가져오겠다.  ( 추가했던 객체 들을 가져옴 )
+	:  POST  -> 리소스에 추가하겠다.  ( 하나의 객체 내용을 추가 )
+	:  PUT  -> 리소스를 수정하겠다.
+	:  PATCH  -> 리소스의 일부분을 수정하겠다.  
+	:  DELETE  -> 리소스의 일부분을 삭제하겠다.
+
+ex)
+POST / toods  :  todo목록에 todo1건을 추가하겠다.
+GET / todos  :  todo 목록을 가져오겠다
+
+2. Client-Server 구조이다.
+----------------------------------------
+// HTTP
+HTTP 프로토콜은 Request (요청) - Response (응답)  으로 이뤄져있음.
+    -  요청하는 쪽이 Client, 응답하는 쪽이 Server
+----------------------------------------
+// HTTP Request 요청 해부
+
+    -> 요청하는 쪽의 정보구조를 파악
+	이런 구조로 서버에 데이터를 보냄, line, header, body
+          - HTTP Request Line
+              - HTTP 메서드 / 요청URL / HTTP 버전
+	     -> GET(/POST) http://localhost:8080/todos HTTP/1.1
+          - HTTP Request Header
+              - Host : 응답을 받을 서버의 주소
+              - User-Agent : 요청을 보내는 클라이언트의 정보 ( OS, 브라우저 )
+              - Accept : 응답받을 데이터의 형식 ( 파일에 대한 MINE Type , image/png... * / * )  *는 모든파일
+          - HTTP Request Body (옵션, 필수아님)
+              - 보내는 데이터를 넣는 부분
+              - JSON ( Javascript Object Notation ) : JS객체 표기법
+              	ex)  { "memo" : "테스트메모" , "key" : "value" }
+              - application/x-222-form-urlencoded
+		ex)  memo=테스트메모&key=value    <- 예전에 쓰던 방식 & 로 결합
+
+	 - Spring Controller 에서 @RequestBody  어노테이션에 의해서 객체 자동 변환
+	       아래 과정
+Request 가 서버에 JSON 구조 데이터를 보냄  ->  Dispatcher Servlet 이 받음   -> HttpMessageConverter 가 객체구조로 변환  ->  Object (Todo 객체로 변환)
+{ "memo" : "테스트메모" }                          =>                                      =>                                                          => Todo ( memo="테스트메모" )
+       문자열을 객체구조로 변환
+
+======================================================================================
+// HTTP Response 해부
+   -> 응답을 주는 쪽의 정보구조를 파악
+	-  HTTP Response Line
+	     **** Status Code : 처리된 결과에 따른 코드값
+		2xx : 정상처리   ***
+		3xx : 컨텐츠 이동
+		4xx : 클라이언트 오류  **
+		5xx : 서버오류  ***
+		## 200-500 번대 오류는 거의 다 알아야함
+	-  HTTP Response Header
+	     ex)  Content-Type : 응답을 보내는 데이터의 형식  ex) application/json
+	-  HTTP Resonse Body
+	     ex)  {"id":2,"memo":"test메모입니다.","createdTime":1631544745442}
+	-  Spirng Controller 에서 @ResponseBody  어노테이션에 의해 객체  -> JSON 자동 변환
+	     ex)  Todo ( id=1, memo="테스트메모" . . .  )  ==자동변환==> { "id" : "1", . . . } 
+======================================================================================
+
+// REST API  :  REST 방식으로 접근 할 수 있는 인터페이스 제공하는 프로그램
+
+
+// 비즈니스 로직
+비즈니스 로직 ( Business logic )은 컴퓨터 프로그램에서 실세계의 규칙에 따라
+데이터를 생성, 표시, 저장, 변경하는 부분을 일컫는다.
+	=> 데이터 검증
+	=> 데이터  [저장/조회/삭제]  처리
+
+어노테이션 : 
+어노테이션은 사전적 의미로는 주석이라는 뜻이다. 
+자바에서 사용될 때의 어노테이션은 코드 사이에 주석처럼 쓰여서 특별한 의미, 
+기능을 수행하도록 하는 기술이다.
+ 즉, 프로그램에게 추가적인 정보를 제공해주는 
+메타데이터(meta data: 데이터를 위한 데이터)라고 볼 수 있다.
+
+
+*** 어휘 ***
+// 스프링 어노테이션을 잘알아야함
+// Lombok
+// Configuration
+// tomcat
+
+implementation  :   내장 tomcat 서버 기반의 백엔드 어플리케이션 실행할 수 있게함, 라이브러리에 자동으로 포함됨
+
+@SpringBootConfiguration : 의존성 주입을 할 수 있도록 함, 객체관리자(IoC 컨테이너를 생성)
+@EnableAutoConfiguration : 사용하는 의존성에 따라 라이브러리에 따라서 자동으로 환경을 구성함
+    => spring-boot-starter-web : embede Tomcat 웹서버를 구동함, 8080 포트 응답대기
+    => spring-boot-devtools :  코드를 고치면 서버를 다시 구동해줌
+@ComponentScan : 컴포넌트들을 검색하여 (main 클래스 동위/하위 패키지들에서) 싱글턴으로 객체생성을 함
+    => Spring Framework에서 컴포넌트(ex: @Controller) 어노테이션이 있는 클래스들을 검색함
+    => Spring Framework에서 싱글턴으로 객체를 생성함
+
+@Controller         두개 합친게
+@ResponseBody     + =    @RestController
+ * Controller
+    => HTTP 요청에 대한 응답을 처리할 수 있는 클래스
+ * RestController
+    => Controller인데 응답으로 데이터 객체만 처리함
+
+================과제==========================================
+1. Status Code : 처리된 결과에 따른 코드값
+		2xx : 정상처리   ***
+		3xx : 컨텐츠 이동
+		4xx : 클라이언트 오류  **
+		5xx : 서버오류  ***
+		### 200-500 번대 오류는 거의 다 알아야함
+
+400  Bad Request 
+클라이언트가 잘못된 형태의 데이터를 보내면 에러 메시지로 400  Bad Request를 띄움
+
+
+
+2. 연락처 관리
+filed : 이름, 전화번호, 이메일(필수아님)
+
+

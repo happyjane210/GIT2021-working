@@ -1,5 +1,7 @@
 package chpa13_1;
 
+import java.util.Objects;
+
 public class Student {
 	// filed
 	public int sno;
@@ -21,5 +23,12 @@ public class Student {
 		} else {
 			return false;
 		}
+	}
+	
+	
+	// 해쉬코드 재정의
+	@Override
+	public int hashCode() {
+		return Objects.hash(sno, name)
 	}
 }

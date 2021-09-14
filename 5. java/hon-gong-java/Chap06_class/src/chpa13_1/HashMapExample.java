@@ -33,7 +33,7 @@ public class HashMapExample {
 		// 가져올 키가 있을 때까지 while문 반복
 		while(keyIterator.hasNext()) {
 			String key = keyIterator.next();  // key를 하나 가져옴
-			Integer value = map.get(key);		// key 로 저장됨 int 객체(value)를 얻을 수 있음
+			Integer value = map.get(key);		// key 로 저장된 int 객체(value)를 얻을 수 있음
 			System.out.println("\t" + key + ":" + value);		// "\t" 들여쓰기
 		}
 		System.out.println();
