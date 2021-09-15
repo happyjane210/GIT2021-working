@@ -44,8 +44,8 @@ import { Suspense, lazy } from "react";
 import { Provider } from "react-redux"; // react 앱에 redux store를 제공함
 import { store } from "./store"; // redux store
 
-import Home from "./domain/Home";
-import Profile from "./domain/profile/Profile";
+import Home from "./features/Home";
+import Profile from "./features/profile/Profile";
 //import Navigation from "./Navigation";
 
 // SPA ( Single Page Application)
@@ -57,21 +57,25 @@ import Profile from "./domain/profile/Profile";
 
 //Lazy-Loading 처리
 // 컴포넌트를 방문하는 시점에 로딩함
-const Todo = lazy(() => import("./domain/todo/Todo"));
-const Feed = lazy(() => import("./domain/feed/Feed"));
-const Contact = lazy(() => import("./domain/contactLine/ContactLine"));
+const Todo = lazy(() => import("./features/todo/Todo"));
+const Feed = lazy(() => import("./features/feed/Feed"));
+const Contact = lazy(() => import("./features/contactLine/ContactLine"));
 
-const Photo = lazy(() => import("./domain/photo/Photo"));
-const PhotoCreate = lazy(() => import("./domain/photo/PhotoCreate"));
-const PhotoDetail = lazy(() => import("./domain/photo/PhotoDetail"));
-const PhotoEdit = lazy(() => import("./domain/photo/PhotoEdit"));
+const Photo = lazy(() => import("./features/photo/Photo"));
+const PhotoCreate = lazy(() => import("./features/photo/PhotoCreate"));
+const PhotoDetail = lazy(() => import("./features/photo/PhotoDetail"));
+const PhotoEdit = lazy(() => import("./features/photo/PhotoEdit"));
 
-const ContactMemo = lazy(() => import("./domain/contactMemo/ContactMemo"));
-const ContactCreate = lazy(() => import("./domain/contactMemo/ContactCreate"));
-const ContactDetail = lazy(() => import("./domain/contactMemo/ContactDetail"));
-const ContactEdit = lazy(() => import("./domain/contactMemo/ContactEdit"));
+const ContactMemo = lazy(() => import("./features/contactMemo/ContactMemo"));
+const ContactCreate = lazy(
+  () => import("./features/contactMemo/ContactCreate")
+);
+const ContactDetail = lazy(
+  () => import("./features/contactMemo/ContactDetail")
+);
+const ContactEdit = lazy(() => import("./features/contactMemo/ContactEdit"));
 
-const TodoLine = lazy(() => import("./domain/practice/Todo-origin"));
+const TodoLine = lazy(() => import("./features/todo/TodoInlineEdit"));
 // React == 컴포넌트 개발 라이브러리
 function App() {
   return (
@@ -96,6 +100,10 @@ function App() {
               </li>
 
               <li>
+                <Link to="/TodoLine">TodoLine</Link>
+              </li>
+
+              <li>
                 <Link to="/Feed">Feed</Link>
               </li>
               <li>
@@ -108,9 +116,6 @@ function App() {
 
               <li>
                 <Link to="/ContactMemo">Contact-Manager</Link>
-              </li>
-              <li>
-                <Link to="/TodoLine">TodoLine</Link>
               </li>
             </ul>
           </nav>
@@ -161,7 +166,7 @@ function App() {
                 {/* /Photo & /Photo/create  이름이 겹치는 부분이 있기때문에 내부 교집합을 exact로 바운더리 처리 해줌*/}
                 {/* <Route path="/Photo/Detail" component={PhotoDetail} /> */}
 
-                <Route path="TodoLine" component={TodoLine} />
+                <Route path="/TodoLine" component={TodoLine} exact />
               </Switch>
             </Suspense>
           </main>
