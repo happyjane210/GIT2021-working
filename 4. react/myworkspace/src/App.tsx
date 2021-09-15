@@ -70,6 +70,8 @@ const ContactMemo = lazy(() => import("./domain/contactMemo/ContactMemo"));
 const ContactCreate = lazy(() => import("./domain/contactMemo/ContactCreate"));
 const ContactDetail = lazy(() => import("./domain/contactMemo/ContactDetail"));
 const ContactEdit = lazy(() => import("./domain/contactMemo/ContactEdit"));
+
+const TodoLine = lazy(() => import("./domain/practice/Todo-origin"));
 // React == 컴포넌트 개발 라이브러리
 function App() {
   return (
@@ -107,6 +109,9 @@ function App() {
               <li>
                 <Link to="/ContactMemo">Contact-Manager</Link>
               </li>
+              <li>
+                <Link to="/TodoLine">TodoLine</Link>
+              </li>
             </ul>
           </nav>
           <main className="content-container">
@@ -128,7 +133,7 @@ function App() {
                 <Route path="/" component={Home} exact />
                 {/* exact 안써주면 밑에 애들도 "/" 까지만 읽고 홈컴포넌트 로딩함 
                      정확히 "/"만 입력했을때 홈컴포넌트 실행 */}
-                <Route path="/Todo" component={Todo} />
+                <Route path="/Todo" component={Todo} exact />
                 <Route path="/Feed" component={Feed} />
                 <Route path="/Contact" component={Contact} exact />
                 <Route path="/Photo" component={Photo} exact />
@@ -155,6 +160,8 @@ function App() {
                 {/* 정확히 "/Photo" 만 입력했을 때 포토 실행 */}
                 {/* /Photo & /Photo/create  이름이 겹치는 부분이 있기때문에 내부 교집합을 exact로 바운더리 처리 해줌*/}
                 {/* <Route path="/Photo/Detail" component={PhotoDetail} /> */}
+
+                <Route path="TodoLine" component={TodoLine} />
               </Switch>
             </Suspense>
           </main>

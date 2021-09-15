@@ -1,0 +1,27 @@
+2021-09-15 수 Spring 프론트, 벡엔드 연동
+
+
+
+////useEffect:특정조건일때 작동하는 코드를 작성할 수 있게 하는 React Hook
+  // React Hook: 클래스컴포넌트에서만 할 수 있었던작업을 함수형 컴포넌트에서 사용할 수 있게함
+  // -> 클래스 컴포넌트 state, 컴포넌트 라이프사이클을 처리할 수 있음stateful
+  // -> 함수형 컴포넌트 다른 컴포넌트로 부터 받은 prop으로 화면에 렌더링만 stateless
+
+  // useEffect(처리할 함수, [조건변수]):
+  // 의존변수가
+  useEffect(() => {
+    // 특정조건일때 처리되는 코드를 작성
+  }, []);
+
+
+
+
+// CORS ( Corss Origin Resource Sharing )
+  : 웹에 리소스 (자원) 공유에 대한 표준 정책
+  : 기본적으로 같은 프로토콜(https://www), 도메인, 포트 (3000)의 리소스만 공유가 가능함
+	ex) https://www.naver.com
+	React : http://localhost:3000
+	Spring : http://localhost:8080
+
+해결방법 : 서버측에 Access-Control-Allow-Origin 헤더를 넣어서 처리해줘야함
+              -> CORS정책에 예외로 처리할 주소를 처리해줘야함

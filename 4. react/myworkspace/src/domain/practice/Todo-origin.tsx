@@ -1,10 +1,10 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Alert from "../../components/Alert";
 
-interface TodoState {
+interface TodoItemState {
   id: number;
   memo: string | undefined;
-  createTime: number;
+  createdTime: number;
   modifyTime?: number;
   isEdit?: boolean; //수정모드인지 여부
 }
@@ -18,15 +18,44 @@ const getTimeString = (unixTime: number) => {
 };
 
 const Todo = () => {
-  const [todoList, setTodoList] = useState<TodoState[]>([
-    { id: 2, memo: "환영합니다🎉", createTime: new Date().getTime() },
-    { id: 1, memo: "안녕하세요😄", createTime: new Date().getTime() },
+  const [todoList, setTodoList] = useState<TodoItemState[]>([
+    { id: 2, memo: "환영합니다🎉", createdTime: new Date().getTime() },
+    { id: 1, memo: "안녕하세요😄", createdTime: new Date().getTime() },
   ]);
 
   const [isError, setIsError] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+
+  //useEffect:특정조건일때 작동하는 코드를 작성할 수 있게 하는 React Hook
+  // React Hook: 클래스컴포넌트에서만 할 수 있었던작업을 함수형 컴포넌트에서 사용할 수 있게함
+  // -> 클래스 컴포넌트 state, 컴포넌트 라이프사이클을 처리할 수 있음stateful
+  // -> 함수형 컴포넌트 다른 컴포넌트로 부터 받은 prop으로 화면에 렌더링만 stateless
+
+  // useEffect(처리할 함수, [조건변수]):
+  // 의존변수의 값/참조가 바뀔때마다 함수가 처리됨
+  // 예) props, state바뀌면 추가적인 처리
+
+  // 의존변수 목록이 빈배열 []
+  //  ->  컴포넌트가 처음 렌더링 되고 마운팅 된 후에 시점에 처리가 됨
+  useEffect(() => {
+    // 특정조건일때 처리되는 코드를 작성
+    // [] zjavhsjsxm fheld gndp qkfh cjflehlsms zhem
+
+    //백엔드에서 데이터를 받아옴
+    // ES6 style 로 Promise 기법을 이용해서 데이터를 조회해옴
+    fetch("http://localhost:8080/todos") //promise 객체
+      // fetch 함수를 실행하고 네트워크 통신이 완료되면 then에 있는 콜백함수(callback)를 실행함
+      // then에 있는 callback 함수의 매개변수로 처리 결과를 넘겨줌
+      // body가 json이면 js object(array)로 변환
+      .then((res) => res.json())
+      // 응답데이터를 js object로 변환이 완료되면 다음 then에 있는 함수(callback)를 실행함
+      // then에 있는 callback함수의 매개변수로 변환된 결과를 넘겨줌
+      .then((data: TodoItemState[]) => {
+        console.log(data);
+      });
+  }, []);
 
   const add = (e: React.KeyboardEvent<HTMLInputElement> | null) => {
     if (e) {
@@ -39,10 +68,10 @@ const Todo = () => {
       return;
     }
 
-    const todo: TodoState = {
+    const todo: TodoItemState = {
       id: todoList.length > 0 ? todoList[0].id + 1 : 1,
       memo: inputRef.current?.value,
-      createTime: new Date().getTime(),
+      createdTime: new Date().getTime(),
     };
 
     setTodoList([todo, ...todoList]);
@@ -128,7 +157,7 @@ const Todo = () => {
                 <span style={{ fontSize: "0.75rem" }}>
                   -{" "}
                   {getTimeString(
-                    item.modifyTime ? item.modifyTime : item.createTime
+                    item.modifyTime ? item.modifyTime : item.createdTime
                   )}
                 </span>
               )}
