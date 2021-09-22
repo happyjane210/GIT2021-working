@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import Alert from "../../components/Alert";
-import axios from "axios";
 
 import produce from "immer";
 
@@ -34,7 +33,8 @@ const Todo = () => {
 
   // 데이터 로딩처리 여부를 표시
   const [isLoading, setLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState(false);
+  // 빈값여부 state
+  const [isError, setIsError] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -85,7 +85,8 @@ const Todo = () => {
     fetchData();
   }, []);
 
-  const add = (e: React.KeyboardEvent<HTMLInputElement> | null) => {
+  // 1. await키워드 쓰기 위해서 await를 쓰는 함수가 async 메서드로 선언되어야함
+  const add = async (e: React.KeyboardEvent<HTMLInputElement> | null) => {
     if (e) {
       if (e.code !== "Enter") return;
     }
@@ -96,11 +97,24 @@ const Todo = () => {
       return;
     }
 
+    //-------------백엔드 연동부분------------------------------
+    //                              더할 객체를 싸서 보내줌
+    const result = await api.add({ memo: inputRef.current?.value });
+    console.log(result);
+
+    //------------- state 변경 부분-----서버에서 넘어온 데이터로수정------------
     const todo: TodoItemState = {
-      id: todoList.length > 0 ? todoList[0].id + 1 : 1,
-      memo: inputRef.current?.value,
-      createdTime: new Date().getTime(),
+      id: result.data.id, // optional chaning
+      memo: result.data.memo,
+      createdTime: result.data.createdTime,
     };
+
+    // 프론트에서 사용하는 id 값
+    // const todo: TodoItemState = {
+    //   id: todoList.length > 0 ? todoList[0].id + 1 : 1,
+    //   memo: inputRef.current?.value,
+    //   createdTime: new Date().getTime(),
+    // };
 
     setTodoList(
       produce((state) => {
@@ -113,10 +127,16 @@ const Todo = () => {
     setIsError(false);
   };
 
-  const del = (id: number, index: number) => {
+  const del = async (id: number, index: number) => {
+    console.log(id);
+
     // 불변성 때문에 splice를사용할 수 없음
     // 주로 filter 함수를 사용
     // filter 함수로 헤당 id를 제외하고 새로운 배열을 리턴함
+    // -------------백엔드 연동부분------------------------------
+    const result = await api.remove(id);
+    console.log(result);
+    //-------------- state 변경 부분-----------------------------
     setTodoList(
       produce((state) => {
         state.splice(index, 1);
@@ -135,25 +155,44 @@ const Todo = () => {
     );
   };
 
-  const save = (id: number, index: number) => {
+  const save = async (id: number, index: number) => {
     console.log(ulRef.current);
     console.log(index);
 
     const input = ulRef.current
-      ?.querySelectorAll("il")
+      ?.querySelectorAll("li")
       [index].querySelector("input");
     console.log(input);
 
+    // -------------백엔드 연동부분------------------------------
+    // 수정차리 요청
+    // input이 없으면 그냥 반환,
+    if (!input) return;
+    const result = await api.modify(id, { memo: input.value });
+
+    //--------------수정된 state 변경 부분----------백엔드 수정 처리---------
     setTodoList(
       produce((state) => {
         const item = state.find((item) => item.id === id);
         if (item) {
-          item.memo = input?.value;
-          item.modifyTime = new Date().getTime();
-          item.isEdit = false;
+          item.memo = result.data.memo; // 수정된 부분
+          item.modifyTime = new Date().getTime(); // 이건 그냥 놔둬
+          item.isEdit = false; // 화면에 수정모드, 뷰모드제어용 (클라이언트 처리)
         }
       })
     );
+
+    //---- 프론트 엔드 수정 처리
+    // setTodoList(
+    //   produce((state) => {
+    //     const item = state.find((item) => item.id === id);
+    //     if (item) {
+    //       item.memo = input?.value;
+    //       item.modifyTime = new Date().getTime();
+    //       item.isEdit = false;
+    //     }
+    //   })
+    // );
   };
 
   return (
@@ -198,7 +237,7 @@ const Todo = () => {
         />
       )}
 
-      <ul className="list-group list-group-flush mt-3">
+      <ul className="list-group list-group-flush mt-3" ref={ulRef}>
         {/* 로딩중 처리 표시 */}
         {isLoading && (
           <li className="list-group-item text-center">
@@ -215,9 +254,11 @@ const Todo = () => {
           <li className="list-group-item">데이터가 없어요😓</li>
         )}
 
+        {/* 데이터와 UI요소 바인딩 */}
         {todoList.map((item, index) => (
           <li className="list-group-item d-flex" key={item.id}>
             <div className="w-100">
+              {/* 보기모드일때 보이는 내용 */}
               {!item.isEdit && <span className="me-1">{item.memo}</span>}
               {!item.isEdit && (
                 <span style={{ fontSize: "0.75rem" }}>

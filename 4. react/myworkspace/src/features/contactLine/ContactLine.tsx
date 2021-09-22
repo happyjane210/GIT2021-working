@@ -1,6 +1,9 @@
 import produce from "immer";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Alert from "../../components/Alert";
+import { ContactItem } from "../contactMemo/contactSlice";
+
+import api from "./contactApi";
 
 interface ContactLineState {
   id: number;
@@ -14,7 +17,9 @@ const Contact = () => {
   const [conList, setConList] = useState<ContactLineState[]>([
     { id: 1, name: "Name", phone: "010-1234-5678", email: "example@123.com" },
   ]);
-  const [isError, setIsError] = useState(false);
+
+  const [isError, setIsError] = useState<boolean>(false);
+  //const [isEmpty, setIsEmpty] = useState<boolean>(false);
 
   const inputRef1 = useRef<HTMLInputElement>(null);
   const inputRef2 = useRef<HTMLInputElement>(null);
@@ -27,7 +32,27 @@ const Contact = () => {
   // 다 알려줬음 쌤이 알려주면 독푸는 거라 그래서 ㄷㄷ;
   const formRef = useRef<HTMLFormElement>(null);
 
-  const add = (e: React.KeyboardEvent<HTMLInputElement> | null) => {
+  const fetchData = async () => {
+    // 응답 데이터 타입 자동으로 결정
+    const res = await api.fetch();
+
+    // axios에서 응답받은 데이터는 data 속성에 들어가 있음
+    // 서버로부터 받은 데이터를 state 객체로 변환함
+    const contacts = res.data.map((item) => ({
+      id: item.id,
+      name: item.name,
+      phone: item.phone,
+      email: item.email,
+    })) as unknown as ContactLineState[];
+
+    setConList(contacts);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const add = async (e: React.KeyboardEvent<HTMLInputElement> | null) => {
     if (e) {
       if (e.code !== "Enter") return;
     }
@@ -41,12 +66,29 @@ const Contact = () => {
       return;
     }
 
-    const con: ContactLineState = {
-      id: conList.length > 0 ? conList[0].id + 1 : 1,
+    //-------------백엔드 연동부분------------------------------
+    const result = await api.add({
       name: inputRef1.current?.value,
       phone: inputRef2.current?.value,
       email: inputRef3.current?.value,
+    });
+    console.log(result);
+
+    //------------- state 변경 부분-----서버에서 넘어온 데이터로수정------------
+    const con: ContactLineState = {
+      id: result.data.id,
+      name: result.data.name,
+      phone: result.data.phone,
+      email: result.data.email,
     };
+
+    // 프론트 Add
+    // const con: ContactLineState = {
+    //   id: conList.length > 0 ? conList[0].id + 1 : 1,
+    //   name: inputRef1.current?.value,
+    //   phone: inputRef2.current?.value,
+    //   email: inputRef3.current?.value,
+    // };
 
     setConList([con, ...conList]);
 
@@ -55,8 +97,22 @@ const Contact = () => {
     setIsError(false);
   };
 
-  const del = (id: number) => {
-    setConList(conList.filter((item) => item.id !== id));
+  const del = async (id: number, index: number) => {
+    console.log(id);
+
+    // -------------백엔드 연동부분------------------------------
+    const result = await api.remove(id);
+    console.log(result);
+
+    //-------------- state 변경 부분-----------------------------
+    setConList(
+      produce((state) => {
+        state.splice(index, 1);
+      })
+    );
+
+    // list 처리 방식, 해당하는 id 만 제외하고 다시 만든다
+    //setConList(conList.filter((item) => item.id !== id));
   };
 
   const edit = (id: number, isEdit: boolean) => {
@@ -70,19 +126,27 @@ const Contact = () => {
     );
   };
 
-  const save = (id: number, index: number) => {
+  const save = async (id: number, index: number) => {
     //tbody에서 몇번째 tr인지 명시를 해줘야함
     const tr = tbodyRef.current?.querySelectorAll("tr")[index];
     const inputName = tr?.querySelectorAll("input"); //NodeList
     const inputArr = Array.prototype.slice.call(inputName); //NodeList ->Array
 
+    // -------------백엔드 연동부분------------------------------
+    const result = await api.modify(id, {
+      name: inputArr[0].value,
+      phone: inputArr[1].value,
+      email: inputArr[2].value,
+    });
+
+    //--------------수정된 state 변경 부분----------백엔드 수정 처리---------
     setConList(
       produce((state) => {
         const item = state.find((item) => item.id === id);
         if (item) {
-          item.name = inputArr[0].value;
-          item.phone = inputArr[1].value;
-          item.email = inputArr[2].value;
+          item.name = result.data.name;
+          item.phone = result.data.phone;
+          item.email = result.data.email;
           item.isEdit = false;
         }
       })
@@ -164,6 +228,12 @@ const Contact = () => {
             </tr>
           </thead>
           <tbody ref={tbodyRef}>
+            {conList.length == 0 && (
+              <tr className="text-center">
+                <td colSpan={5}>⛔ NOT FOUND DATA 4️⃣0️⃣4️⃣ ⛔</td>
+              </tr>
+            )}
+
             {conList.map((item, index) => (
               <>
                 {!item.isEdit && (
@@ -186,7 +256,7 @@ const Contact = () => {
                       <button
                         className="btn btn-outline-secondary btn-sm"
                         onClick={() => {
-                          del(item.id);
+                          del(item.id, index);
                         }}
                       >
                         삭제
