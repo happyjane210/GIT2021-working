@@ -1,0 +1,28 @@
+2021-09-16 목
+
+
+// 백엔드와 연동할 때
+1. 백엔드 연동 ok되면,
+2. 
+
+
+// 백엔드에서 응답 데이터 줄때
+marshalling : 프로그램객체 (메모리)구조에서 -> 데이터 전송용 구조
+	: JavaObject (class) -> JSON String
+^
+HTTP Response Body
+v
+
+// 프론트엔드에서 응답 데이터를 받을 때
+un-marshalling : 데이터 전송용 구조 -> 프로그램객체구조
+	: JSON String -> javascript object (Array)
+
+
+
+
+try {
+  ... 코드 실행 부분
+} catche (e) {
+  // 코드처리 중 에러가 발생하면 실행되는 것
+  // e라는 객체는 어떤 에러인지, 에러메시지가 무언인지를 담고있음
+}
