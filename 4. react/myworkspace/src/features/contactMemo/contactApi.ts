@@ -1,16 +1,20 @@
 import axios from "axios";
 
-interface ContactItemResponse {
+export interface ContactItemResponse {
   id: number;
   name: string;
   phone: string;
   email: string;
+  memo: string | undefined;
+  createdTime: number;
 }
 
-interface ContactItemReqeust {
+export interface ContactItemReqeust {
   name: string | undefined;
   phone: string | undefined;
   email: string | undefined;
+  memo: string | undefined;
+  createdTime: number;
 }
 
 // 서버하고 데이터 연동하는 api처리 목록을 별도의 객체로 작성

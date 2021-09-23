@@ -1,8 +1,9 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
-import { addPhoto, PhotoItem } from "./photoSlice";
+import { requestAddPhoto } from "./photoSaga";
+import { PhotoItem } from "./photoSlice";
 
 const PhotoCreate = () => {
   // 11. 입력폼에 ref 객체 연결
@@ -15,7 +16,7 @@ const PhotoCreate = () => {
   // 포토 데이터 배열 가져오기
   const photoData = useSelector((state: RootState) => state.photo.data);
   // 프로필 정보 가져오기
-  const profile = useSelector((state: RootState) => state.profile);
+  //const profile = useSelector((state: RootState) => state.profile);
 
   // dispatch 함수 만들기
   const dispatch = useDispatch<AppDispatch>();
@@ -41,8 +42,8 @@ const PhotoCreate = () => {
           // 기존 데이터의 id 중에서 가장 큰 것 +1
           id: photoData.length ? photoData[0].id + 1 : 1,
           // 프로필 정보
-          profileUrl: profile.image ? profile.image : "",
-          username: profile.username ? profile.username : "",
+          // profileUrl: profile.image ? profile.image : "",
+          // username: profile.username ? profile.username : "",
           // 입력 정보
           title: titleInput.current ? titleInput.current.value : "",
           description: descrTxta.current?.value,
@@ -50,9 +51,9 @@ const PhotoCreate = () => {
           fileType: imageFile.type,
           fileName: imageFile.name,
           // 시스템 값 (작성일시, 수정일시, 수정한사람...)
-          createTime: new Date().toLocaleTimeString(),
+          createdTime: new Date().getTime(),
         };
-        console.log(item);
+        //console.log(item);
 
         // *** 디스패칭
         // 1. addPhoto 함수에서 Action 객체를 생성함
@@ -71,12 +72,15 @@ const PhotoCreate = () => {
         // payload: item
 
         // 14-2. 디스패칭 dispatch(action함수)
-        dispatch(addPhoto(item));
+        //dispatch(addPhoto(item));
         // 예시, 둘다 가능
         // dispatch({
         //   type: "photo/addPhoto",
         //   payload: item,
         // });
+
+        // saga action 으로 대체  -- 1)
+        dispatch(requestAddPhoto(item));
 
         history.push("/photo");
       };

@@ -1,6 +1,8 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store";
+import { requestFetchContacts } from "./contactSaga";
 
 const ContactMemo = () => {
   //7. 컴포넌트에 selector지정
@@ -9,21 +11,43 @@ const ContactMemo = () => {
   const contact = useSelector((state: RootState) => state.contact);
   //   const contact = useSelector((state: RootState) => state.contact);
   const history = useHistory();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    console.log(dispatch);
+    console.log(contact.isFetched);
+
+    // 데이터 fetch가 안되어있으면 데이터를 받아옴
+    if (!contact.isFetched) {
+      // 서버에서 데이터를 받아오는 action 을 디스패치함
+      dispatch(requestFetchContacts());
+    }
+  }, [dispatch, contact.isFetched]);
 
   return (
     <div style={{ width: "60vw" }} className="mx-auto">
       <h2 className="text-center my-5">
-        <b>CONTACT MANAGER</b>
+        <b>📞CONTACT MANAGER📞</b>
       </h2>
       {/* 9. 추가 버튼 -> 추가화면 */}
       <div className="d-flex justify-content-end my-2">
+        <button
+          className="btn btn-secondary me-2"
+          onClick={() => {
+            dispatch(requestFetchContacts());
+          }}
+        >
+          REFRESH
+          <i className="bi bi-arrow-counterclockwise ms-2"></i>
+        </button>
+
         <button
           className="btn btn-primary"
           onClick={() => {
             history.push("/ContactMemo/ContactCreate");
           }}
         >
-          추가
+          ADD
           <i className="bi bi-plus ms-2"></i>
         </button>
       </div>
@@ -39,6 +63,11 @@ const ContactMemo = () => {
           </tr>
         </thead>
         <tbody>
+          {contact.data.length == 0 && (
+            <tr className="text-center">
+              <td colSpan={5}>⛔ NOT FOUND DATA 4️⃣0️⃣4️⃣ ⛔</td>
+            </tr>
+          )}
           {/* 8. state 데이터 배열을 map 함수로 출력 */}
           {contact.data.map((item, index) => (
             <>
@@ -52,7 +81,7 @@ const ContactMemo = () => {
                 <td>{item.name}</td>
                 <td>{item.phone}</td>
                 <td>{item.email}</td>
-                <td>{item.createTime}</td>
+                <td>{item.createdTime}</td>
               </tr>
             </>
           ))}

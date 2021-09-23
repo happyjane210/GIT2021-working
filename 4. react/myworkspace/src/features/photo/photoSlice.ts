@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { pic } from "./index";
+//import { pic } from "./index";
 
 // 4. 필요한 데이터 구조를 interface 로 만듬
 // - 목록조회: 4열 그리드화면으로 목록조회(프로필, 타이틀, 이미지)
@@ -7,14 +7,14 @@ import { pic } from "./index";
 
 export interface PhotoItem {
   id: number;
-  profileUrl: string;
-  username: string;
   title: string;
   description?: string;
   photoUrl: string;
   fileType: string;
   fileName: string;
-  createTime: string;
+  createdTime: number;
+  // profileUrl: string;
+  // username: string;
 }
 // 얘도 외부에서 쓸수있도록 export 해줘야함
 
@@ -27,72 +27,17 @@ interface PhotoState {
 // 6. photo state를 목록 -> array 로 변환
 const initialState: PhotoState = {
   data: [
-    {
-      id: 6, //id 는 숫자이거나 증가되는 문자열
-      profileUrl: pic,
-      username: "JANE LEE",
-      title: "profile photo",
-      description: "25ages moment",
-      photoUrl: pic,
-      fileType: "image/jpeg",
-      fileName: "SONO9438-3.jpg",
-      createTime: new Date().toLocaleTimeString(),
-    },
-    {
-      id: 5,
-      profileUrl: pic,
-      username: "JANE LEE",
-      title: "profile photo",
-      description: "25ages moment",
-      photoUrl: pic,
-      fileType: "image/jpeg",
-      fileName: "SONO9438-3.jpg",
-      createTime: new Date().toLocaleTimeString(),
-    },
-    {
-      id: 4,
-      profileUrl: pic,
-      username: "JANE LEE",
-      title: "profile photo",
-      description: "25ages moment",
-      photoUrl: pic,
-      fileType: "image/jpeg",
-      fileName: "SONO9438-3.jpg",
-      createTime: new Date().toLocaleTimeString(),
-    },
-    {
-      id: 3,
-      profileUrl: pic,
-      username: "JANE LEE",
-      title: "profile photo",
-      description: "25ages moment",
-      photoUrl: pic,
-      fileType: "image/jpeg",
-      fileName: "SONO9438-3.jpg",
-      createTime: new Date().toLocaleTimeString(),
-    },
-    {
-      id: 2,
-      profileUrl: pic,
-      username: "JANE LEE",
-      title: "profile photo",
-      description: "25ages moment",
-      photoUrl: pic,
-      fileType: "image/jpeg",
-      fileName: "SONO9438-3.jpg",
-      createTime: new Date().toLocaleTimeString(),
-    },
-    {
-      id: 1,
-      profileUrl: pic,
-      username: "JANE LEE",
-      title: "profile photo",
-      description: "25ages moment",
-      photoUrl: pic,
-      fileType: "image/jpeg",
-      fileName: "SONO9438-3.jpg",
-      createTime: new Date().toLocaleTimeString(),
-    },
+    // {
+    //   id: 1,
+    //   title: "profile photo",
+    //   // profileUrl: pic,
+    //   // username: "JANE LEE",
+    //   description: "25ages moment",
+    //   photoUrl: pic,
+    //   fileType: "image/jpeg",
+    //   fileName: "SONO9438-3.jpg",
+    //   createdTime: new Date().getTime(),
+    // },
   ],
   isFetched: false,
 };
@@ -145,11 +90,21 @@ const photoSlice = createSlice({
         photoItem.fileType = modifyItem.fileType;
       }
     },
+
+    // 5)
+    // payload값으로 state를 초기화하는 reducer 필요함
+    initialPhoto: (state, action: PayloadAction<PhotoItem[]>) => {
+      const photos = action.payload;
+      // 백엔드에서 받아온 데이터  6)
+      state.data = photos;
+      state.isFetched = false;
+    },
   },
 });
 
 // 14. action export
-export const { addPhoto, removePhoto, modifyPhoto } = photoSlice.actions;
+export const { addPhoto, removePhoto, modifyPhoto, initialPhoto } =
+  photoSlice.actions;
 
 // 2. 슬라이스 리듀서를 밖으로 공유함
 export default photoSlice.reducer;

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import Contact from "../contactLine/ContactLine";
 
 // 4. 필요한 데이터 구조 interface로 만들기
 // 외부에서 쓸수있도록 export
@@ -9,7 +8,7 @@ export interface ContactItem {
   phone: string | undefined;
   email: string | undefined;
   memo?: string;
-  createTime: string;
+  createdTime: number;
 }
 
 // 5. ContactState선언
@@ -21,22 +20,22 @@ interface ContactState {
 // 6. contact state 를 목록 -> array 로 변환
 const initialState: ContactState = {
   data: [
-    {
-      id: 2,
-      name: "홍길동",
-      phone: "02-1588-1588",
-      email: "honggildong@123.com",
-      memo: "This is the second contact",
-      createTime: new Date().toLocaleTimeString(),
-    },
-    {
-      id: 1,
-      name: "Name",
-      phone: "010-0000-0000",
-      email: "example@123.com",
-      memo: "This is the first contact",
-      createTime: new Date().toLocaleTimeString(),
-    },
+    // {
+    //   id: 2,
+    //   name: "홍길동",
+    //   phone: "02-1588-1588",
+    //   email: "honggildong@123.com",
+    //   memo: "This is the second contact",
+    //   createdTime: new Date().getTime(),
+    // },
+    // {
+    //   id: 1,
+    //   name: "Name",
+    //   phone: "010-0000-0000",
+    //   email: "example@123.com",
+    //   memo: "This is the first contact",
+    //   createdTime: new Date().getTime(),
+    // },
   ],
   isFetched: false,
 };
@@ -77,10 +76,20 @@ const contactSlice = createSlice({
         contactItem.memo = saveItem.memo;
       }
     },
+
+    // payload 값으로 state를 초기화하는 reducer 필요
+    initialContact: (state, action: PayloadAction<ContactItem[]>) => {
+      const contacts = action.payload;
+
+      // 백엔드에서 받아온 데이터
+      state.data = contacts;
+      state.isFetched = false;
+    },
   },
 });
 
-export const { addContact, removeContact, saveContact } = contactSlice.actions;
+export const { addContact, removeContact, saveContact, initialContact } =
+  contactSlice.actions;
 
 //2. contact 슬라이스 리듀서 밖으로 공유
 export default contactSlice.reducer;

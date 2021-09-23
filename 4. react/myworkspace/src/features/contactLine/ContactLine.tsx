@@ -1,21 +1,27 @@
 import produce from "immer";
 import React, { useEffect, useRef, useState } from "react";
 import Alert from "../../components/Alert";
-import { ContactItem } from "../contactMemo/contactSlice";
 
-import api from "./contactApi";
+import api from "./contactLineApi";
 
-interface ContactLineState {
+export interface ContactLineState {
   id: number;
   name: string | undefined;
   phone: string | undefined;
   email: string | undefined;
+  createdTime: number;
   isEdit?: boolean; // 수정모드인지
 }
 
 const Contact = () => {
   const [conList, setConList] = useState<ContactLineState[]>([
-    { id: 1, name: "Name", phone: "010-1234-5678", email: "example@123.com" },
+    {
+      id: 1,
+      name: "Name",
+      phone: "010-1234-5678",
+      createdTime: new Date().getTime(),
+      email: "example@123.com",
+    },
   ]);
 
   const [isError, setIsError] = useState<boolean>(false);
@@ -43,6 +49,7 @@ const Contact = () => {
       name: item.name,
       phone: item.phone,
       email: item.email,
+      createdTime: item.createdTime,
     })) as unknown as ContactLineState[];
 
     setConList(contacts);
@@ -71,6 +78,7 @@ const Contact = () => {
       name: inputRef1.current?.value,
       phone: inputRef2.current?.value,
       email: inputRef3.current?.value,
+      createdTime: new Date().getTime(),
     });
     console.log(result);
 
@@ -80,6 +88,7 @@ const Contact = () => {
       name: result.data.name,
       phone: result.data.phone,
       email: result.data.email,
+      createdTime: result.data.createdTime,
     };
 
     // 프론트 Add
@@ -137,6 +146,7 @@ const Contact = () => {
       name: inputArr[0].value,
       phone: inputArr[1].value,
       email: inputArr[2].value,
+      createdTime: new Date().getTime(),
     });
 
     //--------------수정된 state 변경 부분----------백엔드 수정 처리---------
@@ -217,13 +227,14 @@ const Contact = () => {
           />
         )}
 
-        <table className="table table-striped my-5">
+        <table className="table table my-5">
           <thead>
             <tr>
               <th>No.</th>
               <th>NAME</th>
               <th>PHONE</th>
               <th>E-MAIL</th>
+              <th>TIME</th>
               <th>FUNCTION</th>
             </tr>
           </thead>
@@ -244,6 +255,7 @@ const Contact = () => {
                     <td>{item.name}</td>
                     <td>{item.phone}</td>
                     <td>{item.email}</td>
+                    <td>{item.createdTime}</td>
                     <td>
                       <button
                         className="btn btn-outline-success btn-sm me-md-1"
@@ -310,6 +322,7 @@ const Contact = () => {
                         }}
                       />
                     </td>
+                    <td>{item.createdTime}</td>
                     <td>
                       <button
                         className="btn btn-outline-success btn-sm me-md-1"

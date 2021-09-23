@@ -2,7 +2,8 @@ import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { AppDispatch, RootState } from "../../store";
-import { addContact, ContactItem } from "./contactSlice";
+import { ContactItem } from "./contactSlice";
+import { requestAddContact } from "./contactSaga";
 import Alert from "../../components/Alert";
 
 const ContactCreate = () => {
@@ -41,11 +42,14 @@ const ContactCreate = () => {
       phone: phoneInput.current?.value,
       email: emailInput.current?.value,
       memo: memoInput.current?.value,
-      createTime: new Date().toLocaleTimeString(),
+      createdTime: new Date().getTime(),
     };
+
     console.log(item);
+
     // 14. 디스패칭 dispatch(action함수)
-    dispatch(addContact(item));
+    dispatch(requestAddContact(item));
+
     history.push("/ContactMemo");
   };
 

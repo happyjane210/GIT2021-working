@@ -1,22 +1,51 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { RootState } from "../../store";
-import style from "../profile/Profile.module.scss";
+import { AppDispatch, RootState } from "../../store";
+import { requestFetchPhotos } from "./photoSaga";
+//import style from "../profile/Profile.module.scss";
 
 const Photo = () => {
-  const profile = useSelector((state: RootState) => state.profile);
+  //const profile = useSelector((state: RootState) => state.profile);
   //7. 컴포넌트에 selector 지정
   // state 에 photo state를 가지고 오겠다
   const photo = useSelector((state: RootState) => state.photo);
   const history = useHistory();
+  const dispatch = useDispatch<AppDispatch>();
+
+  // 컴포넌트가 마운팅되는 시점에 실행
+  // dispatch객체가 생성되고,
+  // photo.isFetched를 가져올때와 바뀔때마다 실행됨
+  // dispatch 객체는 위에서 생성된 후 바뀌지 않으므로
+  // dispatch 객체에 따른 effect가 발생하지는 않음
+  useEffect(() => {
+    console.log(dispatch);
+    console.log(photo.isFetched);
+
+    // 데이터 fetch가 안되어있으면 데이터를 받아옴
+    if (!photo.isFetched) {
+      // 서버에서 데이터를 받아오는 action을 디스패치함
+      dispatch(requestFetchPhotos()); // 1)
+    }
+  }, [dispatch, photo.isFetched]);
 
   return (
     <div>
       <h2 className="text-center my-5">
         <b>PHOTOS</b>
       </h2>
-      {/* 9. 추가버튼 -> 추가화면 */}
+
+      {/* 리프레쉬 버튼 & 추가버튼 -> 추가화면*/}
       <div className="d-flex justify-content-end my-2">
+        <button
+          className="btn btn-secondary me-2"
+          onClick={() => {
+            dispatch(requestFetchPhotos());
+          }}
+        >
+          REFRESH
+          <i className="bi bi-arrow-counterclockwise ms-2"></i>
+        </button>
         <button
           className="btn btn-primary"
           onClick={() => {
@@ -46,13 +75,14 @@ const Photo = () => {
               cursor: "pointer",
             }}
           >
-            <div className="d-flex card-header">
+            {/* 프로필 부분 */}
+            {/* <div className="d-flex card-header">
               <div
                 className={`${style.thumb} me-1`}
                 style={{ backgroundImage: `url(${item.profileUrl})` }}
               ></div>
               <span className={`${style.username} `}>{item.username}</span>
-            </div>
+            </div> */}
 
             <img
               src={item.photoUrl}
@@ -67,7 +97,7 @@ const Photo = () => {
 
             <div className="card-body">
               <h5 className="card-title">{item.title}</h5>
-              <p>{item.createTime}</p>
+              <p>{item.createdTime}</p>
             </div>
           </div>
         ))}
