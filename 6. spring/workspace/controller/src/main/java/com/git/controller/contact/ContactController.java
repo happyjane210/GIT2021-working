@@ -44,7 +44,8 @@ public class ContactController {
 	public Contact addContact(@RequestBody Contact contact, HttpServletResponse res) {
 		// 데이터 검증 로직
 		if (contact.getName() == null || contact.getName().isEmpty() || contact.getPhone() == null
-				|| contact.getPhone().isEmpty() || contact.getEmail() == null || contact.getEmail().isEmpty()) {
+				|| contact.getPhone().isEmpty() || contact.getEmail() == null || contact.getEmail().isEmpty()
+				|| contact.getMemo() == null || contact.getMemo().isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
@@ -59,6 +60,7 @@ public class ContactController {
 				.name(contact.getName().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
 				.phone(contact.getPhone().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
 				.email(contact.getEmail().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
+				.memo(contact.getMemo().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
 				.createdTime(new Date().getTime()).build();
 
 		// contact 목록객체 추가
@@ -121,10 +123,16 @@ public class ContactController {
 			return null;
 		}
 
+		if (contact.getMemo() == null || contact.getMemo().isEmpty()) {
+			res.setStatus(HttpServletResponse.SC_CREATED);
+			return contact;
+		}
+
 		// 데이터를 변경
 		findItem.setName(contact.getName());
 		findItem.setPhone(contact.getPhone());
 		findItem.setEmail(contact.getEmail());
+		findItem.setMemo(contact.getMemo());
 
 		return findItem;
 	}
