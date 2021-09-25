@@ -50,7 +50,8 @@ Create complex side effects without getting bogged down by the details.
 
 
 
-
+// 이해 -> 구현 , 좋은회사는 못감
+// 이해하고 구현한것을 설명할 줄 알아야함.
 
 
 

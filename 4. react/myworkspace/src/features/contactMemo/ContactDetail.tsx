@@ -46,7 +46,7 @@ const ContactDetail = () => {
             </tr>
             <tr>
               <th>Created Time</th>
-              <td>{contactData?.createTime}</td>
+              <td>{contactData?.createdTime}</td>
             </tr>
           </tbody>
         </table>

@@ -1,0 +1,13 @@
+2021-09-24 금  DB SQL
+
+
+
+postgres
+password123!
+
+
+
+VPC ( vertual private cloud )
+
+사설IP   대역
+공인IP
