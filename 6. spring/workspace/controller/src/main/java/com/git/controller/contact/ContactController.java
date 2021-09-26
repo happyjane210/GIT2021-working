@@ -28,6 +28,7 @@ public class ContactController {
 	// id 값 생성에 사용할 변수
 	private AtomicLong maxId = new AtomicLong();
 
+	// -----GET---------------------------------------------------
 	// contact 목록조회
 	// GET / contacts
 	@GetMapping(value = "/contacts")
@@ -75,8 +76,8 @@ public class ContactController {
 
 	// ------REMOVE-----------------------------------
 
-	// todo 1건 삭제
-	// delete / todos /1 -> id가 1인 항목을 삭제해라
+	// contact 1건 삭제
+	// delete / contact /1 -> id가 1인 항목을 삭제해라
 	// id값이 path variable로
 	@DeleteMapping(value = "/contacts/{id}")
 	public boolean removeContact(@PathVariable long id, HttpServletResponse res) {
@@ -124,8 +125,8 @@ public class ContactController {
 		}
 
 		if (contact.getMemo() == null || contact.getMemo().isEmpty()) {
-			res.setStatus(HttpServletResponse.SC_CREATED);
-			return contact;
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
 		}
 
 		// 데이터를 변경
