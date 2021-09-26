@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import { AppDispatch, RootState } from "../../store";
 import { ContactItem } from "./contactSlice";
 import { requestAddContact } from "./contactSaga";
-import Alert from "../../components/Alert";
+import Alert from "../../components/alert/Alert";
 
 const ContactCreate = () => {
   const [isError, setIsError] = useState(false);

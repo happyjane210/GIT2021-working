@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import Alert from "../../components/Alert";
+import Alert from "../../components/alert/Alert";
 
 import produce from "immer";
-import { userInfo } from "os";
+//import { userInfo } from "os";
 
 //import api from "./todoApi";
 

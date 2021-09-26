@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import profileReducer from "../features/profile/profileSlice";
 import photoReducer from "../features/photo/photoSlice";
 import contactReducer from "../features/contactMemo/contactSlice";
+import progressReducer from "../components/progress/progressSlice";
+import alertReducer from "../components/alert/alertSlice";
 
 // 최상위 saga
 import rootSaga from "../saga";
@@ -32,6 +34,10 @@ export const store = configureStore({
 
     contact: contactReducer,
     //  3. contact state 를 처리하는 reducer 등록
+
+    progress: progressReducer,
+
+    alert: alertReducer,
   },
 
   // redux store(dispatcher)에 미들웨어 적용

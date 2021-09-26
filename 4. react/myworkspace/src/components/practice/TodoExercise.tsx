@@ -3,9 +3,9 @@
 // - 코드가 길어서 분리
 // - 성능적인 관점에서 분리(렌더링 범위 축소: 부모컴포넌트가 업데이트 하면 자식도 업데이트됨)
 
-import { is } from "immer/dist/internal";
+//import { is } from "immer/dist/internal";
 import React, { useRef, useState } from "react";
-import Alert from "../../components/Alert";
+import Alert from "../alert/Alert";
 
 // 한건에 대한 타입
 interface TodoState {

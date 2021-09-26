@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import { TodoState } from "./type"; // ./type (뒤에) 뭐가 없으면 폴더 안에 index.ts/js/tsx 등을 로딩함
 import TodoEditModal from "./TodoEditModal";
-import Alert from "../../components/Alert";
+import Alert from "../../components/alert/Alert";
 import produce from "immer";
 //import style from "../profile/Profile.module.scss";
 

@@ -1,6 +1,6 @@
 import produce from "immer";
 import React, { useEffect, useRef, useState } from "react";
-import Alert from "../../components/Alert";
+import Alert from "../../components/alert/Alert";
 
 import api from "./contactLineApi";
 
@@ -9,7 +9,7 @@ export interface ContactLineState {
   name: string | undefined;
   phone: string | undefined;
   email: string | undefined;
-  createdTime: number;
+  createdTime: string;
   isEdit?: boolean; // 수정모드인지
 }
 
@@ -19,7 +19,7 @@ const Contact = () => {
       id: 1,
       name: "Name",
       phone: "010-1234-5678",
-      createdTime: new Date().getTime(),
+      createdTime: new Date().getTime().toLocaleString(),
       email: "example@123.com",
     },
   ]);
@@ -88,7 +88,7 @@ const Contact = () => {
       name: result.data.name,
       phone: result.data.phone,
       email: result.data.email,
-      createdTime: result.data.createdTime,
+      createdTime: new Date(result.data.createdTime).toLocaleTimeString(),
     };
 
     // 프론트 Add
@@ -239,9 +239,9 @@ const Contact = () => {
             </tr>
           </thead>
           <tbody ref={tbodyRef}>
-            {conList.length == 0 && (
+            {conList.length === 0 && (
               <tr className="text-center">
-                <td colSpan={5}>⛔ NOT FOUND DATA 4️⃣0️⃣4️⃣ ⛔</td>
+                <td colSpan={6}>⛔ NOT FOUND DATA 4️⃣0️⃣4️⃣ ⛔</td>
               </tr>
             )}
 
@@ -258,7 +258,7 @@ const Contact = () => {
                     <td>{item.createdTime}</td>
                     <td>
                       <button
-                        className="btn btn-outline-success btn-sm me-md-1"
+                        className="btn btn-outline-success btn-sm me-1"
                         onClick={() => {
                           edit(item.id, true); // 수정창 띄우기
                         }}
@@ -325,7 +325,7 @@ const Contact = () => {
                     <td>{item.createdTime}</td>
                     <td>
                       <button
-                        className="btn btn-outline-success btn-sm me-md-1"
+                        className="btn btn-outline-success btn-sm me-1"
                         onClick={() => {
                           save(item.id, index);
                         }}

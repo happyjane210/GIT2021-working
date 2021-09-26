@@ -1,7 +1,10 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { AppDispatch, RootState } from "../../store";
-import { removePhoto } from "./photoSlice";
+import { requestRemovePhoto } from "./photoSaga";
+//import { initialCompleted } from "./photoSlice";
+//import { removePhoto } from "./photoSlice";
 
 const PhotoDetail = () => {
   // 3. 상세 컴포넌트에서 id 값을 가져와야함
@@ -17,13 +20,26 @@ const PhotoDetail = () => {
     state.photo.data.find((item) => item.id === +id)
   ); // 반환형식을 타입추론으로 처리
   //  as PhotoItem 타입단언 (type assertion)
-  console.log(photoItem);
+  //console.log(photoItem);
+
+  // 삭제 여부 감지 및 가져오기
+  const isRemoveCompleted = useSelector(
+    (state: RootState) => state.photo.isRemoveCompleted
+  );
 
   const history = useHistory();
   const dispatch = useDispatch<AppDispatch>();
 
+  // 감지 후 에러 없으면 실행
+  useEffect(() => {
+    isRemoveCompleted && history.push("/Photo");
+    console.log("--useEffect RemoveCompleted--");
+  }, [isRemoveCompleted, history]);
+
   const handleDelete = () => {
-    dispatch(removePhoto(+id)); // id값만 넣어서 삭제
+    dispatch(requestRemovePhoto(+id)); // saga action으로 대체
+    //dispatch(removePhoto(+id)); // id값만 넣어서 삭제
+
     history.push("/Photo"); // 목록화면으로 이동
   };
 

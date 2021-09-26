@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
 import { requestAddPhoto } from "./photoSaga";
-import { PhotoItem } from "./photoSlice";
+import { initialCompleted, PhotoItem } from "./photoSlice";
 
 const PhotoCreate = () => {
   // 11. 입력폼에 ref 객체 연결
@@ -15,14 +15,31 @@ const PhotoCreate = () => {
 
   // 포토 데이터 배열 가져오기
   const photoData = useSelector((state: RootState) => state.photo.data);
+
   // 프로필 정보 가져오기
   //const profile = useSelector((state: RootState) => state.profile);
+
+  // 추가 완료 여부 , 추가가 됐는지 셀렉터 하고있어야함 (가리키고 있어야함),
+  // Reactive반응성 추가, 상태값이 바뀌면 컴포넌트가 다시 그려짐
+  const isAddCompleted = useSelector(
+    (state: RootState) => state.photo.isAddCompleted
+  );
 
   // dispatch 함수 만들기
   const dispatch = useDispatch<AppDispatch>();
 
   // history 객체 가져오기
   const history = useHistory();
+
+  // isAddCompleted값이 변경되면 처리 (처음 렌더링 될때도 처리됨)
+  // 2. state가 변경되면 처리되는 함수
+  useEffect(() => {
+    console.log("--isAddCompleted 변경:" + isAddCompleted);
+
+    isAddCompleted && history.push("/photo"); // true이면 화면이동
+    // isAddCompleted를 초기화
+    dispatch(initialCompleted()); //  매개변수 없음
+  }, [isAddCompleted, history, dispatch]); // dependency - 의존성
 
   // 13. clickAdd 함수 만들기
   const clickAdd = () => {
@@ -82,7 +99,8 @@ const PhotoCreate = () => {
         // saga action 으로 대체  -- 1)
         dispatch(requestAddPhoto(item));
 
-        history.push("/photo");
+        // 목록화면으로 이동
+        //history.push("/photo");
       };
       reader.readAsDataURL(imageFile);
     }

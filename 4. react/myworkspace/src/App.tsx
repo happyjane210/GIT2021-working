@@ -48,6 +48,7 @@ import Home from "./features/Home";
 import Profile from "./features/profile/Profile";
 //import Navigation from "./Navigation";
 import Progress from "./components/progress/Progress";
+import AlertStack from "./components/alert/AlertStack";
 
 // SPA ( Single Page Application)
 // - 페이지 파일이 1개, index.html
@@ -172,6 +173,7 @@ function App() {
             </Suspense>
 
             <Progress />
+            <AlertStack />
           </main>
         </div>
       </Router>

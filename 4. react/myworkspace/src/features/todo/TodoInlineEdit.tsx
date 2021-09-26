@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Alert from "../../components/Alert";
+import Alert from "../../components/alert/Alert";
 
 import produce from "immer";
 
@@ -250,7 +250,7 @@ const Todo = () => {
           </li>
         )}
         {/* 빈데이터 표시 */}
-        {!isLoading && todoList.length == 0 && (
+        {!isLoading && todoList.length === 0 && (
           <li className="list-group-item">데이터가 없어요😓</li>
         )}
 

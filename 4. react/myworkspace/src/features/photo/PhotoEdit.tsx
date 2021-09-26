@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
-import { modifyPhoto } from "./photoSlice";
+import { requestModifyPhoto } from "./photoSaga";
+import { modifyPhoto, PhotoItem } from "./photoSlice";
 
 const PhotoEdit = () => {
   // useSelector 로  global state랑 묶어줌 (store)
@@ -14,8 +15,12 @@ const PhotoEdit = () => {
     state.photo.data.find((item) => item.id === +id)
   );
 
-  const history = useHistory();
+  const isModifyCompleted = useSelector(
+    (state: RootState) => state.photo.isModifyCompleted
+  );
+
   const dispatch = useDispatch<AppDispatch>();
+  const history = useHistory();
 
   // 파일이 바뀔때 state를 업데이트 해서 img태그에 미리보기 나오기위함
   const [url, setUrl] = useState<string | undefined>(photoItem?.photoUrl);
@@ -23,6 +28,10 @@ const PhotoEdit = () => {
   const titleInput = useRef<HTMLInputElement>(null);
   const descrInput = useRef<HTMLTextAreaElement>(null);
   const fileInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    isModifyCompleted && history.push("/Photo");
+  }, [isModifyCompleted, history]);
 
   // 파일 선택 이벤트 처리
   const changeFile = () => {
@@ -56,10 +65,7 @@ const PhotoEdit = () => {
           item.fileType = imageFile.type;
           item.fileName = imageFile.name;
 
-          // reducer로 state 수정 및 목록으로 이동
-          // modifyPhoto fmf qhsoa
-          dispatch(modifyPhoto(item));
-          history.push("/Photo");
+          saveItem(item);
         }
       };
 
@@ -74,11 +80,16 @@ const PhotoEdit = () => {
         item.title = titleInput.current ? titleInput.current.value : "";
         item.description = descrInput.current?.value;
 
-        // reducer로 state 수정 및 목록으로 이동
-        dispatch(modifyPhoto(item));
-        history.push("/Photo");
+        saveItem(item);
       }
     }
+  };
+
+  const saveItem = (item: PhotoItem) => {
+    // saga action으로 대체
+    dispatch(requestModifyPhoto(item));
+
+    history.push("/Photo");
   };
 
   return (

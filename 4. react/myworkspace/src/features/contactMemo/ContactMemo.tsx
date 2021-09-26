@@ -63,27 +63,25 @@ const ContactMemo = () => {
           </tr>
         </thead>
         <tbody>
-          {contact.data.length == 0 && (
+          {contact.data.length === 0 && (
             <tr className="text-center">
               <td colSpan={5}>⛔ NOT FOUND DATA 4️⃣0️⃣4️⃣ ⛔</td>
             </tr>
           )}
           {/* 8. state 데이터 배열을 map 함수로 출력 */}
           {contact.data.map((item, index) => (
-            <>
-              <tr
-                key={index}
-                onClick={() => {
-                  history.push(`/ContactMemo/ContactDetail/${item.id}`);
-                }}
-              >
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.phone}</td>
-                <td>{item.email}</td>
-                <td>{item.createdTime}</td>
-              </tr>
-            </>
+            <tr
+              key={item.id}
+              onClick={() => {
+                history.push(`/ContactMemo/ContactDetail/${item.id}`);
+              }}
+            >
+              <td>{item.id}</td>
+              <td>{item.name}</td>
+              <td>{item.phone}</td>
+              <td>{item.email}</td>
+              <td>{item.createdTime}</td>
+            </tr>
           ))}
         </tbody>
       </table>
