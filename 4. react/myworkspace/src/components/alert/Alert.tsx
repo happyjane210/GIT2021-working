@@ -10,7 +10,7 @@ const Alert = ({ message, variant, onClose }: AlertProp) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 2초 후에 0.02초마다 opacity(투명도) 변경함수를 실행
+    // 1초 후에 0.05초마다 opacity(투명도) 변경함수를 실행
     setTimeout(() => {
       let count = 1;
       setInterval(() => {
@@ -22,7 +22,7 @@ const Alert = ({ message, variant, onClose }: AlertProp) => {
       }, 50);
     }, 1000);
 
-    // 3초 후에 onClose 함수가 있으면 onClose 함수를 실행
+    // 2초 후에 onClose 함수가 있으면 onClose 함수를 실행
     setTimeout(() => {
       onClose && onClose();
     }, 2000);

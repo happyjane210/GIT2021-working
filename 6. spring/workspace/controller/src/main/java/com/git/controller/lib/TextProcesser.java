@@ -1,6 +1,6 @@
 package com.git.controller.lib;
 
-public class TesxProcesser {
+public class TextProcesser {
 
 	public static boolean isEmptyText(String text) {
 		return text == null || text.isEmpty();

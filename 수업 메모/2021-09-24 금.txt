@@ -11,7 +11,7 @@ Reactive: 반응성
 실무에서 useEffect 자주씀 - 비동기 처리
 
 
-// 프론트엔드 실무 순서
+// 프론트엔드 작업 순서
  1. UI 템플릿을 만듬
  2. 데이터 구조를 만듬 ( state )
  3. UI 템플릿과 데이터를 연결함 ( binding )
@@ -26,12 +26,111 @@ Reactive: 반응성
 
 
 
-postgres
-password123!
+// 1. Amazon RDS 데이터베이스 생성 ,  기본 옵션
+   postgres
+   password123!
+
+- 스토리지 자동 조정 해제
+- 퍼블릭 액세스 > 예
+- 자동 백업 활성화 > 해제
+- 성능 개선 도우미 활성화 > 해제
+
+
+ * DBeaver 설치
+       - 상단메뉴 > 데이터베이스 > 새 데이터베이스 연결 > PostgreSQL > 다음
+       - DB연결설정 > Host > 엔드포인트 복붙 > Database지움 > 밑에 Username, Password (DB생성할때 만든거) 입력 > 완료
+   
+
+
+// 2. RDS 데이터 베이스 데이터베이스 접속
+
+ DBeaver 에서
+      - database-1 우클릭 > SQL편집기 >  SQL편집기 ( F3 )
+      - 실행 명령어  :  1) create database myworkspace;   +  Ctrl enter
+		 2) create schema myworkspace;  +  Ctrl enter
+
+
+// 3. Spring - Database 연동
+ 1) Spring Starter Project (새프로젝트 생성)
+      - 이름 설정 후 next -> Available 설정
+      - 기본으로 Spring Boot DevTools , Lombok , Spring Data JPA , PostgreSQL Driver , Spring Web 설정
+
+ 2) myworkspace 에서   src/main/resources  기존 applicaton파일 지우고
+      -  resource 위치에서 새 파일
+      -  application.yml  (야믈 파일) - 시스템 설정파일로 많이 씀
+	= 앞 두칸 띄어쓰기, 계단식 작성
+	= #쓰면 주석 작성
+
+
+//------------------- database schema 개념--------------------------------------------
+  물리적인 개념 ( 디스크 공간 ) - 데이터 저장
+    - table space
+
+  논리적인 개념 ( 데이터 구조 )
+    -   database   >    schema    >   table
+    최상위 논리개념  >  하위 데이터 구조  > 기능
+  시스템명, 사용자명(명칭) > 애플리케이션명, 기능명 > 기능
+
+** 실제 데이터는 table에 저장됨 -> table space 공간에 물리적인 파일로 저장
+
+ex)  naver > blog > post , comment, like ...
+      naver > news > article , comment , like ... 
+
+
+  ** DB 구조 이렇게 만들 것 - schema 기준으로 나눠져있음
+     postgres > myworkspace > photo, contact
+                    commerce > purchase_order, purchase_order_product
+                    salse > salse_order, product
+                    analysis > 
+
+-------------------------------------------------------
+
+// CMD 명령어
+
+ipconfig / all  - 윈도우즈
+ifconfig / all  - 리눅스, 맥
+  IPv4 주소 : 192.168.00.00
+   => 공유기 ip 주소 볼수 있음
+
 
 
 
 VPC ( vertual private cloud )
 
-사설IP   대역
-공인IP
+▶사설IP대역 - 공유기에 연결된 내부 인터넷, 외부 접근 불가
+10.0.0.0~10.255.255.255
+172.16.0.0~172.31.255.255
+192.168.0.0~192.168.255.255
+
+▶공인IP대역 - 공유기 사용안함, 외부 접근 가능, 공개됨
+0.0.0.0~127.255.255.255
+128.0.0.0~191.255.255.255
+192.0.0.0~233.255.255.255
+224.0.0.0~239.255.255.255
+240.0.0.0~255.255.255.255
+
+
+
+===== 용어 ========================================
+
+// Spring Data JPA
+  - Persist data in SQL stores with Java Persistence API using Spring Data and Hibernate.
+   (데이터 영속화)
+
+
+// PostgreSQL Driver
+  - A JDBC and R2DBC driver that allows Java programs 
+     to connect to a PostgreSQL database using standard, 
+     database independent Java code.
+
+
+
+
+
+
+
+
+
+
+
+
