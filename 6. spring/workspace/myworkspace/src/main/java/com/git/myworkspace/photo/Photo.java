@@ -23,6 +23,7 @@ public class Photo {
 	private long id;
 	private String title;
 	private String description;
+	// BLOB: binary large object
 	@Column(columnDefinition = "TEXT")
 	private String photoUrl;
 	private String fileType;

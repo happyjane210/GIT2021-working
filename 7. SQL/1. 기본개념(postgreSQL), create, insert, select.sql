@@ -1,11 +1,17 @@
 -- 스키마 생성
 create schema myworkspace;
 
+
+
+
 -- 현재 쿼리창에서 사용할 스키마 선택
 -- myworkspace 라는 스키마 공간에서 작업을 함.
 -- 범위 지정, 안해주면, select * from myworkspace.photo;
 -- 매번 점찍고 범위 지정해줘야함.
 set schema 'myworkspace';
+
+
+
 
 -- 테이블 생성 명령어 (자동으로 생성되서 잘 쓰진 않음)
 /* create table 테이블명 (
@@ -34,6 +40,9 @@ create table photo (
 	primary key (id)
 )
 
+
+
+
 -- 데이터를 1건 추가
 -- insert into 테이블명(컬럼1, 컬럼2...) values(값1, 값2...)
 insert into photo(created_time, title)
@@ -41,13 +50,44 @@ insert into photo(created_time, title)
 values(1, 'test');
 
 
+
 -- select 컬럼목록 from 테이블명; *는 전체
-select * from photo;  -- 테이블 데이터를 전체 조회
-select id, title from photo;   -- 특정 컬럼(세로칸)만 조회
+
+-- 테이블 데이터를 전체 조회
+select * from photo;
+
+-- 특정 컬럼(세로칸)만 조회
+select id, title from photo;
+
+
+
+
 
 -- 특정 데이터 조회
 -- selec 컬럼목록 from 테이블명 where 조건식 -> (equal조건식)
 -- equal 조건식: 컬럼명 = 값   / map.get(1) 이랑 같음
 select * from photo where id = 1; -- id가 1인 행의 데이터
 select * from photo where id >= 1; -- id가 1보다 크거나 같은 행의 데이터
+
+
+
+
+
+
+select 
+	photo0_.id as id1_0_, 
+	photo0_.created_time as created_2_0_, 
+	photo0_.description as descript3_0_, 
+	photo0_.file_name as file_nam4_0_, 
+	photo0_.file_type as file_typ5_0_, 
+	photo0_.photo_url as photo_ur6_0_, 
+	photo0_.title as title7_0_ 
+from photo photo0_;
+
+
+-- 특정 데이터 삭제
+-- delete from 테이블명 where 조건식
+-- ** 조건식에는 PK 필드 equal연산으로 특정 데이터만 삭제하도록 함
+-- **** where 조건이 없으면 전체 데이터가 삭제됨, 조심할 것
+delete from photo where id = 1;
 

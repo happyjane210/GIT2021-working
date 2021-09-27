@@ -3,7 +3,8 @@
 
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver  # postgresql
+    #driver-class-name: com.mysql.cj.jdbc.Driver  # mysql
     # jdbc - java databse connector
     # :postgresql - 데이터베이스 엔진
     # //url (//database-1.caip~) - 데이터베이스 주소 url
@@ -11,9 +12,11 @@ spring:
     # /postgres - 접속할 데이터베이스(이름)
     # jdbc를 이용해 postgresql포트의 데이터베이스로 접속한다
     url: jdbc:postgresql://database-1.caipcwydwewo.ap-northeast-2.rds.amazonaws.com:5432/postgres?currentSchema=myworkspace
+    #url: jdbc:mysql://database-2.caipcwydwewo.ap-northeast-2.rds.amazonaws.com:3306/myworkspace
     username: postgres
+    #username: admin
     password: password123!  #기본 접속정보 넣음
   jpa:
     show-sql: true
-    generate-ddl: true
+    generate-ddl: true # create SQL 명령어를 자동으로 수행함, auto-migration
     
