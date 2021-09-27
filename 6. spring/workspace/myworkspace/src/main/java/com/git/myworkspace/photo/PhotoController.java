@@ -76,6 +76,7 @@ public class PhotoController {
 		}
 
 		// 삭제 수행
+		// delete from photo where id = ?
 		repo.deleteById(id);
 
 		return true;
@@ -112,6 +113,11 @@ public class PhotoController {
 		photoItem.get().setFileType(photo.getFileType());
 		photoItem.get().setFileName(photo.getFileType());
 
+		// repository.save(entity)
+		// id가 있으면 UPDATE, 없으면 INSERT
+		// UPDATE
+		// SET title=?, description=?
+		// where ...
 		Photo photoSaved = repo.save(photoToSave);
 
 		return photoSaved;
