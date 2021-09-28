@@ -264,8 +264,15 @@ delete from photo where id = 5;
 ====== constact DB연동하기====================
 
 Spring contact 에서
-1. class @Entity 어노테이션 붙여
+1. Contact  <=  class  어노테이션 붙여
+	@Entity , @Id , @Column
 
+2. ContactRepository  만들어
+
+3. ContactController 에서 Repository 주입하기
+	 생성자 만들기  <= private ContactRepository repo;
+
+4. findAll( ) , save( entity ) , findById( id ) , deleteById( id )
 
 -------------------------------------------------------
 
