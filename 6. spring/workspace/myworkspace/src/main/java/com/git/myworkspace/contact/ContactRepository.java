@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 // contact 테이블에 접근하는 객체
 
-//상속관계
+// 상속관계
 // ContactRepository -> JpaRepository -> PagingAndSortingRepository -> CrudRepository
 
 //JpaRepository 에는 데이터 처리를 위한 기본적인 메서드들이 선언되어있음

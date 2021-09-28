@@ -7,12 +7,16 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.git.myworkspace.lib.TextProcesser;
@@ -20,6 +24,7 @@ import com.git.myworkspace.lib.TextProcesser;
 @RestController
 public class ContactController {
 
+	// ContactRepository를 생성자의 매개변수로 의존성 주입
 	private ContactRepository repo;
 
 	// 의존성 주입
@@ -33,8 +38,17 @@ public class ContactController {
 	// GET / contacts
 	@GetMapping(value = "/contacts")
 	public List<Contact> getContacts() throws InterruptedException {
-		return repo.findAll();
+		// 모든 데이터 조회 , 역정렬
+		return repo.findAll(Sort.by("id").descending());
 
+	}
+
+	// ----------- paging 처리 -------------
+	// ex) GET/contacts/paging?page=0&size=3
+
+	@GetMapping("/contacts/paging")
+	public Page<Contact> getContactPaging(@RequestParam int page, @RequestParam int size) {
+		return repo.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
 	}
 
 	// -----ADD---------------------------------------------------

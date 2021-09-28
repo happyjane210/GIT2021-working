@@ -7,12 +7,16 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.git.myworkspace.lib.TextProcesser;
@@ -34,7 +38,23 @@ public class PhotoController {
 		// select * from photo;
 		// 기본적으로 PK 순정렬 (asc, ascending) 되고있는상황
 		// 1, 2, 3///
-		return repo.findAll();
+		// return repo.findAll();
+
+		// id 컬럼 역정렬
+		// Sort.by("정렬칼럼").descending() 역정렬
+		// Sort.by("정렬칼럼").ascending() 순정렬
+		return repo.findAll(Sort.by("id").descending());
+	}
+
+	// ----------- paging 처리, 한페이지 2개, 1번째 페이지 ----------
+
+	// 0번째 페이지에, 사진 2개씩
+	// ex) GET/photos/paging?page=0&size=2
+	@GetMapping("/photos/paging")
+	public Page<Photo> getPhotoPaging(@RequestParam int page, @RequestParam int size) {
+		// findAll()함수에 Pageable page 객체를 넣음
+		// page 객체에 PageRequest.of() 함수로 page, size, Sort.by("id").descending() 를 넣음
+		return repo.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
 	}
 
 	@PostMapping(value = "/photos")

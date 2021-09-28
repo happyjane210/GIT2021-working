@@ -1,5 +1,5 @@
 // @import "../node_modules/bootstrap/scss/bootstrap.scss";
-// @import "~bootstrap/scss/bootstrap"
+//@import "~bootstrap/scss/bootstrap"
 // Required
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "~bootstrap/scss/functions";
@@ -39,6 +39,7 @@ $border-radius-sm: 0;
 @import "~bootstrap/scss/modal";
 @import "~bootstrap/scss/tables";
 @import "~bootstrap/scss/spinners";
+@import "~bootstrap/scss/pagination";
 /*-----------------------------------------------------------------------*/
 @import "~bootstrap/scss/helpers";
 // 5. Optionally include utilities API last to generate classes based on the Sass map in `_utililies.scss`
