@@ -16,6 +16,6 @@ import org.springframework.stereotype.Repository;
 //photo 테이블에 접근할 수 있는 기본적인 메서드들을 사용할 수 있음
 
 @Repository
-public interface ContactRepository extends JpaRepository<Contact, Long> {
+public interface ContactRepository extends JpaRepository<Contact, Long> { // entity타입: Contact , id타입: Long
 
 }

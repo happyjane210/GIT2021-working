@@ -17,8 +17,9 @@ import lombok.NoArgsConstructor;
 @Entity
 
 public class Contact {
+	// 필드의 id를 테이블의 Primary key로.
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // 생성전략 IDENTITY
 	private long id;
 	private String name;
 	private String phone;

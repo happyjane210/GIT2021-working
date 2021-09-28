@@ -30,6 +30,10 @@ public class PhotoController {
 
 	@GetMapping(value = "/photos")
 	public List<Photo> getPhotos() throws InterruptedException {
+		// repository.findAll();
+		// select * from photo;
+		// 기본적으로 PK 순정렬 (asc, ascending) 되고있는상황
+		// 1, 2, 3///
 		return repo.findAll();
 	}
 
