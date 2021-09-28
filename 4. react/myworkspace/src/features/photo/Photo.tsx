@@ -1,10 +1,25 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { getTimeString } from "../../common/lib/string";
 import Pagination from "../../components/Pagination";
 import { AppDispatch, RootState } from "../../store";
-import { requestFetchPhotos } from "./photoSaga";
+import { requestFetchPagingPhotos, requestFetchPhotos } from "./photoSaga";
 //import style from "../profile/Profile.module.scss";
+
+const getTiemString = (unixtime: number) => {
+  // 1초: 1000
+  // 1분: 60 * 1000
+  // 1시간: 60 * 60 * 1000
+  // 1일: 24 * 60 * 60 * 1000
+  const day = 24 * 60 * 60 * 1000;
+
+  const dateTime = new Date(unixtime);
+
+  return unixtime - new Date().getTime() >= day
+    ? dateTime.toLocaleDateString()
+    : dateTime.toLocaleTimeString();
+};
 
 const Photo = () => {
   //const profile = useSelector((state: RootState) => state.profile);
@@ -26,89 +41,119 @@ const Photo = () => {
     // 데이터 fetch가 안되어있으면 데이터를 받아옴
     if (!photo.isFetched) {
       // 서버에서 데이터를 받아오는 action을 디스패치함
-      dispatch(requestFetchPhotos()); // 1)
+      // dispatch(requestFetchPhotos());
+      dispatch(
+        requestFetchPagingPhotos({
+          page: 0,
+          size: photo.pageSize,
+        })
+      );
     }
-  }, [dispatch, photo.isFetched]);
+  }, [dispatch, photo.isFetched, photo.pageSize]);
+
+  const handlePageChanged = (page: number) => {
+    console.log("--page: " + page);
+    // setCurrentPage(page);
+    dispatch(
+      requestFetchPagingPhotos({
+        page,
+        size: photo.pageSize,
+      })
+    );
+  };
+
+  const handlePageSizeChanged = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.currentTarget.value);
+    dispatch(
+      requestFetchPagingPhotos({
+        page: photo.page,
+        size: +e.currentTarget.value,
+      })
+    );
+  };
 
   return (
     <div>
-      <h2 className="text-center my-5">
-        <b>PHOTOS</b>
-      </h2>
-
+      <h2 className="text-center">Photos</h2>
       {/* 버튼 */}
-      {/* 리프레쉬 버튼 & 추가버튼 -> 추가화면*/}
-      <div className="d-flex justify-content-end my-2">
+      <div className="d-flex justify-content-end mb-2">
+        <select
+          className="form-select form-select-sm me-2"
+          style={{ width: "60px" }}
+          onChange={(e) => {
+            handlePageSizeChanged(e);
+          }}
+        >
+          {[2, 4, 8, 12].map((size) => (
+            <option value={size} selected={photo.pageSize === size}>
+              {size}
+            </option>
+          ))}
+        </select>
         <button
           className="btn btn-secondary me-2"
           onClick={() => {
             dispatch(requestFetchPhotos());
           }}
         >
-          REFRESH
-          <i className="bi bi-arrow-counterclockwise ms-2"></i>
+          <i className="bi bi-arrow-clockwise"></i>
+          새로고침
         </button>
         <button
           className="btn btn-primary"
           onClick={() => {
-            history.push("/Photo/Create");
+            history.push("/photos/create");
           }}
         >
+          <i className="bi bi-plus" />
           추가
-          <i className="bi bi-plus ms-2"></i>
         </button>
       </div>
-
       {/* 컨텐트 */}
       <div className="d-flex flex-wrap">
-        {/* 8. state 데이터 배열을 map 함수로 출력 */}
+        {/* state 데이터 배열에 map함수로 출력 */}
         {photo.data.map((item, index) => (
-          // card 시작
           <div
-            // key={`photo-item-${index}`}
-            onClick={() => {
-              // id 값을 물고 이동
-              history.push(`/Photo/Detail/${item.id}`);
-            }}
+            key={`photo-item-${index}`}
             className="card"
             style={{
               width: "calc((100% - 3rem) / 4)",
               marginLeft: index % 4 === 0 ? "0" : "1rem",
               marginTop: index > 3 ? "1rem" : "0",
-              cursor: "pointer",
             }}
           >
-            {/* 프로필 부분 */}
-            {/* <div className="d-flex card-header">
-              <div
-                className={`${style.thumb} me-1`}
-                style={{ backgroundImage: `url(${item.profileUrl})` }}
-              ></div>
-              <span className={`${style.username} `}>{item.username}</span>
-            </div> */}
-
-            <img
-              src={item.photoUrl}
-              alt={item.title}
-              className="card-img-top"
-
-              // onClick={() => {
-              //   history.push(`/photos/${item.id}`);
-              // }}
-              // 사진 클릭하면 상세페이지 / 수정페이지
-            />
-
-            <div className="card-body">
-              <h5 className="card-title">{item.title}</h5>
-              <p>{item.createdTime}</p>
+            {/* 컨텐트 wrapper -- 시작 */}
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                // id값을 물고 이동해야함
+                history.push(`/photos/detail/${item.id}`);
+              }}
+            >
+              <img
+                src={item.photoUrl}
+                className="card-img-top"
+                alt={item.title}
+              />
+              <div className="card-body">
+                <h5 className="card-title">{item.title}</h5>
+                <h6 className="text-muted">
+                  {getTimeString(item.createdTime)}
+                </h6>
+              </div>
             </div>
+            {/* 컨텐트 wrapper -- 끝 */}
           </div>
         ))}
       </div>
-
       {/* 페이지네이션 */}
-      <div className="d-flex justify-content-center my-5">
-        <Pagination pageBlockSize={2} totalPage={3} />
+      <div className="d-flex justify-content-center mt-4">
+        <Pagination
+          blockSize={2} // 고정값
+          totalPages={photo.totalPages}
+          currentPage={photo.page}
+          onPageChanged={handlePageChanged}
+        />
       </div>
     </div>
   );

@@ -18,6 +18,15 @@ export interface PhotoItem {
 }
 // 얘도 외부에서 쓸수있도록 export 해줘야함
 
+export interface PhotoPage {
+  data: PhotoItem[];
+  totalElements: number;
+  totalPages: number;
+  page: number;
+  pageSize: number;
+  isLast: boolean;
+}
+
 // 5. PhotoState 선언 - 백엔드 연동 고려해서 설계
 interface PhotoState {
   data: PhotoItem[]; // 포토 아이템 배열
@@ -25,7 +34,14 @@ interface PhotoState {
   isAddCompleted?: boolean; // 데이터 추가가 완료되었는지 여부
   isRemoveCompleted?: boolean; // 데이터 삭제가 완료되었는지 여부
   isModifyCompleted?: boolean; // 데이터 수정이 완료되었는지 여부
+  totalElements?: number;
+  totalPages: number;
+  page: number;
+  pageSize: number;
+  isLast?: boolean;
 }
+
+const photoPageSize = localStorage.getItem("photo_page_size");
 
 // 6. photo state를 목록 -> array 로 변환
 const initialState: PhotoState = {
@@ -43,6 +59,9 @@ const initialState: PhotoState = {
     // },
   ],
   isFetched: false,
+  page: 0,
+  pageSize: photoPageSize ? +photoPageSize : 2,
+  totalPages: 0,
 };
 
 //1. 슬라이스 만들기
@@ -71,6 +90,8 @@ const photoSlice = createSlice({
     // completed 관련된 속성을 삭제함 (undefined)
     initialCompleted: (state) => {
       delete state.isAddCompleted;
+      delete state.isRemoveCompleted;
+      delete state.isModifyCompleted;
     },
 
     // payload 로 id 값을 받음
@@ -90,6 +111,7 @@ const photoSlice = createSlice({
     modifyPhoto: (state, action: PayloadAction<PhotoItem>) => {
       // 생성해서 넘긴 객체
       const modifyItem = action.payload;
+
       // state에 있는 객체
       const photoItem = state.data.find((item) => item.id === modifyItem.id);
 
@@ -110,6 +132,22 @@ const photoSlice = createSlice({
       const photos = action.payload;
       // 백엔드에서 받아온 데이터  6)
       state.data = photos;
+      // 데이터를 받아옴으로 값을 남김
+      state.isFetched = true;
+    },
+
+    // payload값으로 state를 초기화하는 reducer 필요함
+    initialPagedPhoto: (state, action: PayloadAction<PhotoPage>) => {
+      // 백엔드에서 받아온 데이터
+      // 컨텐트
+      state.data = action.payload.data;
+      // 페이징 데이터
+      state.totalElements = action.payload.totalElements;
+      state.totalPages = action.payload.totalPages;
+      state.page = action.payload.page;
+      state.pageSize = action.payload.pageSize;
+      state.isLast = action.payload.isLast;
+      // 데이터를 받아옴으로 값을 남김
       state.isFetched = true;
     },
   },
@@ -122,6 +160,7 @@ export const {
   modifyPhoto,
   initialPhoto,
   initialCompleted,
+  initialPagedPhoto,
 } = photoSlice.actions;
 
 // 2. 슬라이스 리듀서를 밖으로 공유함

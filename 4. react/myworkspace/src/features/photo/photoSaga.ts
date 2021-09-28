@@ -1,8 +1,10 @@
 import photoReducer, {
   addPhoto,
   initialCompleted,
+  initialPagedPhoto,
   initialPhoto,
   modifyPhoto,
+  PhotoPage,
   removePhoto,
 } from "./photoSlice";
 import { createAction, nanoid, PayloadAction } from "@reduxjs/toolkit";
@@ -14,7 +16,11 @@ import {
   takeEvery,
   takeLatest,
 } from "@redux-saga/core/effects";
-import api, { PhotoItemRequest, PhotoItemResponse } from "./photoApi";
+import api, {
+  PhotoItemRequest,
+  PhotoItemResponse,
+  PhotoPagingReponse,
+} from "./photoApi";
 import { AxiosResponse } from "axios";
 import {
   endProgress,
@@ -22,6 +28,13 @@ import {
 } from "../../components/progress/progressSlice";
 import { addAlert } from "../../components/alert/alertSlice";
 import { RootState } from "../../store";
+
+/* ------------- saga action을 생성하는 부분 -------------- */
+
+export interface PageRequest {
+  page: number;
+  size: number;
+}
 
 /* ------------- saga action을 생성하는 부분 -------------- */
 
@@ -55,6 +68,12 @@ export const requestFetchPhotos = createAction(
   `${photoReducer.name}/requestFetchPhotos`
 );
 
+// photo를 페이징으로 가져오는 action
+//                                      action만듬  <action의 payload 타입이 PageRequest>
+export const requestFetchPagingPhotos = createAction<PageRequest>(
+  `${photoReducer.name}/requestFetchPagingPhotos`
+);
+
 // photo를 삭제하는 action                      id 값
 //                             액션을 만듬, <액션의 payload값이 number임>
 export const requestRemovePhoto = createAction<number>(
@@ -67,6 +86,7 @@ export const requestModifyPhoto = createAction<PhotoItem>(
 );
 
 /* ------------- saga action을 처리하는 부분 -------------- */
+
 // 서버에 POST로 데이터를 보내 추가하고, redux state를 변경
 function* addData(action: PayloadAction<PhotoItem>) {
   yield console.log("--addData--");
@@ -96,10 +116,8 @@ function* addData(action: PayloadAction<PhotoItem>) {
     // spinner 보여주기
     yield put(startProgress());
 
-    // await api.add(photoItemRequest) 이 구문고 ㅏ일치함
-    // 결과값 형식을 지정해야함
-    console.log(api.add);
-
+    // await api.add(photoItemRequest) 이 구문과 일치함
+    // 결과값 형식을 지정해야함  : result
     const result: AxiosResponse<PhotoItemResponse> = yield call(
       api.add,
       photoItemRequest
@@ -111,10 +129,16 @@ function* addData(action: PayloadAction<PhotoItem>) {
     //===========2. redux state를 변경함
 
     // 2021-09-28 페이징 처리 추가 로직
-
     const photoData: PhotoItem[] = yield select(
       (state: RootState) => state.photo.data
     );
+
+    // 현재 데이터가 있으면  ????
+    if (photoData.length > 0) {
+      // 가장 마지막 요소의 id값을 가져오고 삭제함  ??????
+      const deleteId = photoData[photoData.length - 1].id;
+      yield put(removePhoto(deleteId));
+    }
 
     // 백엔드에서 처리한 데이터 객체로 state를 변경할 payload객체를 생성
     const photoItem: PhotoItem = {
@@ -139,6 +163,11 @@ function* addData(action: PayloadAction<PhotoItem>) {
 
     // completed 속성 삭제
     yield put(initialCompleted());
+
+    // alert 박스를 추가해줌
+    yield put(
+      addAlert({ id: nanoid(), variant: "success", message: "저장되었습니다." })
+    );
   } catch (e: any) {
     // 에러발생
 
@@ -152,6 +181,11 @@ function* addData(action: PayloadAction<PhotoItem>) {
   }
 }
 
+// Redux 사이드 이펙트
+// 1. api 연동
+// 2. 파일처리
+// 3. 처리중 메시지 보여주기/감추기
+// 4. 에러메시지 띄우기
 // 서버에서 GET으로 데이터를 가져오고, redux state를 초기화
 function* fetchData() {
   // 3)
@@ -195,6 +229,68 @@ function* fetchData() {
   }
 }
 
+function* fetchPagingData(action: PayloadAction<PageRequest>) {
+  yield console.log("--fetchPagingData--");
+
+  const page = action.payload.page;
+  const size = action.payload.size;
+
+  // ????????? 이해안됨
+  localStorage.setItem("photo_page_size", size.toString());
+
+  // spinner 보여주기
+  yield put(startProgress());
+
+  try {
+    // 백엔드에서 데이터 받아오기 ,   rest api 연동
+    const result: AxiosResponse<PhotoPagingReponse> = yield call(
+      // api
+      api.fetchPaging, // api
+      page,
+      size
+    );
+
+    // spinner 사라지게 하기
+    yield put(endProgress());
+
+    // 받아온 페이지 데이터를 Payload 변수로 변환
+    const photoPage: PhotoPage = {
+      // slice
+      // 응답데이터배열을 액션페이로드배열로 변환
+      // PhotoItemReponse[] => PhotoItem[]
+      data: result.data.content.map(
+        (item) =>
+          ({
+            id: item.id,
+            title: item.title,
+            description: item.description,
+            photoUrl: item.photoUrl,
+            fileType: item.fileType,
+            fileName: item.fileName,
+            createdTime: item.createdTime,
+          } as PhotoItem)
+      ),
+      totalElements: result.data.totalElements,
+      totalPages: result.data.totalPages,
+      page: result.data.number,
+      pageSize: result.data.size,
+      isLast: result.data.last,
+    };
+
+    // state 초기화 reducer 실행
+    yield put(initialPagedPhoto(photoPage)); // slice
+  } catch (e: any) {
+    // 에러발생
+    // spinner 사라지게 하기
+    yield put(endProgress());
+
+    // alert박스를 추가해줌
+    yield put(
+      addAlert({ id: nanoid(), variant: "danger", message: e.message })
+    );
+  }
+}
+
 //            (액션객체: payload가 있는 액션, <payload의 타입이 number - 제너릭타입>)
 function* removeData(action: PayloadAction<number>) {
   yield console.log("--removeData--");
@@ -202,6 +298,7 @@ function* removeData(action: PayloadAction<number>) {
   // payload값이 id값이다
   const id = action.payload;
 
+  // spinner 보여주기
   yield put(startProgress());
 
   // rest api 연동
@@ -214,17 +311,36 @@ function* removeData(action: PayloadAction<number>) {
   if (result.data) {
     // state 변경 - 1건 삭제
     yield put(removePhoto(id));
+  } else {
+    // alert박스를 추가해줌
+    yield put(
+      addAlert({
+        id: nanoid(),
+        variant: "danger",
+        message: "오류로 저장되지 않았습니다.",
+      })
+    );
   }
 
   // completed 속성 삭제
   yield put(initialCompleted());
+
+  // ??????????????????????????????????
+  // 현재 페이지 데이터를 다시 가져옴
+  // 현재 페이지와 사이즈 값을 읽어옴
+  const page: number = yield select((state: RootState) => state.photo.page);
+  const size: number = yield select((state: RootState) => state.photo.pageSize);
+
+  yield put(requestFetchPagingPhotos({ page, size }));
 }
 
 function* modifyData(action: PayloadAction<PhotoItem>) {
   yield console.log("--modifyData--");
 
+  // action의 payload로 넘어온 객체
   const photoItemPayload = action.payload;
 
+  // rest api로 보낼 요청객체
   const photoItemRequest: PhotoItemRequest = {
     title: photoItemPayload.title,
     description: photoItemPayload.description,
@@ -236,6 +352,7 @@ function* modifyData(action: PayloadAction<PhotoItem>) {
   // spinner 보여주기
   yield put(startProgress());
 
+  // rest api 연동
   const result: AxiosResponse<PhotoItemResponse> = yield call(
     api.modify,
     photoItemPayload.id,
@@ -276,6 +393,8 @@ export default function* photoSaga() {
   // 동일한 타입의 액션중에서 가장 마지막 액션만 처리, 이전 액션은 취소
   // 이전에 처리하던 함수는 모두 취소하고 맨마지막 함수만 실행
   yield takeLatest(requestFetchPhotos, fetchData); // 2)
+
+  yield takeLatest(requestFetchPagingPhotos, fetchPagingData);
 
   // 처리할 액션 등록, 삭제처리
   yield takeEvery(requestRemovePhoto, removeData);
