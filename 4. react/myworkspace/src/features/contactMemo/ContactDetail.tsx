@@ -1,22 +1,32 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { AppDispatch, RootState } from "../../store";
-import { removeContact } from "./contactSlice";
+import { requestRemoveContact } from "./contactSaga";
 
 const ContactDetail = () => {
   const { id } = useParams<{ id: string }>();
   console.log(id);
 
-  const contactData = useSelector((state: RootState) =>
+  const contactItem = useSelector((state: RootState) =>
     state.contact.data.find((item) => item.id === +id)
   );
-  console.log(contactData);
+
+  const isRemoveCompleted = useSelector(
+    (state: RootState) => state.contact.isRemoveCompleted
+  );
 
   const history = useHistory();
   const dispatch = useDispatch<AppDispatch>();
 
+  // 감지 후 에러 없으면 실행
+  useEffect(() => {
+    isRemoveCompleted && history.push("/ContactMemo");
+    console.log("--useEffect RemoveCompleted--");
+  }, [isRemoveCompleted, history]);
+
   const clickDelet = () => {
-    dispatch(removeContact(+id));
+    dispatch(requestRemoveContact(+id)); // saga action으로 대체
     history.push("/ContactMemo");
   };
 
@@ -30,23 +40,23 @@ const ContactDetail = () => {
           <tbody>
             <tr>
               <th>NAME</th>
-              <td>{contactData?.name}</td>
+              <td>{contactItem?.name}</td>
             </tr>
             <tr>
               <th>PHONE</th>
-              <td>{contactData?.phone}</td>
+              <td>{contactItem?.phone}</td>
             </tr>
             <tr>
               <th>E-MAIL</th>
-              <td>{contactData?.email}</td>
+              <td>{contactItem?.email}</td>
             </tr>
             <tr>
               <th>MEMO</th>
-              <td>{contactData?.memo}</td>
+              <td>{contactItem?.memo}</td>
             </tr>
             <tr>
               <th>Created Time</th>
-              <td>{contactData?.createdTime}</td>
+              <td>{contactItem?.createdTime}</td>
             </tr>
           </tbody>
         </table>

@@ -7,7 +7,13 @@ import photoReducer, {
 } from "./photoSlice";
 import { createAction, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { PhotoItem } from "./photoSlice";
-import { call, put, takeEvery, takeLatest } from "@redux-saga/core/effects";
+import {
+  call,
+  put,
+  select,
+  takeEvery,
+  takeLatest,
+} from "@redux-saga/core/effects";
 import api, { PhotoItemRequest, PhotoItemResponse } from "./photoApi";
 import { AxiosResponse } from "axios";
 import {
@@ -15,6 +21,7 @@ import {
   startProgress,
 } from "../../components/progress/progressSlice";
 import { addAlert } from "../../components/alert/alertSlice";
+import { RootState } from "../../store";
 
 /* ------------- saga action을 생성하는 부분 -------------- */
 
@@ -102,6 +109,13 @@ function* addData(action: PayloadAction<PhotoItem>) {
     yield put(endProgress());
 
     //===========2. redux state를 변경함
+
+    // 2021-09-28 페이징 처리 추가 로직
+
+    const photoData: PhotoItem[] = yield select(
+      (state: RootState) => state.photo.data
+    );
+
     // 백엔드에서 처리한 데이터 객체로 state를 변경할 payload객체를 생성
     const photoItem: PhotoItem = {
       id: result.data.id,
@@ -146,29 +160,39 @@ function* fetchData() {
   // spinner 보여주기
   yield put(startProgress());
 
-  // 백엔드에서 데이터 받아오기
-  const result: AxiosResponse<PhotoItemResponse[]> = yield call(api.fetch);
+  try {
+    // 백엔드에서 데이터 받아오기
+    const result: AxiosResponse<PhotoItemResponse[]> = yield call(api.fetch);
 
-  // spinner 사라지게 하기
-  yield put(endProgress());
+    // spinner 사라지게 하기
+    yield put(endProgress());
 
-  // PhotoItemResonse[] => PhotoItem[]
-  // 서버에서 받아온 배열(응답데이터)을 state에 넣을 수 있는 payload배열로 변환과정
-  const photos = result.data.map(
-    (item) =>
-      ({
-        id: item.id,
-        title: item.title,
-        description: item.description,
-        photoUrl: item.photoUrl,
-        fileType: item.fileType,
-        fileName: item.fileName,
-        createdTime: item.createdTime,
-      } as PhotoItem)
-  );
+    // PhotoItemResonse[] => PhotoItem[]
+    // 서버에서 받아온 배열(응답데이터)을 state에 넣을 수 있는 payload배열로 변환과정
+    const photos = result.data.map(
+      (item) =>
+        ({
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          photoUrl: item.photoUrl,
+          fileType: item.fileType,
+          fileName: item.fileName,
+          createdTime: item.createdTime,
+        } as PhotoItem)
+    );
 
-  // state 초기화 reducer실행
-  yield put(initialPhoto(photos)); // 4)
+    // state 초기화 reducer실행
+    yield put(initialPhoto(photos)); // 4)
+  } catch (e: any) {
+    // spinner 사라지게 하기
+    yield put(endProgress());
+
+    // alert 박스를 추가해줌
+    yield put(
+      addAlert({ id: nanoid(), variant: "danger", message: e.message })
+    );
+  }
 }
 
 //            (액션객체: payload가 있는 액션, <payload의 타입이 number - 제너릭타입>)

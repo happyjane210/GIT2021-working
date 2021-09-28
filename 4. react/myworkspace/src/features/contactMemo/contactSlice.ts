@@ -14,7 +14,10 @@ export interface ContactItem {
 // 5. ContactState선언
 interface ContactState {
   data: ContactItem[]; // contact 데이터 배열
-  isFetched: boolean;
+  isFetched: boolean; // 서버에서 데이터를 받아온지에 대한 여부
+  isAddCompleted?: boolean; // 데이터 추가가 완료되었는지 여부
+  isRemoveCompleted?: boolean; // 데이터 삭제가 완료되었는지 여부
+  isModifyCompleted?: boolean; // 데이터 수정이 완료되었는지 여부
 }
 
 // 6. contact state 를 목록 -> array 로 변환
@@ -54,6 +57,11 @@ const contactSlice = createSlice({
       console.log(contact);
 
       state.data.unshift(contact);
+      state.isAddCompleted = true; //추가가 완료되었음으로 상태표시
+    },
+
+    initialCompleted: (state) => {
+      delete state.isAddCompleted;
     },
 
     removeContact: (state, action: PayloadAction<number>) => {
@@ -63,18 +71,22 @@ const contactSlice = createSlice({
         state.data.findIndex((item) => item.id === id),
         1
       );
+      state.isRemoveCompleted = true;
     },
 
-    saveContact: (state, action: PayloadAction<ContactItem>) => {
-      const saveItem = action.payload;
-      const contactItem = state.data.find((item) => item.id === saveItem.id);
+    modifyContact: (state, action: PayloadAction<ContactItem>) => {
+      const modifyItem = action.payload;
+      const contactItem = state.data.find((item) => item.id === modifyItem.id);
 
+      // state에 있는 객체의 속성을 넘긴 객체의 속성으로 변경
       if (contactItem) {
-        contactItem.name = saveItem.name;
-        contactItem.phone = saveItem.phone;
-        contactItem.email = saveItem.email;
-        contactItem.memo = saveItem.memo;
+        contactItem.name = modifyItem.name;
+        contactItem.phone = modifyItem.phone;
+        contactItem.email = modifyItem.email;
+        contactItem.memo = modifyItem.memo;
       }
+      state.isModifyCompleted = true;
+      // 변경되었음을 표시
     },
 
     // payload 값으로 state를 초기화하는 reducer 필요
@@ -88,8 +100,13 @@ const contactSlice = createSlice({
   },
 });
 
-export const { addContact, removeContact, saveContact, initialContact } =
-  contactSlice.actions;
+export const {
+  addContact,
+  removeContact,
+  modifyContact,
+  initialContact,
+  initialCompleted,
+} = contactSlice.actions;
 
 //2. contact 슬라이스 리듀서 밖으로 공유
 export default contactSlice.reducer;

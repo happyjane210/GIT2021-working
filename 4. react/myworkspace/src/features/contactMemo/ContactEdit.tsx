@@ -1,15 +1,19 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { AppDispatch, RootState } from "../../store";
-import { saveContact } from "./contactSlice";
+import { requestModifyContact } from "./contactSaga";
 
 const ContactEdit = () => {
   const { id } = useParams<{ id: string }>();
   console.log(id);
 
-  const contactData = useSelector((state: RootState) =>
+  const contactItem = useSelector((state: RootState) =>
     state.contact.data.find((item) => item.id === +id)
+  );
+
+  const isModifyCompleted = useSelector(
+    (state: RootState) => state.photo.isModifyCompleted
   );
 
   const history = useHistory();
@@ -20,15 +24,19 @@ const ContactEdit = () => {
   const newEmail = useRef<HTMLInputElement>(null);
   const newMemo = useRef<HTMLTextAreaElement>(null);
 
+  useEffect(() => {
+    isModifyCompleted && history.push("/ContactMemo");
+  }, [isModifyCompleted, history]);
+
   const clickSave = () => {
-    if (contactData) {
-      const item = { ...contactData };
+    if (contactItem) {
+      const item = { ...contactItem };
       item.name = newName.current?.value;
       item.phone = newPhone.current?.value;
       item.email = newEmail.current?.value;
       item.memo = newMemo.current?.value;
 
-      dispatch(saveContact(item));
+      dispatch(requestModifyContact(item));
       history.push("/ContactMemo");
     }
   };
@@ -47,7 +55,7 @@ const ContactEdit = () => {
                 <input
                   className="form-control"
                   type="text"
-                  defaultValue={contactData?.name}
+                  defaultValue={contactItem?.name}
                   ref={newName}
                 />
               </td>
@@ -58,7 +66,7 @@ const ContactEdit = () => {
                 <input
                   className="form-control"
                   type="text"
-                  defaultValue={contactData?.phone}
+                  defaultValue={contactItem?.phone}
                   ref={newPhone}
                 />
               </td>
@@ -69,7 +77,7 @@ const ContactEdit = () => {
                 <input
                   className="form-control"
                   type="text"
-                  defaultValue={contactData?.email}
+                  defaultValue={contactItem?.email}
                   ref={newEmail}
                 />
               </td>
@@ -80,7 +88,7 @@ const ContactEdit = () => {
                 <textarea
                   className="form-control"
                   rows={10}
-                  defaultValue={contactData?.memo}
+                  defaultValue={contactItem?.memo}
                   ref={newMemo}
                 ></textarea>
               </td>

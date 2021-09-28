@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
 import { requestModifyPhoto } from "./photoSaga";
-import { modifyPhoto, PhotoItem } from "./photoSlice";
+import { PhotoItem } from "./photoSlice";
 
 const PhotoEdit = () => {
   // useSelector 로  global state랑 묶어줌 (store)

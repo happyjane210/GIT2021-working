@@ -1,4 +1,4 @@
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 //nanoid 문자열로 id 만드는 함수
 
