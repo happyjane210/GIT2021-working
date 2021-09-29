@@ -51,13 +51,14 @@ const Photo = () => {
     }
   }, [dispatch, photo.isFetched, photo.pageSize]);
 
+  // 콜백함수  4. onPageChanged(currentBlock * blockSize - 1); = 배열[1]
   const handlePageChanged = (page: number) => {
     console.log("--page: " + page);
     // setCurrentPage(page);
     dispatch(
       requestFetchPagingPhotos({
-        page,
-        size: photo.pageSize,
+        page, // 페이지 [1]:배열 => (2):화면  를 백엔드에 요청.
+        size: photo.pageSize, // 한페이지에 보여줄 사진개수 2개
       })
     );
   };
@@ -117,8 +118,9 @@ const Photo = () => {
             key={`photo-item-${index}`}
             className="card"
             style={{
-              width: "calc((100% - 3rem) / 4)",
-              marginLeft: index % 4 === 0 ? "0" : "1rem",
+              //  100를 초과된 마진 1rem 씩을
+              width: "calc((100% - 3rem) / 4)", // (총길이(100%) - 초과 공백 3rem) / 4  // (103-3)=(100/4)
+              marginLeft: index % 4 === 0 ? "0" : "1rem", // 사진 사이에 3개 공백 , 1rem
               marginTop: index > 3 ? "1rem" : "0",
             }}
           >
@@ -149,10 +151,10 @@ const Photo = () => {
       {/* 페이지네이션 */}
       <div className="d-flex justify-content-center mt-4">
         <Pagination
-          blockSize={2} // 고정값
+          blockSize={3} // 고정값
           totalPages={photo.totalPages}
           currentPage={photo.page}
-          onPageChanged={handlePageChanged}
+          onPageChanged={handlePageChanged} // 1. 콜백함수
         />
       </div>
     </div>

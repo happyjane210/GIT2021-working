@@ -4,7 +4,9 @@ interface PaginationProp {
   blockSize: number;
   totalPages: number;
   currentPage: number;
-  onPageChanged?: (pageNo: number) => void; // 반환값 없는 매서드
+  onPageChanged?: (pageNo: number) => void; //  2.
+  // 반환값 없는 매서드(함수), page 번호를 매개변수로 받음
+  // props up , event down으로 받아옴
 }
 
 const Pagination = ({
@@ -35,7 +37,7 @@ const Pagination = ({
     <nav>
       <ul className="pagination">
         {/* PREVIOUS 영역 */}
-        {currentBlock !== 0 && (
+        {currentBlock !== 0 && ( // [0] 첫번째 페이지UI 는 preview없음, 첫번째가 아닐때만 실행
           <li className="page-item">
             <a
               className="page-link"
@@ -43,7 +45,8 @@ const Pagination = ({
               onClick={(e) => {
                 e.preventDefault();
                 setCurrentBlock(currentBlock - 1); // ???
-                onPageChanged && onPageChanged(currentBlock * blockSize - 1); // ???
+                onPageChanged && onPageChanged(currentBlock * blockSize - 1); // 3.   / -1은 페이지 뒤로가기 1칸
+                //         2번째 페이지블럭부터 대입   [1] * 2 - 1 = [1]  : 페이지2
               }}
             >
               PREV
@@ -86,7 +89,8 @@ const Pagination = ({
                     onPageChanged && onPageChanged(num);
                   }}
                 >
-                  {num + 1}
+                  {num}
+                  {/* num + 1 */}
                 </a>
               </li>
             ))
@@ -94,6 +98,8 @@ const Pagination = ({
 
         {/* NEXT 영역 */}
         {/* 현재 블록 기준 남아있는 페이지가 블록사이즈보다 크면 NEXT 보임 */}
+        {/* 총페이지 - 현재페이지블럭 * 몇개보여줄건지 > 몇개보여줌 */}
+        {/*  10   - ( x[ 0, 1, 2, 3]  *  3 ) >  3  */}
         {totalPages - currentBlock * blockSize > blockSize && (
           <li className="page-item">
             <a
@@ -104,6 +110,7 @@ const Pagination = ({
                 setCurrentBlock(currentBlock + 1);
                 onPageChanged &&
                   onPageChanged(currentBlock * blockSize + blockSize);
+                //              [0]  * 2 + 2 = [2]
               }}
             >
               NEXT

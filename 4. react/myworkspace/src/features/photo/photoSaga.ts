@@ -261,6 +261,7 @@ function* fetchPagingData(action: PayloadAction<PageRequest>) {
       data: result.data.content.map(
         (item) =>
           ({
+            // 사진 정보 객체 == data
             id: item.id,
             title: item.title,
             description: item.description,
@@ -270,14 +271,17 @@ function* fetchPagingData(action: PayloadAction<PageRequest>) {
             createdTime: item.createdTime,
           } as PhotoItem)
       ),
-      totalElements: result.data.totalElements,
-      totalPages: result.data.totalPages,
-      page: result.data.number,
-      pageSize: result.data.size,
-      isLast: result.data.last,
+      // 딸려온 페이지에 대한 정보
+      totalElements: result.data.totalElements, // DB에 저장되어있는 총 photo의 개수  / 6
+      totalPages: result.data.totalPages, // 총 페이지 수  / 3
+      page: result.data.number, // 현재 페이지, 배열[]  / 0
+      pageSize: result.data.size, // 1개 페이지안에서 게시글 개수 (포토 개수 몇개 들어가) /2
+      isLast: result.data.last, // 마지막 게시물(사진)인지? *마지막 페이지면 true, 마지막 아니면 false
+      // 마지막 페이지에 마지막 사진이 있음, 결국 같은말
     };
 
     // state 초기화 reducer 실행
+    // photoPage객체를 dispatch
     yield put(initialPagedPhoto(photoPage)); // slice
   } catch (e: any) {
     // 에러발생
