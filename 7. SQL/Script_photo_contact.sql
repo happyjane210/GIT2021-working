@@ -7,6 +7,7 @@ create schema myworkspace;
 -- 매번 점찍고 범위 지정해줘야함.
 set schema 'myworkspace';
 
+
 -- pk(primary key) : 주키
 -- 유일성과 최소성을 보장하는 컬럼
 -- 유일성: 전체 테이블 데이터에서 유일한 값을 가짐(사용자id, 이메일, 주민등록번호)
@@ -25,6 +26,9 @@ create table photo (
 	primary key (id)
 )
 
+truncate table photo restart identity;
+
+
 --(CREATE)
 -- 데이터를 1건 추가 
 -- insert into 테이블명(컬럼1, 컬럼2...) values(값1, 값2...)
@@ -36,7 +40,7 @@ values(1, 'test', 'DBeaver');
 --(READ)
 -- select 컬럼목록 from 테이블명; *는 전체
 -- 테이블 데이터를 전체 조회
-select * from photo;
+select * from photo p;
 -- 특정 컬럼(세로칸)만 조회
 select id, title from photo;
 -- photo 테이블 전체 목록 조회
@@ -64,7 +68,7 @@ update photo set
 	title='새로운제목' 
 where id=5;
 
-
+select * from photo p ;
 
 
 
@@ -100,7 +104,6 @@ select
 from contact;
 
 select "name" from contact;
-
 
 
 

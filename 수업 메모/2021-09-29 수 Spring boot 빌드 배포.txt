@@ -1,0 +1,242 @@
+2021-09-29  수  Spring boot 빌드 배포
+
+
+// 교재 추천
+
+자바 
+  - 혼공자 (혼자 공부하는 자바)
+  - 모던자바스크립트 인 액션
+
+스프링
+  - 스프링 인 액션
+  - 스프링 부트를 활용한 마이크로서비스 개발
+
+
+
+// 배포
+1.  공공데이터 포털 회원가입
+2.  데이터 활용신청
+   - 대기오염 : https://www.data.go.kr/data/15073855/openapi.do
+   - 코로나 발생 현황 : https://www.data.go.kr/data/15043378/openapi.do
+
+3. 스프링에서 빌드 생성
+   - 빌드 스크립트 내장되어있음
+   -  gradlew.bat (배치 파일)  -> open with textedit
+   - gradle / maven (spring) == npm (react)
+
+빌드 명령어
+  gradlew build   - 테스트코드까지 같이 실행함
+  gradlew bootJar  - 실행 파일만 실행
+
+자바 홈 경로가 잘못됨..?
+ERROR: JAVA_HOME is set to an invalid directory: C:\sts-4.11.1.RELEASE\plugins\org.eclipse.justj.openjdk.h
+otspot.jre.full.win32.x86_64_16.0.2.v20210721-1149
+
+Please set the JAVA_HOME variable in your environment to match the
+location of your Java installation.
+
+6. spring\workspace\myworkspace\build\libs
+에서 cmd 
+
+프로젝트명 버전명. jar
+
+
+
+-----------------------------
+//EC2 
+
+보안그룹 (security group) - 인바운드 규칙 (외부->서버 들어옴)      	
+white list 방법
+  - 기본적으로 다 막아놓고 필요한것만 열음
+
+// 아웃바운드는 포트가 기본적으로 열려있음 (서버->외부 나감)
+  아웃바운드는 
+50000-51000 
+
+ACL (Access Control List)
+black list 방법
+  - 기본적으로 다 열어놓고 불필요한 애들은 막는다
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------
+interface 
+  : 형식
+  : 데이터를 주고받을 형식
+  : 구현할 클래스에 대한 형식
+  : 설계적인 곤점
+
+ : 자바에서의 interface 기능(메서드)의 spec ( 요구사항 )을 보여줌
+ : findById(Long id) : Entity
+
+  : OOP 다형성 관점에서
+    - interface를 구현하는 클래스가 여러개 있을 수 있음
+    - interfae 타입 하나만 가지고 다양한 클래스 타입의 객체를 갈아끼우면서 사용 할 수 있음
+
+Interface i - new A ( ) ;
+Interface i - new B ( ) ;
+
+@Repository
+interface PhotoRepository extends JpaRepository<Photo, Long> {
+    Photo findByTitle ( String titile ) ;
+   	쿼리 자동 생성됨 => SELECT * FROM photo WHERE title = :title
+}
+
+@Repository :  인터페이스에 메서드들에 맞는 쿼리처리를 하는 객체를 생성해줌
+   : Hibernate EntityFactoryManager
+   : 생성된 객체 IoC 컨테이너 안에 @Autowired로 의존객체 주입
+
+
+
+
+// @Bean
+
+@Configuration
+public class entityConfiguration {
+
+    // Photo 클래스의 객체들이 이 메서드에서 생성한 객체로 의존주입을 할 수 있게됨
+    @Bean     <- 싱글턴 기법
+    public Photo getPhoto( ) {
+        return new Photo ( ) ;
+    }
+}
+
+
+///-----------------Spring boot 빌드 배포명령어----------------------------------------------------
+
+jar파일 확인 명령어
+java -jar
+
+
+
+@
+커멘드 창에서 spring boot 실행명령어
+java -jar myworkspace-0.0.1-SNAPSHOT.jar
+
+실행 중지
+Ctrl + C
+
+**
+ /home/ubuntu/app/myworkspace/ 경로
+
+
+@
+커멘드 창 꺼도 서버 유지되도록 하는 명령어
+nohup 실행명령어 &
+nohup java -jar myworkspace-0.0.1-SNAPSHOT.jar &
+   ->  nohup : no hang-up     - 접속을 끊어도 작동되게 함          hang-up(끊다)
+   ->  & : background 실행    - 쉘창 뒤에서 실행, 백그라운드에서 실행
+
+
+
+
+
+@
+ps -ef | grep java            
+ps -ef | grep myworkspace 
+   -> ps( process )  :  실행중인 프로그램 목록 조회하는 명령어
+   -> -ef : 시스템에서 실행중인 모든 프로세스를 자세하게 조회 (작업관리자랑 비슷함)
+				(-e)            (-f)
+   ->  | (pipe, 연결자) : 앞의 명령의 출력을 뒤의 명령어의 입력으로 연결                    (ps -ef)  출력 => 입력 (grep java )
+   -> grep 키워드 파일명 :  파일의 특정키워드 검색  (전체 프로그램에서 자바 검색)
+
+== grep java 전체 프로세스 목록
+
+
+
+
+
+@
+& 로그파일 조회하기
+
+tail 파일명  :  파일 뒤쪽 부분을 읽어옴 (기본 10줄)
+    tail nohup.out
+
+tail -f 파일명  :  파일 뒤쪽을 읽고, 내용이 추가되는 것을 대기하고 있음
+		내용이 추가되면 바로 출력함
+    tail -f nohup.out
+    -> nohup 백그라운드 실행결과 지속적으로 nohup.out 파일에 기록함
+
+나올땐 ctrl + c
+
+
+
+@
+서버 끌때 - 
+
+kill -9 PID    processID : 프로세스를 강제종료,  끌때는 강제 종료하는게 좋음
+
+ubuntu    242957  242291  1 03:44 pts/0    00:00:16 java -jar myworkspace-0.0.1-SNAPSHOT.jar
+            processID
+
+kill -9 242957  
+[1]+  Killed                  nohup java -jar myworkspace-0.0.1-SNAPSHOT.jar
+
+
+
+
+
+
+
+@
+노홉 파일 지우고 다른데에 옮기기   - Redireaction 출력을 바꿈(화면 -> 파일)
+    명령어 > 파일명  : 명령어의 실행출력 결과가 해당파일에 기록됨 (덮어씌움)
+    명령어 >> 파일명  : 명령어의 실행출력 결과가 해당파일에 기록됨 (뒤에 붙임)
+
+rm nohup.out
+
+nohup java -jar myworkspace-0.0.1-SNAPSHOT.jar > myworkspace.log &
+
+tail -f *.log
+tail -f myworkspace.log
+
+
+
+sudo chdmod 777  파일명
+
+ls -al   =>
+d		rwx		rwx		r-x
+filetype		owner		owner group	other
+디렉토리		소유자권한	소유자그룹권한	그외사용자권한
+		읽기/쓰기/실행	읽기/쓰기/실행	읽기/실행
+
+
+
+
+//
+./run.sh myworkspace
+
+
+
+
+
+
+여러번 해보기!!
+** 커멘드창 명령어 잘 익히기
+
+
+
+
+
+
+
+
+
+scp -i "C:\Users\juh22\OneDrive\문서\Github\GIT2021-working\myworkspace.pem" -r ./build/libs/*.jar ubuntu@ec2-15-165-17-21.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/app/myworkspace
+scp -i "C:\Users\juh22\OneDrive\문서\Github\GIT2021-working\myworkspace.pem" -r ./run.sh ubuntu@ec2-15-165-17-21.ap-northeast-2.compute.amazonaws.com:/home/ubuntu/app/myworkspace
+ssh -i "C:\Users\juh22\OneDrive\문서\Github\GIT2021-working\myworkspace.pem" ubuntu@ec2-15-165-17-21.ap-northeast-2.compute.amazonaws.com "sudo chdmod 777 /home/ubuntu/app/myworkspace/run.sh"
+
+
+
+// 공공데이터 서비스키
+대기오염
+http://apis.data.go.kr/B552584/ArpltnStatsSvc/getCtprvnMesureLIst?itemCode=PM10&dataGubun=HOUR&pageNo=1&serviceKey=itBvLQRBMyMkMogfGhCxuSntdkkbcJtmhySH2jR9GD%2FcayyuW4%2FprkAKC0YvgzVTgbo8732gHiA%2Fo%2BZFWZrZAg%3D%3D
+코로나 현황
+http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?pageNo=1&numOfRows=10&serviceKey=itBvLQRBMyMkMogfGhCxuSntdkkbcJtmhySH2jR9GD%2FcayyuW4%2FprkAKC0YvgzVTgbo8732gHiA%2Fo%2BZFWZrZAg%3D%3D
+http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=itBvLQRBMyMkMogfGhCxuSntdkkbcJtmhySH2jR9GD%2FcayyuW4%2FprkAKC0YvgzVTgbo8732gHiA%2Fo%2BZFWZrZAg%3D%3D
+
