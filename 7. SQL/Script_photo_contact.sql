@@ -7,7 +7,6 @@ create schema myworkspace;
 -- 매번 점찍고 범위 지정해줘야함.
 set schema 'myworkspace';
 
-
 -- pk(primary key) : 주키
 -- 유일성과 최소성을 보장하는 컬럼
 -- 유일성: 전체 테이블 데이터에서 유일한 값을 가짐(사용자id, 이메일, 주민등록번호)
@@ -26,7 +25,9 @@ create table photo (
 	primary key (id)
 )
 
-truncate table photo restart identity;
+
+--//------------------------------------------------------
+
 
 
 --(CREATE)
@@ -37,10 +38,16 @@ insert into photo(created_time, title, description)
 values(1, 'test', 'DBeaver');
 
 
+
+--//------------------------------------------------------
+
+
+
 --(READ)
 -- select 컬럼목록 from 테이블명; *는 전체
 -- 테이블 데이터를 전체 조회
-select * from photo p;
+
+select * from photo;
 -- 특정 컬럼(세로칸)만 조회
 select id, title from photo;
 -- photo 테이블 전체 목록 조회
@@ -55,7 +62,53 @@ select
 from photo;
 
 
-truncate table photo;
+
+-- clustered index로 변경 : 데이터 정렬 순서를 인덱스 순서에 맞게
+cluster photo using photo_pkey;
+
+
+
+-- SQL 데이터 (역||순)정렬 : ORDER BY
+-- Spring 명령어 :    repo.findAll(Sort.by("id").descending());  &&   POSTMAN GET 목록조회
+-- ORDER BY 컬럼명 정렬방법 (desc, asc)  - 역순, 정순
+-- id 6->1 정렬
+select * from photo order by id desc;  
+-- title 역순(ㄷㄴㄱ) , id 정순 1->6
+select * from photo order by title desc, id asc;
+
+
+
+-- 1. 페이징 조회
+
+--  1.1 데이터 개수 조회  - 자동생성
+-- POSTMAN GET /photos/paging?page=2&size=2   
+-- 페이지 조회하면 자동으로 전체 id 카운트하는 명령어 실행  select count( )
+select count(*) from photo;
+select count(id) from photo;
+-- 둘다 결과값은 6 인데 count(*) 를 더 많이 씀
+
+-- 1.2 데이터 (역||순) 정렬 조회  - 자동으로 명령어 생성
+--  limit : 표시할 데이터 개수?  offset : 건너 뛸 데이터 개수?
+
+-- 데이터 6, 5   , (offset 0*2 생략가능)  - 역정렬하고, 데이터 2개 가져와
+select * from photo 
+order by id desc 
+limit 2;
+
+-- 데이터 4, 3  ,  offset 2  - 2개 건너뛰고 2개 가져와
+select * from photo 
+order by id desc 
+limit 2 offset 1*2;
+
+-- 데이터 2, 1  ,  offset 4  - 4개 건너뛰고 2개 가져와
+select * from photo 
+order by id desc 
+limit 2 offset 2*2;
+
+
+
+--//------------------------------------------------------
+
 
 
 -- (UPDATE)
@@ -68,9 +121,9 @@ update photo set
 	title='새로운제목' 
 where id=5;
 
-select * from photo p ;
 
 
+--//------------------------------------------------------
 
 
 
@@ -79,19 +132,25 @@ select * from photo p ;
 -- **** where 조건이 없으면 전체 데이터가 삭제됨, 조심할 것
 delete from photo where id = 16;
 
+-- 테이블 데이터 초기화, 로그 log 에 기록 안됨, 복구불가
+truncate table photo restart identity;
 
 
---//===== contact =======================================
 
 
---(CREATE)
+
+
+--//=========================== CONTACT =======================================
+
+
+------------(CREATE)-------------------------
 insert into contact (created_time, email, memo, "name" , phone) 
-values (1, 'dbeaver@gmail.com', 'dbeaver', 'dbeaver', '000-0000-0000');
+values (1, 'dbeaver@gmail.com', 'This is DBeaver', 'DBeaver', '000-0000-0000');
 
 
 
 
---(READ)
+------------(READ)-------------------------
 select * from contact;
 
 select
@@ -106,8 +165,41 @@ from contact;
 select "name" from contact;
 
 
+-- clustered index로 변경 : 데이터 정렬 순서를 인덱스 순서에 맞게
+cluster contact using contact_pkey;
 
--- (UPDATE)
+
+
+-- 1. 페이징 조회
+
+--  1.1 데이터 개수 조회  - 자동생성
+-- POSTMAN GET /contact/paging?page=0&size=3
+select count(*) from contact;
+select count(id) from contact;
+-- 둘다 결과값은 9
+
+-- 1.2 데이터 (역||순) 정렬 조회  - 자동으로 명령어 생성
+--  limit : 표시할 데이터 개수?  offset : 건너 뛸 데이터 개수?
+
+-- 데이터 6, 5   , (offset 0*2 생략가능)  - 역정렬하고, 데이터 2개 가져와
+select * from contact 
+order by id desc 
+limit 3;
+
+-- 데이터 4, 3  ,  offset 2  - 2개 건너뛰고 2개 가져와
+select * from contact 
+order by id desc 
+limit 3 offset 1*3;
+
+-- 데이터 2, 1  ,  offset 4  - 4개 건너뛰고 2개 가져와
+select * from contact 
+order by id desc 
+limit 3 offset 2*3;
+
+
+
+
+------------(UPDATE)-------------------------
 update contact set
 	created_time=2,
 	email='DDD@naver.com',
@@ -119,7 +211,13 @@ where id = 3;
 
 
 
---(DELETE)
+------------(DELETE)-------------------------
 -- **** where 조건이 없으면 전체 데이터가 삭제됨, 조심할 것
-delete from contact where id = 7;
+delete from contact where id = 15;
+
+-- 데이터 날리기, 테이블 데이터 초기화, 로그 log 에 기록 안됨, 복구불가
+truncate table contact restart identity;
+
+
+
 
