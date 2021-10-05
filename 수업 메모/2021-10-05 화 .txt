@@ -9,15 +9,37 @@ std_date 로 desc 걸기
 
 
 // [Spring] Cache  캐시
-일부 데이터를 좀더 빠른 공간에 저장 - 캐시 (Cache)
+   1. 일부 데이터를 좀더 빠른 공간에 저장 - 캐시 (Cache)
+   2. 데이터 갱신 주기에 캐시를 삭제
+    	=> 1시간 air / 1일 covid 데이터 추가 (수정/삭제)
+
 데이터베이스 (아주큰 백팩)  + 임시 저장 장치 캐시 (보조백, 자주쓰는 것들을 빠르게 넣고 빼고 할수있음)
 ** 백팩이 바뀌면 보조백 내용도 한꺼번에 없어짐
+
+Redis => 백팩 역할하는 프로그램 (in-memory database)
+    -  현재 시점의 데이터 올리는데 많이 씀
 
 @Cacheable : 캐시 설정
 @CacheEvict : 캐시 삭제
 @CachePut : 캐시 업데이트
 @Caching : 여러개의 cache 동작을 적용
 @CacheConfig : 클래스 레벨에서 캐시 설정의 공유
+
+
+
+// in-memory | document 데이터베이스
+
+1. in-memory 데이터베이스
+   - 현재 데이터
+   - 최근 데이터
+   - Redis 
+       : 데이터 들어갈 때 key-value 데이터 구조로 들어감
+       : 응답성능을 최적화 할때 많이 사용
+
+2. document 데이터 베이스
+   - 이력데이터
+   - mongo-db
+
 
 
 
@@ -34,12 +56,18 @@ std_date 로 desc 걸기
 [ es2-myworkspace.bat 더블클릭 cmd창 ]
   1. ps -ef | grep myworkspace
   2. 뭔가 돌아가고 있으면 중지하고 스프링 터미널로 가서 다시 배포해본다
-  3. 
+  3. 프로그램 중지하기  kill -9 오른쪽위6개숫자
+  4. 스프링에서 빌드하고 cd app , cd myworkspace 로 실행 디렉토리로 이동하기
+  5.  ls 로 myworkspace 에 run.sh 잘 있는지 확인
+  6. 여기서  myworkspace-0.0.1-SNAPSHOT.jar  myworkspace.log  run.sh 이렇게 나오면 1번 입력 ps -ef
+  7. 로그 확인하기 tail -f *.log
 
 
 
 
 // 필수
+지역명, 매개변수 영문
+gubunEn
 
 기준일시		STD_DAY		30				2020 3월 14일 00시
 
@@ -61,19 +89,122 @@ std_date 로 desc 걸기
 
 
 
+//// Redis 설치
+
+1.  아래 에서 다운로드
+https://github.com/microsoftarchive/redis/releases
+
+2. 설치되면 커멘드창 실행
+   - redis-cli      입력
+	127.0.0.1:6379>    가 떠야함
+
+  - config get maxmemory     입력
+	1) "maxmemory"
+	2) "104857600"   ->  Mebibyte
+	127.0.0.1:6379>
+ 
+
+//------- 캐싱하기
+
+3. spring   -> src/main/resources -> application.yml
+				아래 추가
+    cache:
+       type: redis
+    redis:
+       host: 127.0.0.1
+       port: 6379
+
+
+4. Sprign Boot Starter Data Redis  > 2.5.5 > Gradle
+의존성을 spring  > build.gradle 파일에 추가,  => build.gradle 눌러서 Gradle > Refresh project
+implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.5.5'
+
+
+5. Spring myworkspace > MyworkspaceApplication.java 에
+  어노테이션 추가
+@EnableCaching
+
+
+6. Spring myworkspace > configuration > RedisCacheConfig.java   작성
+
+
+//------- 캐싱하기 끝
+
+7. redis에 접속된 상태로 keys * 입력
+  - 전체 key 목록 조회하기
+  - postMan 에 get 먼저 하고 입력해야 나옴
+	1) "air-current::all"      이라고 나오면 정상
+
+
+8. keys * 까지 들어갔으면 거기서
+  - get key이름    입력   ex)  get "air-current::all"
+	키값으로 캐쉬에 저장된 데이터 모두 나옴
+
+**. 키 지우기
+  - del "air-current::all"
+
+
+//------- 원격에 설치
+우분투 [ es2-myworkspace.bat 더블클릭 cmd창 ]
+
+1. sudo apt-get update
+  - 경로 설정 ~/app/myworkspace$
+  - 패키지관리자 버전정보 최신화
+	~~~~.... Done
+
+2. sudo apt-get upgrade
+  - continue 나오면 y
+  - 실제 새로운 버전의 패키지들 설치
+
+3. sudo apt-get install redis-server
+  - continue 나오면 y
+
+4. redis-server --version
+	결과
+	Redis server v=5.0.7 sha=00000000:0 malloc=jemalloc-5.2.1 bits=64 build=636cde3b5c7a3923
+
+5. sudo vi /etc/redis/redis.conf
+  - / 입력후 maxmemory 검색
+  - #maxmemory 주석으로 달린곳 찾아서
+  - [ maxmemory 100M ] 로 수정하고
+  - :wq 저장, 강제종료하고 나오기
+
+6.  재시작
+sudo systemctl restart redis-server.service
+
+7. 서비스 상태
+sudo systemctl status redis-server.service
+ 초록색 원 나오고 뭔가 깜박임
+ 여기서나오려면    : wq
+
+8. 프로세스 잘 돌고있는지 확인
+ps -ef | grep redis
+	결과
+	redis     293442       1  0 16:51 ?        00:00:00 /usr/bin/redis-server 127.0.0.1:6379   <-이 서버에서 돌고있음
+
+9. redis-cli
+  	127.0.0.1:6379>
+
+10. config get maxmemory   
+	1) "maxmemory"
+	2) "100000000"
+	127.0.0.1:6379>
+
+11. keys *
+
+12. get "캐시이름::키이름"
+  - 키데이터 조회
+
+13. del "캐시이름::키이름"
+  - 키데이터 삭제
 
 
 
 
 
 
-
-
-
-
-
-
-
+// Spring Boot Starter  - Data Redis 
+불필요한 설치를 제거하고 의존성만 가지고 설치를 할수있게하는 명령어 모음
 
 
 

@@ -44,7 +44,9 @@ public class AirService {
 	// cron="초 분 시 일 월 년"
 	// cron="0 30 * * * *"
 	@Scheduled(cron = "0 30 * * * *")
-	@CacheEvict(value = "air-current", allEntries = true) // 해당 캐시이름의 모든 키를 삭제, value = 캐시이름
+	@CacheEvict(value = "air-current", allEntries = true)
+	// 가장 최신의 데이터를 불러와야 하니까 데이터가 맞물리지 않도록 기존 조회한 데이터 삭제
+	// 해당 캐시이름의 모든 키를 삭제, value = 캐시이름
 	public void requestAir() throws IOException {
 		// String[] sidoNames = { "서울", "경기" };
 		String[] sidoNames = { "서울" };
@@ -62,7 +64,7 @@ public class AirService {
 		// StringBuilder 문자열을 빌더방식으로 생성하는 클래스
 		// 1. 요청 URL 만들기
 		StringBuilder builder = new StringBuilder();
-		builder.append("http://apis.data.go.kr/B552584"); // 호스트/게이트웨이
+		builder.append("http://apis.data.go.kr/B552584"); // 호스트 / 게이트웨이
 		builder.append("/ArpltnStatsSvc"); // 서비스
 		builder.append("/getCtprvnMesureSidoLIst"); // 기능(시도-시군구별조회 예) 서울-강남구...중랑구)
 		builder.append("?sidoName=" + URLEncoder.encode(sido, "UTF-8")); // 시도(서울, 경기...) (한글이 있어서 UTF-8로 읽어야댐)
@@ -103,6 +105,7 @@ public class AirService {
 		/* ---------------------- 응답 객체 -> 엔티티 시작 ----------------- */
 		List<AirSigunguHour> list = new ArrayList<AirSigunguHour>();
 		for (AirSigunguHourResponse.Item item : response.getResponse().getBody().getItems().getItem()) {
+
 			AirSigunguHour record = AirSigunguHour.builder().dataTime(item.getDataTime()).sidoName(item.getSidoName())
 					.cityName(item.getCityName()).pm10Value(item.getPm10Value()).pm25Value(item.getPm25Value()).build();
 

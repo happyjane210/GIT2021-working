@@ -31,7 +31,7 @@ public class AirController {
 
 	// 최근 25개의 데이터를 조회 , 현재 시간 기준으로 역정렬
 	// 예) 서울 25개 구의 가장 최근 시간의 데이터
-	@Cacheable(value = cachName, key = "'all'")
+	@Cacheable(value = cachName, key = "'all'") // 캐싱하기
 	@GetMapping(value = "/sido/current")
 	public List<AirSigunguHour> getAirSidoCurrent() {
 
@@ -43,6 +43,8 @@ public class AirController {
 		return repo.findAll(PageRequest.of(0, 25, Sort.by(orders))).toList(); // 0번째 페이지에서 25개씩 출력
 
 	}
+
+	// 캐싱은 매서드의 리턴 객체가 캐시되는것, 디비의 데이터 테이블 아님!!
 
 	// 특정 구의 최근 12개의 데이터를 조회
 	// 예) 강남구, 최근 12개(12시간)의 데이터
