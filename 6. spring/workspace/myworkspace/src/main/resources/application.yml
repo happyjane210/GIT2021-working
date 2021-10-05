@@ -11,8 +11,10 @@ spring:
     # :5432 - 데이터베이스 접속 포트
     # /postgres - 접속할 데이터베이스(이름)
     # jdbc를 이용해 postgresql포트의 데이터베이스로 접속한다
+    
     url: jdbc:postgresql://database-1.caipcwydwewo.ap-northeast-2.rds.amazonaws.com:5432/postgres?currentSchema=myworkspace
     #url: jdbc:mysql://database-2.caipcwydwewo.ap-northeast-2.rds.amazonaws.com:3306/myworkspace
+    
     username: postgres
     #username: admin
     password: password123!  #기본 접속정보 넣음
@@ -20,4 +22,7 @@ spring:
   jpa:
     show-sql: true
     generate-ddl: true  # create SQL 명령어를 자동으로 수행함, auto-migration
+  cache:    type: redis
+  redis:    host: 127.0.0.1
+    port: 6379
     

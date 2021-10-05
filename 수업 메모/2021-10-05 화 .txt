@@ -1,0 +1,115 @@
+2021-10-05 화 redis 설치
+
+
+// covid, page
+pagesize = 19 개
+std_date 로 desc 걸기
+
+
+
+
+// [Spring] Cache  캐시
+일부 데이터를 좀더 빠른 공간에 저장 - 캐시 (Cache)
+데이터베이스 (아주큰 백팩)  + 임시 저장 장치 캐시 (보조백, 자주쓰는 것들을 빠르게 넣고 빼고 할수있음)
+** 백팩이 바뀌면 보조백 내용도 한꺼번에 없어짐
+
+@Cacheable : 캐시 설정
+@CacheEvict : 캐시 삭제
+@CachePut : 캐시 업데이트
+@Caching : 여러개의 cache 동작을 적용
+@CacheConfig : 클래스 레벨에서 캐시 설정의 공유
+
+
+
+// Spring 배포
+
+[ spring 터미널창 ]
+  1. gradlew build
+
+  2. gradlew bootJar
+
+  3. deploy
+
+
+[ es2-myworkspace.bat 더블클릭 cmd창 ]
+  1. ps -ef | grep myworkspace
+  2. 뭔가 돌아가고 있으면 중지하고 스프링 터미널로 가서 다시 배포해본다
+  3. 
+
+
+
+
+// 필수
+
+기준일시		STD_DAY		30				2020 3월 14일 00시
+
+시도명 (한글)	GUBUN		30				부산		
+
+해외유입		OVER_FLOW_CNT	15		옵션		14
+
+지역발생				7		옵션
+
+
+기준 column
+
+- 		기준일시	std_day		varchar(255), 	PK
+- 		시도명(한글)	gubun		varchar(255), 	PK
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

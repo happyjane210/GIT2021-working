@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class AirService {
 	// 시군구별 대기질 시간단위 조회
 	// 1시간마다 실행(js, setInterval)
 	// fixedRate: 가장 처음에 실행되고 간격별로 실행됨
-	@Scheduled(fixedRate = 1000 * 60 * 60 * 1)
+	// @Scheduled(fixedRate = 1000 * 60 * 60 * 1)
 
 	// 정각 2시간마다 실행
 //	@Scheduled(cron = "0 0 */2 * * *")	
@@ -43,9 +43,11 @@ public class AirService {
 	// 그 시간이 되어야만 실행됨
 	// cron="초 분 시 일 월 년"
 	// cron="0 30 * * * *"
-//	@Scheduled(cron = "0 30 * * * *")
+	@Scheduled(cron = "0 30 * * * *")
+	@CacheEvict(value = "air-current", allEntries = true) // 해당 캐시이름의 모든 키를 삭제, value = 캐시이름
 	public void requestAir() throws IOException {
-		String[] sidoNames = { "서울", "경기" };
+		// String[] sidoNames = { "서울", "경기" };
+		String[] sidoNames = { "서울" };
 		for (String sidoName : sidoNames) {
 			requestAirSiGunGuHour(sidoName);
 		}
@@ -68,7 +70,7 @@ public class AirService {
 		builder.append("&pageNo=1&numOfRows=100"); // 시군구 개수
 		builder.append("&serviceKey=" + SERVICE_KEY); // 서비스키
 
-//		System.out.println(builder.toString());
+		System.out.println(builder.toString());
 
 		// 2. URL 객체 생성
 		URL url = new URL(builder.toString());
@@ -85,11 +87,9 @@ public class AirService {
 		/* ---------------------- 데이터 요청하고 XML 받아오기 끝 ----------------- */
 
 		/* ---------------------- XML -> JSON -> Object(Java) 시작 ----------------- */
-		// XML(문자열) -> JSON(객체)
-		JSONObject jsonObj = XML.toJSONObject(data);
-		// JSON(객체) -> JSON(문자열)
-		String json = jsonObj.toString(2); // 가시성을 높이기 위해 toString(2)를 하면 새로로 보여줌
-//		System.out.println(json);
+		// XML(문자열) -> JSON(문자열)
+		String json = XML.toJSONObject(data).toString(2);
+		System.out.println(json);
 
 		// JSON(문자열) -> Java(object)
 		AirSigunguHourResponse response = new Gson().fromJson(json, AirSigunguHourResponse.class);
