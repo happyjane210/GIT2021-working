@@ -22,6 +22,7 @@ const getTiemString = (unixtime: number) => {
 };
 
 const Photo = () => {
+  ``;
   //const profile = useSelector((state: RootState) => state.profile);
   //7. 컴포넌트에 selector 지정
   // state 에 photo state를 가지고 오겠다
@@ -148,7 +149,7 @@ const Photo = () => {
           </div>
         ))}
       </div>
-      {/* 페이지네이션 */}
+      {/* 숫자형 페이지네이션 */}
       <div className="d-flex justify-content-center mt-4">
         <Pagination
           blockSize={3} // 고정값
