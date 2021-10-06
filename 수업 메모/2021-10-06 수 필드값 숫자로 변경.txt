@@ -1,0 +1,25 @@
+// 컬럼값 숫자로 변경
+
+1. SQL - 컬럼 타입 변경
+alter table 테이블명
+alter column 컬럼명 type int using (nullif(컬럼명, '')::integer);
+
+예)
+alter table air_sigungu_hour 
+alter column pm10value type int using (nullif(pm10value, '')::integer);
+
+2. Spring - 필드 타입 변경
+ - Entity Field 타입을 String -> Integer로 변경
+ - Service에 String -> Integer 변경처리
+  예) .pm10Value(item.getPm10Value().isEmpty() 
+			? null 
+			: Integer.valueOf(item.getPm10Value()))
+
+3. React - 필드 타입 변경
+  - Axios Response 타입 변경
+   예) pm10Value: string -> pm10Value: number;
+  - 샘플 데이터에 타입 변경
+   예) pm10Value: "44" -> 44
+   예) pm10Value: "" -> null
+  - series 데이터 숫자변환 제거
+   예)  data.map((item) => (+이부분을제거)item.pm10Value)

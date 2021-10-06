@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CovidSidoDailyId implements Serializable {
 
-	// 이게뭐지 1L는뭐지 ?? 그냥 있는것
 	/**
 	 * 
 	 */

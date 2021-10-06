@@ -1,12 +1,19 @@
 import { useState } from "react";
-import Pagination from "../components/Pagination";
+//import Pagination from "../../components/Pagination";
+import AirBar from "./AirBar";
+import AirLine from "./AirLine";
 
 const Home = () => {
-  const [currentPage, setCurrentpage] = useState(0);
+  //const [currentPage, setCurrentpage] = useState(0);
 
-  const handlePageChanged = (page: number) => {
+  {
+    /*
+    const handlePageChanged = (page: number) => {
     setCurrentpage(page);
   };
+  
+  */
+  }
 
   return (
     <div style={{ width: "40vw" }} className="mx-auto">
@@ -31,12 +38,16 @@ const Home = () => {
           <b>This is Home Component</b>
         </div>
       </div>
+      <AirBar />
+      <AirLine />
+      {/*
       <Pagination
         blockSize={10}
         totalPages={25}
         currentPage={currentPage}
         onPageChanged={handlePageChanged}
       />
+      */}
     </div>
   );
 };

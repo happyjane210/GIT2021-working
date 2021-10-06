@@ -44,7 +44,7 @@ import { Suspense, lazy } from "react";
 import { Provider } from "react-redux"; // react 앱에 redux store를 제공함
 import { store } from "./store"; // redux store
 
-import Home from "./features/Home";
+import Home from "./features/home/Home";
 import Profile from "./features/profile/Profile";
 //import Navigation from "./Navigation";
 import Progress from "./components/progress/Progress";

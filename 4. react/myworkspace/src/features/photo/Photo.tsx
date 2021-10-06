@@ -22,7 +22,6 @@ const getTiemString = (unixtime: number) => {
 };
 
 const Photo = () => {
-  ``;
   //const profile = useSelector((state: RootState) => state.profile);
   //7. 컴포넌트에 selector 지정
   // state 에 photo state를 가지고 오겠다
