@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.json.XML;
@@ -33,26 +32,15 @@ public class CovidService {
 	// 초:0-59 | 분:0-59 | 시:0-23 | 일:1-31 | 월:1-12 | 요일:0-6 | 연:생략가능 2021
 	// @Scheduled(cron="초 분 시 일 월 (요일) 년")
 	// 매일 오전 10시 5분 스케줄 실행, 데이터 수집
-	@Scheduled(cron = "0 5 10 * * *")
+//	@Scheduled(cron = "0 5 10 * * *")
 
+	@Scheduled(fixedRate = 1000 * 60 * 60 * 1)
 	// 가장 최신의 데이터를 불러와야 하니까 데이터가 맞물리지 않도록 기존 조회한 데이터 삭제
 	// 해당 캐시이름의 모든 키를 삭제, value = 캐시이름
 	@CacheEvict(value = "covid-daily", allEntries = true)
-	public void requestCovid() throws IOException {
-		// ????
-		String[] sidoGubunNames = { "서울" }; // 검색할 시도 이름
-		for (String sidoGubunName : sidoGubunNames) {
-			requestCovidSidoDaily(sidoGubunName);
-		}
-	}
-
-	@SuppressWarnings("deprecation")
-	public void requestCovidSidoDaily(String gubun) throws IOException {
-		System.out.println(new Date().toLocaleString());
+	public void requestCovidSidoDaily() throws IOException {
 
 		/* ---------------------- 데이터 요청하고 XML 받아오기 시작 ----------------- */
-
-		//
 
 		// 1. 요청 URL 만들기
 		StringBuilder builder = new StringBuilder();
@@ -60,10 +48,10 @@ public class CovidService {
 		builder.append("/service/rest/Covid19"); // 서비스
 		builder.append("/getCovid19SidoInfStateJson"); // 기능 (코로나19 시도별 감염 상황 json)
 		builder.append("?serviceKey=" + SERVICE_KEY); // 서비스키
-		builder.append("&pageNo=1&numOfRows=10"); // 개수 ?? 무슨개수
+		builder.append("&pageNo=1&numOfRows=10"); // 페이지 번호 1번 / 게시물 개수 10개
 		builder.append("&startCreateDt=20211001"); // 검색할 생성일 범위 시작 , 필수는 아닌데 start 나 end 하나는 있어야 데이터 조회됨
 
-		System.out.println(builder.toString());
+//		System.out.println(builder.toString());
 
 		// 2. URL 객체 생성
 		URL url = new URL(builder.toString());
@@ -79,17 +67,15 @@ public class CovidService {
 
 		/* ---------------------- 데이터 요청하고 XML 받아오기 끝 ----------------- */
 
-		//
-
 		/* ---------------------- XML -> JSON -> Object(Java) 시작 ----------------- */
 
 		// XML(문자열) -> JSON(문자열)
 		String json = XML.toJSONObject(data).toString(2); // 왜 2개???
-		System.out.println(json);
+//		System.out.println(json);
 
 		// JSON(문자열) -> Java(object) 객체
 		CovidSidoDailyResponse response = new Gson().fromJson(json, CovidSidoDailyResponse.class);
-		System.out.println(response);
+//		System.out.println(response);
 
 		/* ---------------------- XML -> JSON -> Object(Java) 끝 ----------------- */
 

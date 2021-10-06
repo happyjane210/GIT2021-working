@@ -17,25 +17,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(indexes = @Index(name = "idx_covid_sigu_daily_1", columnList = "stdDay, gubun"))
+@Table(indexes = @Index(name = "idx_covid_sido_daily_1", columnList = "stdDay, gubun"))
 @IdClass(CovidSidoDailyId.class)
 public class CovidSidoDaily {
 
+	// Id
 	@Id
-	@Column(columnDefinition = "varchar(255) PK")
 	private String stdDay;
 
 	@Id
-	@Column(columnDefinition = "varchar(255) PK \"ko_KR.utf8\"")
+	@Column(columnDefinition = "varchar(255) collate \"ko_KR.utf8\"")
 	private String gubun;
 
-	@Column(columnDefinition = "varchar(255)")
+	// value
 	private String gubunEn;
-
-	@Column(columnDefinition = "varchar(255)")
 	private String overFlowCnt;
-
-	@Column(columnDefinition = "varchar(255)")
 	private String localOccCnt;
 
 }

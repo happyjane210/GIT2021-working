@@ -38,7 +38,7 @@ public class CovidController {
 		// 여러개의 필드로 정렬
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(new Order(Sort.Direction.DESC, "stdDay"));
-		// orders.add(new Order(Sort.Direction.ASC, "gubun"));
+		orders.add(new Order(Sort.Direction.ASC, "gubun"));
 
 		return repo.findAll(PageRequest.of(0, 19, Sort.by(orders))).toList(); // 0번째 페이지에서 19개씩 출력
 	}
@@ -52,7 +52,7 @@ public class CovidController {
 
 		Pageable page = PageRequest.of(0, 7, Sort.by("stdDay").descending());
 
-		return repo.findBySidoGubun(page, gubun);
+		return repo.findByGubun(page, gubun);
 	}
 
 }

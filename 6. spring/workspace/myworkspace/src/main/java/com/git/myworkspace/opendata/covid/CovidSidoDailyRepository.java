@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface CovidSidoDailyRepository extends JpaRepository<CovidSidoDaily, Long> {
 
 	// findBy ÇÊµå¸í , Pascal-Case
-	List<CovidSidoDaily> findBySidoGubun(Pageable page, String gubun);
+	List<CovidSidoDaily> findByGubun(Pageable page, String gubun);
 
 }
