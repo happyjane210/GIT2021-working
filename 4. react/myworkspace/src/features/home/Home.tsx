@@ -1,4 +1,3 @@
-import { useState } from "react";
 //import Pagination from "../../components/Pagination";
 import AirBar from "./AirBar";
 import AirLine from "./AirLine";

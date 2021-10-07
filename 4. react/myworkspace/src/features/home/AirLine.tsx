@@ -29,16 +29,20 @@ const AirLine = () => {
         pm25Value: number;
       }[]
     >(
-      `${process.env.REACT_APP_API_BASE}/opendata/air/sido/current/${cityRef.current?.value}`
+      `${process.env.REACT_APP_API_BASE}/opendata/air/sido/current/${
+        cityRef.current ? cityRef.current.value : "강남구"
+      }`
     );
 
-    const data = result.data;
+    const data = result.data.reverse();
     //    const data = lineData;
 
     // 차트 옵션, x축
     const options: ApexOptions = {
       title: {
-        text: `서울 자치구별 미세먼지 현황 (${cityRef.current?.value})`,
+        text: `서울 자치구별 미세먼지 현황 (${
+          cityRef.current ? cityRef.current.value : "강남구"
+        })`,
         align: "center",
         margin: 20,
         style: {
@@ -51,7 +55,6 @@ const AirLine = () => {
         // ["2021-10-06 01:00", ... , "2021-10-07 03:00"]
         categories: data
           .map((item) => item.dataTime)
-          .sort()
           .map((itme) => itme.substr(11, 5)),
       },
     };
@@ -60,11 +63,11 @@ const AirLine = () => {
     const series = [
       {
         name: "PM10",
-        data: data.map((item) => +item.pm10Value),
+        data: data.map((item) => item.pm10Value),
       },
       {
         name: "PM2.5",
-        data: data.map((item) => +item.pm25Value),
+        data: data.map((item) => item.pm25Value),
       },
     ];
 
@@ -93,8 +96,8 @@ const AirLine = () => {
             >
               {barData
                 .map((item) => item.cityName)
-                .map((city) => (
-                  <option value={city}>{city}</option>
+                .map((item) => (
+                  <option value={item}>{item}</option>
                 ))}
             </select>
           </div>

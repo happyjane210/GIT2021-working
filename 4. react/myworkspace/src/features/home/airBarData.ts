@@ -2,13 +2,6 @@ const data = [
   {
     dataTime: "2021-10-07 01:00",
     sidoName: "서울",
-    cityName: "중구",
-    pm10Value: "5",
-    pm25Value: "1",
-  },
-  {
-    dataTime: "2021-10-07 01:00",
-    sidoName: "서울",
     cityName: "강남구",
     pm10Value: "8",
     pm25Value: "4",
@@ -173,6 +166,13 @@ const data = [
     cityName: "영등포구",
     pm10Value: "10",
     pm25Value: "3",
+  },
+  {
+    dataTime: "2021-10-07 01:00",
+    sidoName: "서울",
+    cityName: "중구",
+    pm10Value: "5",
+    pm25Value: "1",
   },
 ];
 
