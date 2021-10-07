@@ -40,7 +40,7 @@ public class CovidController {
 		orders.add(new Order(Sort.Direction.DESC, "stdDay"));
 		orders.add(new Order(Sort.Direction.ASC, "gubun"));
 
-		return repo.findAll(PageRequest.of(0, 19, Sort.by(orders))).toList(); // 0번째 페이지에서 19개씩 출력
+		return repo.findAll(PageRequest.of(0, 18, Sort.by(orders))).toList(); // 0번째 페이지에서 19개씩 출력
 	}
 
 	// 2. 특정 시도의 데이터 조회

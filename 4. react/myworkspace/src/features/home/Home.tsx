@@ -1,6 +1,7 @@
 //import Pagination from "../../components/Pagination";
 import AirBar from "./AirBar";
 import AirLine from "./AirLine";
+import CovidBar from "./CovidBar";
 
 const Home = () => {
   //const [currentPage, setCurrentpage] = useState(0);
@@ -39,6 +40,7 @@ const Home = () => {
       </div>
       <AirBar />
       <AirLine />
+      <CovidBar />
       {/*
       <Pagination
         blockSize={10}
