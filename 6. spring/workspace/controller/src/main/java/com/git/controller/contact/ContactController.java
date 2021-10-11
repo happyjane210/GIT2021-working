@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ContactController {
 
-	// Á¤·Ä Map, À§¿¡¼­ºÎÅÍ ½×ÀÌ°Ô
+	// ì •ë ¬ Map, ìœ„ì—ì„œë¶€í„° ìŒ“ì´ê²Œ
 	private SortedMap<Long, Contact> contacts = Collections
 			.synchronizedSortedMap(new TreeMap<Long, Contact>(Collections.reverseOrder()));
 
-	// id °ª »ı¼º¿¡ »ç¿ëÇÒ º¯¼ö
+	// id ê°’ ìƒì„±ì— ì‚¬ìš©í•  ë³€ìˆ˜
 	private AtomicLong maxId = new AtomicLong();
 
 	// -----GET---------------------------------------------------
-	// contact ¸ñ·ÏÁ¶È¸
+	// contact ëª©ë¡ì¡°íšŒ
 	// GET / contacts
 	@GetMapping(value = "/contacts")
 	public List<Contact> getContacts() {
@@ -39,11 +39,11 @@ public class ContactController {
 
 	// -----ADD---------------------------------------------------
 
-	// contact 1°Ç Ãß°¡
-	// POST / contacts »õ ¿¬¶ôÃ³ ÀÔ·Â
+	// contact 1ê±´ ì¶”ê°€
+	// POST / contacts ìƒˆ ì—°ë½ì²˜ ì…ë ¥
 	@PostMapping(value = "/contacts")
 	public Contact addContact(@RequestBody Contact contact, HttpServletResponse res) {
-		// µ¥ÀÌÅÍ °ËÁõ ·ÎÁ÷
+		// ë°ì´í„° ê²€ì¦ ë¡œì§
 		if (contact.getName() == null || contact.getName().isEmpty() || contact.getPhone() == null
 				|| contact.getPhone().isEmpty() || contact.getEmail() == null || contact.getEmail().isEmpty()
 				|| contact.getMemo() == null || contact.getMemo().isEmpty()) {
@@ -51,11 +51,11 @@ public class ContactController {
 			return null;
 		}
 
-		// id°ªÀ» »ı¼º
+		// idê°’ì„ ìƒì„±
 		Long currentId = maxId.incrementAndGet();
-		// ÀÔ·Â¹ŞÀº µ¥ÀÌÅÍ·Î contact°´Ã¼¸¦ »ı¼º
-		// id°ª°ú »ı¼ºÀÏ½Ã´Â ¼­¹ö¿¡¼­ »ı¼ºÇÑ °ÍÀ¸·Î Ã³¸®ÇÔ
-		// html Å×±×°¡ ÀÖÀ¸¸é ³¯·Á¹ö¸²(script¿¡¼­ ¹®Á¦°¡ ¹ß»ıÇÔ)
+		// ì…ë ¥ë°›ì€ ë°ì´í„°ë¡œ contactê°ì²´ë¥¼ ìƒì„±
+		// idê°’ê³¼ ìƒì„±ì¼ì‹œëŠ” ì„œë²„ì—ì„œ ìƒì„±í•œ ê²ƒìœ¼ë¡œ ì²˜ë¦¬í•¨
+		// html í…Œê·¸ê°€ ìˆìœ¼ë©´ ë‚ ë ¤ë²„ë¦¼(scriptì—ì„œ ë¬¸ì œê°€ ë°œìƒí•¨)
 		@SuppressWarnings("deprecation")
 		Contact contactItme = Contact.builder().id(currentId)
 				.name(contact.getName().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
@@ -64,62 +64,62 @@ public class ContactController {
 				.memo(contact.getMemo().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
 				.createdTime(new Date().getTime()).build();
 
-		// contact ¸ñ·Ï°´Ã¼ Ãß°¡
+		// contact ëª©ë¡ê°ì²´ ì¶”ê°€
 		contacts.put(currentId, contactItme);
-		// ¸®¼Ò½º »ı¼ºµÊ
+		// ë¦¬ì†ŒìŠ¤ ìƒì„±ë¨
 		// res.setStatus(201) = SC_CREATED
 		res.setStatus(HttpServletResponse.SC_CREATED);
-		// Ãß°¡µÈ °´Ã¼¸¦ ¹İÈ¯
+		// ì¶”ê°€ëœ ê°ì²´ë¥¼ ë°˜í™˜
 		return contactItme;
 
 	}
 
 	// ------REMOVE-----------------------------------
 
-	// contact 1°Ç »èÁ¦
-	// delete / contact /1 -> id°¡ 1ÀÎ Ç×¸ñÀ» »èÁ¦ÇØ¶ó
-	// id°ªÀÌ path variable·Î
+	// contact 1ê±´ ì‚­ì œ
+	// delete / contact /1 -> idê°€ 1ì¸ í•­ëª©ì„ ì‚­ì œí•´ë¼
+	// idê°’ì´ path variableë¡œ
 	@DeleteMapping(value = "/contacts/{id}")
 	public boolean removeContact(@PathVariable long id, HttpServletResponse res) {
 
-		// ÇØ´ç idÀÇ µ¥ÀÌÅÍ 1°ÇÀ» °¡Á®¿È
+		// í•´ë‹¹ idì˜ ë°ì´í„° 1ê±´ì„ ê°€ì ¸ì˜´
 		Contact contact = contacts.get(Long.valueOf(id));
-		if (contact == null) { // ÇØ´çµ¥ÀÌÅÍ°¡ ¾øÀ¸¸é - ¸ñ·Ï¿¡ ¾ø´Â ¼ıÀÚ ÀÔ·ÂÇÏ¸é
+		if (contact == null) { // í•´ë‹¹ë°ì´í„°ê°€ ì—†ìœ¼ë©´ - ëª©ë¡ì— ì—†ëŠ” ìˆ«ì ì…ë ¥í•˜ë©´
 			// res.setStatus(404)
-			// NOT FOUND : ÇØ´ç °æ·Î¿¡ ¸®¼Ò½º°¡ ¾øÀ½
+			// NOT FOUND : í•´ë‹¹ ê²½ë¡œì— ë¦¬ì†ŒìŠ¤ê°€ ì—†ìŒ
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return false;
 		}
 
-		// **½ÇÁ¦ »èÁ¦ ¼öÇà
+		// **ì‹¤ì œ ì‚­ì œ ìˆ˜í–‰
 		contacts.remove(Long.valueOf(id));
 		return true;
 	}
 
 	// ------EDIT-----------------------------------
-	// contact 1°Ç ¼öÁ¤
-	// PUT/contact/1 {"memo":"..."} , ¿¬¶ôÃ³ °ü¸®´Â ¿©±â¿¡ ¼öÁ¤¸ñ·Ï Ãß°¡ÇÔ
+	// contact 1ê±´ ìˆ˜ì •
+	// PUT/contact/1 {"memo":"..."} , ì—°ë½ì²˜ ê´€ë¦¬ëŠ” ì—¬ê¸°ì— ìˆ˜ì •ëª©ë¡ ì¶”ê°€í•¨
 	@PutMapping(value = "/contacts/{id}")
 	public Contact modifyContact(@PathVariable long id, @RequestBody Contact contact, HttpServletResponse res) {
 
-		// ÇØ´ç idÀÇ µ¥ÀÌÅÍ 1°ÇÀ» °¡Á®¿È
+		// í•´ë‹¹ idì˜ ë°ì´í„° 1ê±´ì„ ê°€ì ¸ì˜´
 		Contact findItem = contacts.get(Long.valueOf(id));
 
-		if (findItem == null) { // ÇØ´çµ¥ÀÌÅÍ°¡ ¾øÀ¸¸é - ¸ñ·Ï¿¡ ¾ø´Â ¼ıÀÚ ÀÔ·ÂÇÏ¸é
+		if (findItem == null) { // í•´ë‹¹ë°ì´í„°ê°€ ì—†ìœ¼ë©´ - ëª©ë¡ì— ì—†ëŠ” ìˆ«ì ì…ë ¥í•˜ë©´
 			// res.setStatus(404)
-			// NOT FOUND : ÇØ´ç °æ·Î¿¡ ¸®¼Ò½º°¡ ¾øÀ½
+			// NOT FOUND : í•´ë‹¹ ê²½ë¡œì— ë¦¬ì†ŒìŠ¤ê°€ ì—†ìŒ
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
 
-		// µ¥ÀÌÅÍ °ËÁõ ·ÎÁ÷À» Ãß°¡
-		// ¸Ş¸ğ°¡ ºó°ªÀÌ¸é ¿¡·¯
+		// ë°ì´í„° ê²€ì¦ ë¡œì§ì„ ì¶”ê°€
+		// ë©”ëª¨ê°€ ë¹ˆê°’ì´ë©´ ì—ëŸ¬
 		if (contact.getName() == null || contact.getName().isEmpty() || contact.getPhone() == null
 				|| contact.getPhone().isEmpty() || contact.getEmail() == null || contact.getEmail().isEmpty()) {
-			// Å¬¶óÀÌ¾ğÆ®¿¡¼­ ¸Ş¸ğ°ª ¾øÀÌ º¸³»°Å³ª ºó°ªÀ¸·Î º¸³½°Í = Å¬¶óÀÌ¾ğÆ® ¿À·ù ÄÚµå Bad Request (400)
+			// í´ë¼ì´ì–¸íŠ¸ì—ì„œ ë©”ëª¨ê°’ ì—†ì´ ë³´ë‚´ê±°ë‚˜ ë¹ˆê°’ìœ¼ë¡œ ë³´ë‚¸ê²ƒ = í´ë¼ì´ì–¸íŠ¸ ì˜¤ë¥˜ ì½”ë“œ Bad Request (400)
 			// res.setStatus(400) SC_BAD_REQUEST = 400
 
-			// Dispatcher ServletÀÌ »ı¼ºÇÑ ÀÀ´ä°´Ã¼¿¡ statusÄÚµå¸¦ ³Ö¾îÁÜ
+			// Dispatcher Servletì´ ìƒì„±í•œ ì‘ë‹µê°ì²´ì— statusì½”ë“œë¥¼ ë„£ì–´ì¤Œ
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
@@ -129,7 +129,7 @@ public class ContactController {
 			return null;
 		}
 
-		// µ¥ÀÌÅÍ¸¦ º¯°æ
+		// ë°ì´í„°ë¥¼ ë³€ê²½
 		findItem.setName(contact.getName());
 		findItem.setPhone(contact.getPhone());
 		findItem.setEmail(contact.getEmail());

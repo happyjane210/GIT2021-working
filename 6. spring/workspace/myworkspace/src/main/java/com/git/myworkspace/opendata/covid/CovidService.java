@@ -17,10 +17,10 @@ import com.google.gson.Gson;
 @Service
 public class CovidService {
 
-	// ¼­ºñ½ºÅ°
+	// ì„œë¹„ìŠ¤í‚¤
 	private final String SERVICE_KEY = "itBvLQRBMyMkMogfGhCxuSntdkkbcJtmhySH2jR9GD%2FcayyuW4%2FprkAKC0YvgzVTgbo8732gHiA%2Fo%2BZFWZrZAg%3D%3D";
 
-	// ÀÇÁ¸¼ºÁÖÀÔ
+	// ì˜ì¡´ì„±ì£¼ì…
 	private CovidSidoDailyRepository repo;
 
 	@Autowired
@@ -28,62 +28,62 @@ public class CovidService {
 		this.repo = repo;
 	}
 
-	// ½Ãµµº° ÄÚ·Î³ª »óÈ² ÀÏº°Á¶È¸
-	// ÃÊ:0-59 | ºĞ:0-59 | ½Ã:0-23 | ÀÏ:1-31 | ¿ù:1-12 | ¿äÀÏ:0-6 | ¿¬:»ı·«°¡´É 2021
-	// @Scheduled(cron="ÃÊ ºĞ ½Ã ÀÏ ¿ù (¿äÀÏ) ³â")
-	// ¸ÅÀÏ ¿ÀÀü 10½Ã 5ºĞ ½ºÄÉÁÙ ½ÇÇà, µ¥ÀÌÅÍ ¼öÁı
+	// ì‹œë„ë³„ ì½”ë¡œë‚˜ ìƒí™© ì¼ë³„ì¡°íšŒ
+	// ì´ˆ:0-59 | ë¶„:0-59 | ì‹œ:0-23 | ì¼:1-31 | ì›”:1-12 | ìš”ì¼:0-6 | ì—°:ìƒëµê°€ëŠ¥ 2021
+	// @Scheduled(cron="ì´ˆ ë¶„ ì‹œ ì¼ ì›” (ìš”ì¼) ë…„")
+	// ë§¤ì¼ ì˜¤ì „ 10ì‹œ 5ë¶„ ìŠ¤ì¼€ì¤„ ì‹¤í–‰, ë°ì´í„° ìˆ˜ì§‘
 //	@Scheduled(cron = "0 5 10 * * *")
 
-// »ùÇÃµ¥ÀÌÅÍ
+// ìƒ˜í”Œë°ì´í„°
 	@Scheduled(fixedRate = 1000 * 60 * 60 * 1)
 
-	// °¡Àå ÃÖ½ÅÀÇ µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Í¾ß ÇÏ´Ï±î µ¥ÀÌÅÍ°¡ ¸Â¹°¸®Áö ¾Êµµ·Ï ±âÁ¸ Á¶È¸ÇÑ µ¥ÀÌÅÍ »èÁ¦
-	// ÇØ´ç Ä³½ÃÀÌ¸§ÀÇ ¸ğµç Å°¸¦ »èÁ¦, value = Ä³½ÃÀÌ¸§
+	// ê°€ì¥ ìµœì‹ ì˜ ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì™€ì•¼ í•˜ë‹ˆê¹Œ ë°ì´í„°ê°€ ë§ë¬¼ë¦¬ì§€ ì•Šë„ë¡ ê¸°ì¡´ ì¡°íšŒí•œ ë°ì´í„° ì‚­ì œ
+	// í•´ë‹¹ ìºì‹œì´ë¦„ì˜ ëª¨ë“  í‚¤ë¥¼ ì‚­ì œ, value = ìºì‹œì´ë¦„
 	@CacheEvict(value = "covid-daily", allEntries = true)
 	public void requestCovidSidoDaily() throws IOException {
 
-		/* ---------------------- µ¥ÀÌÅÍ ¿äÃ»ÇÏ°í XML ¹Ş¾Æ¿À±â ½ÃÀÛ ----------------- */
+		/* ---------------------- ë°ì´í„° ìš”ì²­í•˜ê³  XML ë°›ì•„ì˜¤ê¸° ì‹œì‘ ----------------- */
 
-		// 1. ¿äÃ» URL ¸¸µé±â
+		// 1. ìš”ì²­ URL ë§Œë“¤ê¸°
 		StringBuilder builder = new StringBuilder();
-		builder.append("http://openapi.data.go.kr/openapi"); // È£½ºÆ® / °ÔÀÌÆ®¿şÀÌ
-		builder.append("/service/rest/Covid19"); // ¼­ºñ½º
-		builder.append("/getCovid19SidoInfStateJson"); // ±â´É (ÄÚ·Î³ª19 ½Ãµµº° °¨¿° »óÈ² json)
-		builder.append("?serviceKey=" + SERVICE_KEY); // ¼­ºñ½ºÅ°
-		builder.append("&pageNo=1&numOfRows=10"); // ÆäÀÌÁö ¹øÈ£ 1¹ø / °Ô½Ã¹° °³¼ö 10°³
-		builder.append("&startCreateDt=20211001"); // °Ë»öÇÒ »ı¼ºÀÏ ¹üÀ§ ½ÃÀÛ , ÇÊ¼ö´Â ¾Æ´Ñµ¥ start ³ª end ÇÏ³ª´Â ÀÖ¾î¾ß µ¥ÀÌÅÍ Á¶È¸µÊ
+		builder.append("http://openapi.data.go.kr/openapi"); // í˜¸ìŠ¤íŠ¸ / ê²Œì´íŠ¸ì›¨ì´
+		builder.append("/service/rest/Covid19"); // ì„œë¹„ìŠ¤
+		builder.append("/getCovid19SidoInfStateJson"); // ê¸°ëŠ¥ (ì½”ë¡œë‚˜19 ì‹œë„ë³„ ê°ì—¼ ìƒí™© json)
+		builder.append("?serviceKey=" + SERVICE_KEY); // ì„œë¹„ìŠ¤í‚¤
+		builder.append("&pageNo=1&numOfRows=10"); // í˜ì´ì§€ ë²ˆí˜¸ 1ë²ˆ / ê²Œì‹œë¬¼ ê°œìˆ˜ 10ê°œ
+		builder.append("&startCreateDt=20211001"); // ê²€ìƒ‰í•  ìƒì„±ì¼ ë²”ìœ„ ì‹œì‘ , í•„ìˆ˜ëŠ” ì•„ë‹Œë° start ë‚˜ end í•˜ë‚˜ëŠ” ìˆì–´ì•¼ ë°ì´í„° ì¡°íšŒë¨
 
 //		System.out.println(builder.toString());
 
-		// 2. URL °´Ã¼ »ı¼º
+		// 2. URL ê°ì²´ ìƒì„±
 		URL url = new URL(builder.toString());
 
-		// 3. Http·Î Á¢¼ÓÇÏ·Á¸é url¸¦ http Á¢¼Ó¿ë °´Ã¼·Î ¹Ù²ã¾ßÇÔ
+		// 3. Httpë¡œ ì ‘ì†í•˜ë ¤ë©´ urlë¥¼ http ì ‘ì†ìš© ê°ì²´ë¡œ ë°”ê¿”ì•¼í•¨
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
-		// 4. byte[] ¹è¿­·Î µ¥ÀÌÅÍ¸¦ ÀĞ¾î¿È
+		// 4. byte[] ë°°ì—´ë¡œ ë°ì´í„°ë¥¼ ì½ì–´ì˜´
 		byte[] result = con.getInputStream().readAllBytes();
 
-		// 5. byte[] -> ¹®ÀÚ¿­ (XML) º¯È¯
+		// 5. byte[] -> ë¬¸ìì—´ (XML) ë³€í™˜
 		String data = new String(result, "UTF-8");
 
-		/* ---------------------- µ¥ÀÌÅÍ ¿äÃ»ÇÏ°í XML ¹Ş¾Æ¿À±â ³¡ ----------------- */
+		/* ---------------------- ë°ì´í„° ìš”ì²­í•˜ê³  XML ë°›ì•„ì˜¤ê¸° ë ----------------- */
 
-		/* ---------------------- XML -> JSON -> Object(Java) ½ÃÀÛ ----------------- */
+		/* ---------------------- XML -> JSON -> Object(Java) ì‹œì‘ ----------------- */
 
-		// XML(¹®ÀÚ¿­) -> JSON(¹®ÀÚ¿­)
-		String json = XML.toJSONObject(data).toString(2); // ¿Ö 2°³???
+		// XML(ë¬¸ìì—´) -> JSON(ë¬¸ìì—´)
+		String json = XML.toJSONObject(data).toString(2); // ì™œ 2ê°œ???
 //		System.out.println(json);
 
-		// JSON(¹®ÀÚ¿­) -> Java(object) °´Ã¼
+		// JSON(ë¬¸ìì—´) -> Java(object) ê°ì²´
 		CovidSidoDailyResponse response = new Gson().fromJson(json, CovidSidoDailyResponse.class);
 //		System.out.println(response);
 
-		/* ---------------------- XML -> JSON -> Object(Java) ³¡ ----------------- */
+		/* ---------------------- XML -> JSON -> Object(Java) ë ----------------- */
 
 		//
 
-		/* ---------------------- ÀÀ´ä °´Ã¼ -> entity ¿£Æ¼Æ¼ °´Ã¼ ½ÃÀÛ ----------------- */
+		/* ---------------------- ì‘ë‹µ ê°ì²´ -> entity ì—”í‹°í‹° ê°ì²´ ì‹œì‘ ----------------- */
 
 		List<CovidSidoDaily> list = new ArrayList<CovidSidoDaily>();
 		for (CovidSidoDailyResponse.Item item : response.getResponse().getBody().getItems().getItem()) {
@@ -95,13 +95,13 @@ public class CovidService {
 			list.add(record);
 		}
 
-		/* ---------------------- ÀÀ´ä °´Ã¼ -> entity ¿£Æ¼Æ¼ °´Ã¼ ³¡ ----------------- */
+		/* ---------------------- ì‘ë‹µ ê°ì²´ -> entity ì—”í‹°í‹° ê°ì²´ ë ----------------- */
 
 		//
 
-		/* ---------------------- ¿£Æ¼Æ¼°´Ã¼ -> ¸®Æ÷ÁöÅÍ¸®·Î ÀúÀå ½ÃÀÛ ----------------- */
+		/* ---------------------- ì—”í‹°í‹°ê°ì²´ -> ë¦¬í¬ì§€í„°ë¦¬ë¡œ ì €ì¥ ì‹œì‘ ----------------- */
 		repo.saveAll(list);
-		/* ---------------------- ¿£Æ¼Æ¼°´Ã¼ -> ¸®Æ÷ÁöÅÍ¸®·Î ÀúÀå ½ÃÀÛ ----------------- */
+		/* ---------------------- ì—”í‹°í‹°ê°ì²´ -> ë¦¬í¬ì§€í„°ë¦¬ë¡œ ì €ì¥ ì‹œì‘ ----------------- */
 
 	}
 

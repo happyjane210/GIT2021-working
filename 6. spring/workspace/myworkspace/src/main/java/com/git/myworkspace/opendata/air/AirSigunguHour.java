@@ -21,9 +21,9 @@ import lombok.NoArgsConstructor;
 @IdClass(AirSigunguHourId.class)
 public class AirSigunguHour {
 
-	// ½Ã°£ ½Ãµµ, »ç±º±¸¿¡ À¯ÀÏÇÑµ¥ÀÌÅÍ¸¸ Á¸ÀçÇØ¾ßÇÔ
-	// 20210930 16:00, ¼­¿ï, °­³²±¸ ÃøÁ¤µÈ µ¥ÀÌÅÍ´Â À¯ÀÏÇÏ°Ô 1°Ç Á¸ÀçÇØ¾ßÇÔ
-	// ÇØ´ç ¾ÆÀÌµğ °ª¿¡ µ¥ÀÌÅÍ°¡ ÀÖÀ¸¸é select ÇÔ insert ¾ÈÇÔ <Áßº¹Ã³¸®>
+	// ì‹œê°„ ì‹œë„, ì‚¬êµ°êµ¬ì— ìœ ì¼í•œë°ì´í„°ë§Œ ì¡´ì¬í•´ì•¼í•¨
+	// 20210930 16:00, ì„œìš¸, ê°•ë‚¨êµ¬ ì¸¡ì •ëœ ë°ì´í„°ëŠ” ìœ ì¼í•˜ê²Œ 1ê±´ ì¡´ì¬í•´ì•¼í•¨
+	// í•´ë‹¹ ì•„ì´ë”” ê°’ì— ë°ì´í„°ê°€ ìˆìœ¼ë©´ select í•¨ insert ì•ˆí•¨ <ì¤‘ë³µì²˜ë¦¬>
 	@Id
 	private String dataTime;
 	@Id
@@ -32,7 +32,7 @@ public class AirSigunguHour {
 	@Id
 	@Column(columnDefinition = "varchar(20) collate \"ko_KR.utf8\"")
 	private String cityName;
-	// °ª
+	// ê°’
 	private String pm10Value;
 	private String pm25Value;
 }

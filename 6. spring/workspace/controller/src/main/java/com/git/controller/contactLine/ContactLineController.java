@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ContactLineController {
 
-	// Á¤·Ä À§¿¡¼­ºÎÅÍ ½×ÀÌ°Ô
+	// ì •ë ¬ ìœ„ì—ì„œë¶€í„° ìŒ“ì´ê²Œ
 	private SortedMap<Long, ContactLine> contactlines = Collections
 			.synchronizedSortedMap(new TreeMap<Long, ContactLine>(Collections.reverseOrder()));
 
-	// id °ª »ı¼º¿¡ »ç¿ëÇÒ º¯¼ö
+	// id ê°’ ìƒì„±ì— ì‚¬ìš©í•  ë³€ìˆ˜
 	private AtomicLong maxId = new AtomicLong();
 
-	// contact ¸ñ·ÏÁ¶È¸
+	// contact ëª©ë¡ì¡°íšŒ
 	// GET / linecontacts
 	@GetMapping(value = "/linecontacts")
 	public List<ContactLine> getContactLines() {
@@ -37,12 +37,12 @@ public class ContactLineController {
 
 	// -----ADD---------------------------------------------------
 
-	// contactline 1°Ç Ãß°¡
-	// POST / linecontacts »õ¿¬¶ôÃ³ ÀÔ·Â
+	// contactline 1ê±´ ì¶”ê°€
+	// POST / linecontacts ìƒˆì—°ë½ì²˜ ì…ë ¥
 	@PostMapping(value = "/linecontacts")
 	public ContactLine addContact(@RequestBody ContactLine contactline, HttpServletResponse res) {
 
-		// µ¥ÀÌÅÍ °ËÁõ
+		// ë°ì´í„° ê²€ì¦
 		if (contactline.getName() == null || contactline.getName().isEmpty() || contactline.getPhone() == null
 				|| contactline.getPhone().isEmpty() || contactline.getEmail() == null
 				|| contactline.getEmail().isEmpty()) {
@@ -50,10 +50,10 @@ public class ContactLineController {
 			return null;
 		}
 
-		// id°ªÀ» »ı¼º
+		// idê°’ì„ ìƒì„±
 		Long currentId = maxId.incrementAndGet();
 
-		// html Å×±×°¡ ÀÖÀ¸¸é ³¯·Á¹ö¸²(script¿¡¼­ ¹®Á¦°¡ ¹ß»ıÇÔ)
+		// html í…Œê·¸ê°€ ìˆìœ¼ë©´ ë‚ ë ¤ë²„ë¦¼(scriptì—ì„œ ë¬¸ì œê°€ ë°œìƒí•¨)
 		@SuppressWarnings("deprecation")
 		ContactLine contactlineItem = ContactLine.builder().id(currentId)
 				.name(contactline.getName().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
@@ -61,53 +61,53 @@ public class ContactLineController {
 				.email(contactline.getEmail().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
 				.createdTime(new Date().getTime()).build();
 
-		// contact ¸ñ·Ï°´Ã¼ Ãß°¡
+		// contact ëª©ë¡ê°ì²´ ì¶”ê°€
 		contactlines.put(currentId, contactlineItem);
 
-		// ¸®¼Ò½º »ı¼º res.setStatus(201) = SC_CREATED
+		// ë¦¬ì†ŒìŠ¤ ìƒì„± res.setStatus(201) = SC_CREATED
 		res.setStatus(HttpServletResponse.SC_CREATED);
 
-		// Ãß°¡µÈ °´Ã¼¸¦ ¹İÈ¯
+		// ì¶”ê°€ëœ ê°ì²´ë¥¼ ë°˜í™˜
 		return contactlineItem;
 	}
 
 	// ------REMOVE-----------------------------------
 
-	// contact 1°Ç »èÁ¦
-	// delete / linecontacts / 1 => id°¡ 1ÀÎ Ç×¸ñ »èÁ¦
+	// contact 1ê±´ ì‚­ì œ
+	// delete / linecontacts / 1 => idê°€ 1ì¸ í•­ëª© ì‚­ì œ
 
 	@DeleteMapping(value = "/linecontacts/{id}")
 	public boolean removeContact(@PathVariable long id, HttpServletResponse res) {
 
-		// ÇØ´ç idÀÇ µ¥ÀÌÅÍ 1°ÇÀ» °¡Á®¿Â
+		// í•´ë‹¹ idì˜ ë°ì´í„° 1ê±´ì„ ê°€ì ¸ì˜¨
 		ContactLine contactline = contactlines.get(Long.valueOf(id));
-		if (contactline == null) { // ¸ñ·Ï¿¡ ¾ø´Â ¼ıÀÚ ÀÔ·ÂÇÏ¸é
+		if (contactline == null) { // ëª©ë¡ì— ì—†ëŠ” ìˆ«ì ì…ë ¥í•˜ë©´
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return false;
 		}
 
-		// ½ÇÁ¦ »èÁ¦ ¼öÇà
+		// ì‹¤ì œ ì‚­ì œ ìˆ˜í–‰
 		contactlines.remove(Long.valueOf(id));
 		return true;
 	}
 
 	// ------EDIT-----------------------------------
-	// contactline 1°Ç ¼öÁ¤
+	// contactline 1ê±´ ìˆ˜ì •
 	// PUT / linecontacts / 1 {"name":"ddd"}
 	@PutMapping(value = "/linecontacts/{id}")
 	public ContactLine modifyContact(@PathVariable long id, @RequestBody ContactLine contactline,
 			HttpServletResponse res) {
 
-		// ÇØ´ç idÀÇ µ¥ÀÌÅÍ 1°ÇÀ» °¡Á®¿È
+		// í•´ë‹¹ idì˜ ë°ì´í„° 1ê±´ì„ ê°€ì ¸ì˜´
 		ContactLine findItem = contactlines.get(Long.valueOf(id));
 
-		if (findItem == null) { // ÇØ´çµ¥ÀÌÅÍ°¡ ¾øÀ¸¸é - ¸ñ·Ï¿¡ ¾ø´Â ¼ıÀÚ ÀÔ·ÂÇÏ¸é
-			// res.setStatus(404) - NOT FOUND : ÇØ´ç °æ·Î¿¡ ¸®¼Ò½º°¡ ¾øÀ½
+		if (findItem == null) { // í•´ë‹¹ë°ì´í„°ê°€ ì—†ìœ¼ë©´ - ëª©ë¡ì— ì—†ëŠ” ìˆ«ì ì…ë ¥í•˜ë©´
+			// res.setStatus(404) - NOT FOUND : í•´ë‹¹ ê²½ë¡œì— ë¦¬ì†ŒìŠ¤ê°€ ì—†ìŒ
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
 
-		// µ¥ÀÌÅÍ °ËÁõ ·ÎÁ÷À» Ãß°¡ - ¼öÁ¤ÇÏ´Â ¸Ş¸ğ°¡ ºó°ªÀÌ¸é ¿¡·¯
+		// ë°ì´í„° ê²€ì¦ ë¡œì§ì„ ì¶”ê°€ - ìˆ˜ì •í•˜ëŠ” ë©”ëª¨ê°€ ë¹ˆê°’ì´ë©´ ì—ëŸ¬
 		if (contactline.getName() == null || contactline.getName().isEmpty() || contactline.getPhone() == null
 				|| contactline.getPhone().isEmpty() || contactline.getEmail() == null
 				|| contactline.getEmail().isEmpty()) {

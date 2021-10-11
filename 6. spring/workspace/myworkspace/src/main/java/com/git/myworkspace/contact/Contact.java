@@ -17,9 +17,9 @@ import lombok.NoArgsConstructor;
 @Entity
 
 public class Contact {
-	// ÇÊµåÀÇ id¸¦ Å×ÀÌºíÀÇ Primary key·Î.
+	// í•„ë“œì˜ idë¥¼ í…Œì´ë¸”ì˜ Primary keyë¡œ.
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // »ı¼ºÀü·« IDENTITY
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // ìƒì„±ì „ëµ IDENTITY
 	private long id;
 	private String name;
 	private String phone;

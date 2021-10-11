@@ -32,30 +32,30 @@ public class CovidSidoDailyResponse {
 
 	@Data
 	public class Item {
-		// ±âÁØÀÏ, (µµ½Ã)±¸ºĞ, ÇØ¿ÜÀ¯ÀÔ, Áö¿ª¹ß»ı
-		// ÇÊ¼ö
+		// ê¸°ì¤€ì¼, (ë„ì‹œ)êµ¬ë¶„, í•´ì™¸ìœ ì…, ì§€ì—­ë°œìƒ
+		// í•„ìˆ˜
 		private String stdDay;
 		private String gubun;
 		private String gubunEn;
 		private String overFlowCnt;
 		private String localOccCnt;
-		// ¼±ÅÃ
+		// ì„ íƒ
 		private String defCnt;
 		private String deathCnt;
 		private String incDec;
 	}
 
-//    <deathCnt>15</deathCnt>			 	»ç¸ÁÀÚ¼ö
-//    <defCnt>6120</defCnt> 				È®ÁøÀÚ¼ö
-//    <gubun>°Ë¿ª</gubun> 					µµ½Ã±¸ºĞ **
-//    <gubunEn>Lazaretto</gubunEn>			±¸ºĞ¿µ¾î *
-//    <incDec>9</incDec>   					ÀüÀÏ´ëºñ Áõ°¨¼ö
+//    <deathCnt>15</deathCnt>			 	ì‚¬ë§ììˆ˜
+//    <defCnt>6120</defCnt> 				í™•ì§„ììˆ˜
+//    <gubun>ê²€ì—­</gubun> 					ë„ì‹œêµ¬ë¶„ **
+//    <gubunEn>Lazaretto</gubunEn>			êµ¬ë¶„ì˜ì–´ *
+//    <incDec>9</incDec>   					ì „ì¼ëŒ€ë¹„ ì¦ê°ìˆ˜
 
-//    <isolClearCnt>5917</isolClearCnt> 	°İ¸®ÇØÁ¦¼ö
-//    <isolIngCnt>188</isolIngCnt>			°İ¸®Áß È¯ÀÚ¼ö
+//    <isolClearCnt>5917</isolClearCnt> 	ê²©ë¦¬í•´ì œìˆ˜
+//    <isolIngCnt>188</isolIngCnt>			ê²©ë¦¬ì¤‘ í™˜ììˆ˜
 
-//    <localOccCnt>0</localOccCnt>			Áö¿ª¹ß»ı¼ö **
-//    <overFlowCnt>9</overFlowCnt>			ÇØ¿Ü À¯ÀÔ¼ö **
-//    <stdDay>2021³â 10¿ù 04ÀÏ 00½Ã</stdDay>	±âÁØÀÏ½Ã **
+//    <localOccCnt>0</localOccCnt>			ì§€ì—­ë°œìƒìˆ˜ **
+//    <overFlowCnt>9</overFlowCnt>			í•´ì™¸ ìœ ì…ìˆ˜ **
+//    <stdDay>2021ë…„ 10ì›” 04ì¼ 00ì‹œ</stdDay>	ê¸°ì¤€ì¼ì‹œ **
 
 }

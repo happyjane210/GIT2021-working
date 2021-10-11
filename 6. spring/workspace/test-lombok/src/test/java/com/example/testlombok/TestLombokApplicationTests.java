@@ -1,6 +1,7 @@
 package com.example.testlombok;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -10,11 +11,11 @@ class TestLombokApplicationTests {
 	@Test
 	void contextLoads() {
 		Member member = new Member();
-		member.setId(1);		// ÀÔ·ÂÇÑ °ª
+		member.setId(1); // ìž…ë ¥í•œ ê°’
 		member.setName("hong");
-		
-		// Å×½ºÆ® ÄÚµå¸¦ Â¥´Â°Í
-		assertEquals(1, member.getId());		// ²¨³»¿Â °ª
+
+		// í…ŒìŠ¤íŠ¸ ì½”ë“œë¥¼ ì§œëŠ”ê²ƒ
+		assertEquals(1, member.getId()); // êº¼ë‚´ì˜¨ ê°’
 		assertEquals("hong", member.getName());
 	}
 

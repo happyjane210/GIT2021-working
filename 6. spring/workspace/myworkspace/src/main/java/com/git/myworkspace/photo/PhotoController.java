@@ -26,7 +26,7 @@ public class PhotoController {
 
 	private PhotoRepository repo;
 
-	// ÀÇÁ¸¼º ÁÖÀÔ
+	// ì˜ì¡´ì„± ì£¼ì…
 	@Autowired
 	public PhotoController(PhotoRepository repo) {
 		this.repo = repo;
@@ -36,43 +36,43 @@ public class PhotoController {
 	public List<Photo> getPhotos() throws InterruptedException {
 		// repository.findAll();
 		// select * from photo;
-		// ±âº»ÀûÀ¸·Î PK ¼øÁ¤·Ä (asc, ascending) µÇ°íÀÖ´Â»óÈ²
+		// ê¸°ë³¸ì ìœ¼ë¡œ PK ìˆœì •ë ¬ (asc, ascending) ë˜ê³ ìˆëŠ”ìƒí™©
 		// 1, 2, 3///
 		// return repo.findAll();
 
-		// id ÄÃ·³ ¿ªÁ¤·Ä
-		// Sort.by("Á¤·ÄÄ®·³").descending() ¿ªÁ¤·Ä
-		// Sort.by("Á¤·ÄÄ®·³").ascending() ¼øÁ¤·Ä
+		// id ì»¬ëŸ¼ ì—­ì •ë ¬
+		// Sort.by("ì •ë ¬ì¹¼ëŸ¼").descending() ì—­ì •ë ¬
+		// Sort.by("ì •ë ¬ì¹¼ëŸ¼").ascending() ìˆœì •ë ¬
 		return repo.findAll(Sort.by("id").descending());
 	}
 
-	// ----------- paging Ã³¸®, ÇÑÆäÀÌÁö 2°³, 1¹øÂ° ÆäÀÌÁö ----------
+	// ----------- paging ì²˜ë¦¬, í•œí˜ì´ì§€ 2ê°œ, 1ë²ˆì§¸ í˜ì´ì§€ ----------
 
-	// 0¹øÂ° ÆäÀÌÁö¿¡, »çÁø 2°³¾¿
+	// 0ë²ˆì§¸ í˜ì´ì§€ì—, ì‚¬ì§„ 2ê°œì”©
 	// ex) GET/photos/paging?page=0&size=2
 	@GetMapping("/photos/paging")
 	public Page<Photo> getPhotoPaging(@RequestParam int page, @RequestParam int size) {
-		// findAll()ÇÔ¼ö¿¡ Pageable page °´Ã¼¸¦ ³ÖÀ½
-		// page °´Ã¼¿¡ PageRequest.of() ÇÔ¼ö·Î page, size, Sort.by("id").descending() ¸¦ ³ÖÀ½
+		// findAll()í•¨ìˆ˜ì— Pageable page ê°ì²´ë¥¼ ë„£ìŒ
+		// page ê°ì²´ì— PageRequest.of() í•¨ìˆ˜ë¡œ page, size, Sort.by("id").descending() ë¥¼ ë„£ìŒ
 		return repo.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
 	}
 
 	@PostMapping(value = "/photos")
 	public Photo addPhoto(@RequestBody Photo photo, HttpServletResponse res) throws InterruptedException {
 
-		// Å¸ÀÌÆ² ºó°ª
+		// íƒ€ì´í‹€ ë¹ˆê°’
 		if (TextProcesser.isEmptyText(photo.getTitle())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
 
-		// ÆÄÀÏ urlÀÌ ºó°ª
+		// íŒŒì¼ urlì´ ë¹ˆê°’
 		if (TextProcesser.isEmptyText(photo.getPhotoUrl())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
 
-		// °´Ã¼ »ı¼º
+		// ê°ì²´ ìƒì„±
 		Photo photoItem = Photo.builder().title(photo.getTitle())
 				.description(TextProcesser.getPlainText(photo.getDescription())).photoUrl(photo.getPhotoUrl())
 				.fileType(photo.getFileType()).fileName(photo.getFileType()).createdTime(new Date().getTime()).build();
@@ -80,26 +80,26 @@ public class PhotoController {
 		// insert into photo(...) values(...)
 		Photo photoSaved = repo.save(photoItem);
 
-		// ¸®¼Ò½º »ı¼ºµÊ
+		// ë¦¬ì†ŒìŠ¤ ìƒì„±ë¨
 		res.setStatus(HttpServletResponse.SC_CREATED);
 
-		// Ãß°¡µÈ °´Ã¼¸¦ ¹İÈ¯
+		// ì¶”ê°€ëœ ê°ì²´ë¥¼ ë°˜í™˜
 		return photoSaved;
 	}
 
 	@DeleteMapping(value = "/photos/{id}")
 	public boolean removePhotos(@PathVariable Long id, HttpServletResponse res) throws InterruptedException {
 
-		// id¿¡ ÇØ´çÇÏ´Â °´Ã¼ °¡ ¾øÀ¸¸é
-		// Optional null-safe ¿ëÀ¸·Î ÀÚ¹Ù 1.8¿¡ ³ª¿Â ¹æ½Ä
-		// ¿É¼Å³Î °´Ã¼¸¦ ¾ò¾î¿È
+		// idì— í•´ë‹¹í•˜ëŠ” ê°ì²´ ê°€ ì—†ìœ¼ë©´
+		// Optional null-safe ìš©ìœ¼ë¡œ ìë°” 1.8ì— ë‚˜ì˜¨ ë°©ì‹
+		// ì˜µì…”ë„ ê°ì²´ë¥¼ ì–»ì–´ì˜´
 		Optional<Photo> photo = repo.findById(id);
 		if (photo.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return false;
 		}
 
-		// »èÁ¦ ¼öÇà
+		// ì‚­ì œ ìˆ˜í–‰
 		// delete from photo where id = ?
 		repo.deleteById(id);
 
@@ -110,20 +110,20 @@ public class PhotoController {
 	public Photo modifyPhotos(@PathVariable long id, @RequestBody Photo photo, HttpServletResponse res)
 			throws InterruptedException {
 
-		// id¿¡ ÇØ´çÇÏ´Â °´Ã¼°¡ ¾øÀ¸¸é
+		// idì— í•´ë‹¹í•˜ëŠ” ê°ì²´ê°€ ì—†ìœ¼ë©´
 		Optional<Photo> photoItem = repo.findById(id);
 		if (photoItem.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
 
-		// Å¸ÀÌÆ²ÀÌ ºó°ª
+		// íƒ€ì´í‹€ì´ ë¹ˆê°’
 		if (TextProcesser.isEmptyText(photo.getTitle())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
 
-		// ÆÄÀÏ URLÀÌ ºó°ª
+		// íŒŒì¼ URLì´ ë¹ˆê°’
 		if (TextProcesser.isEmptyText(photo.getPhotoUrl())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
@@ -138,7 +138,7 @@ public class PhotoController {
 		photoItem.get().setFileName(photo.getFileType());
 
 		// repository.save(entity)
-		// id°¡ ÀÖÀ¸¸é UPDATE, ¾øÀ¸¸é INSERT
+		// idê°€ ìˆìœ¼ë©´ UPDATE, ì—†ìœ¼ë©´ INSERT
 		// UPDATE
 		// SET title=?, description=?
 		// where ...

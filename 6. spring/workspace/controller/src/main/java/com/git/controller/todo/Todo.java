@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor // 朔持失切
-@AllArgsConstructor // 穿端 持失切
+@NoArgsConstructor
+@AllArgsConstructor
 public class Todo {
 	private long id;
 	private String memo;

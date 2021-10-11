@@ -2,7 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.5.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'jacoco'   // Ä¿¹ö¸®Áö ¸®Æ÷Æ®¿ë ÇÃ·¯±×ÀÎ
+	id 'jacoco'   // ì»¤ë²„ë¦¬ì§€ ë¦¬í¬íŠ¸ìš© í”ŒëŸ¬ê·¸ì¸
 }
 
 group = 'com.git'

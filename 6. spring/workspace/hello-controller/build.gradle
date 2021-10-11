@@ -20,8 +20,8 @@ repositories {
 
 dependencies {
 
-	// ³»Àå tomcat ¼­¹ö ±â¹İÀÇ ¹é¿£µå ¾îÇÃ¸®ÄÉÀÌ¼Ç ½ÇÇàÇÒ ¼ö ÀÖ°ÔÇÔ
-	// ÇÁ·Î
+	// ë‚´ì¥ tomcat ì„œë²„ ê¸°ë°˜ì˜ ë°±ì—”ë“œ ì–´í”Œë¦¬ì¼€ì´ì…˜ ì‹¤í–‰í•  ìˆ˜ ìˆê²Œí•¨
+	// í”„ë¡œ
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

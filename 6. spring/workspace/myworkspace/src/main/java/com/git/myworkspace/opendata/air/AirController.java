@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/opendata/air")
 public class AirController {
 
-	// ÀÇÁ¸ ÁÖÀÔ
+	// ì˜ì¡´ ì£¼ì…
 	private AirSigunguHourRepository repo;
 	private final String cachName = "air-current";
 
@@ -29,27 +29,27 @@ public class AirController {
 		this.repo = repo;
 	}
 
-	// ÃÖ±Ù 25°³ÀÇ µ¥ÀÌÅÍ¸¦ Á¶È¸ , ÇöÀç ½Ã°£ ±âÁØÀ¸·Î ¿ªÁ¤·Ä
-	// ¿¹) ¼­¿ï 25°³ ±¸ÀÇ °¡Àå ÃÖ±Ù ½Ã°£ÀÇ µ¥ÀÌÅÍ
-	@Cacheable(value = cachName, key = "'all'") // Ä³½ÌÇÏ±â
+	// ìµœê·¼ 25ê°œì˜ ë°ì´í„°ë¥¼ ì¡°íšŒ , í˜„ì¬ ì‹œê°„ ê¸°ì¤€ìœ¼ë¡œ ì—­ì •ë ¬
+	// ì˜ˆ) ì„œìš¸ 25ê°œ êµ¬ì˜ ê°€ì¥ ìµœê·¼ ì‹œê°„ì˜ ë°ì´í„°
+	@Cacheable(value = cachName, key = "'all'") // ìºì‹±í•˜ê¸°
 	@GetMapping(value = "/sido/current")
 	public List<AirSigunguHour> getAirSidoCurrent() {
 
-		// ¿©·¯°³ÀÇ ÇÊµå·Î Á¤·Ä
+		// ì—¬ëŸ¬ê°œì˜ í•„ë“œë¡œ ì •ë ¬
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(new Order(Sort.Direction.DESC, "dataTime"));
 		orders.add(new Order(Sort.Direction.ASC, "cityName"));
 
-		return repo.findAll(PageRequest.of(0, 25, Sort.by(orders))).toList(); // 0¹øÂ° ÆäÀÌÁö¿¡¼­ 25°³¾¿ Ãâ·Â
+		return repo.findAll(PageRequest.of(0, 25, Sort.by(orders))).toList(); // 0ë²ˆì§¸ í˜ì´ì§€ì—ì„œ 25ê°œì”© ì¶œë ¥
 
 	}
 
-	// Ä³½ÌÀº ¸Å¼­µåÀÇ ¸®ÅÏ °´Ã¼°¡ Ä³½ÃµÇ´Â°Í, µğºñÀÇ µ¥ÀÌÅÍ Å×ÀÌºí ¾Æ´Ô!!
+	// ìºì‹±ì€ ë§¤ì„œë“œì˜ ë¦¬í„´ ê°ì²´ê°€ ìºì‹œë˜ëŠ”ê²ƒ, ë””ë¹„ì˜ ë°ì´í„° í…Œì´ë¸” ì•„ë‹˜!!
 
-	// Æ¯Á¤ ±¸ÀÇ ÃÖ±Ù 12°³ÀÇ µ¥ÀÌÅÍ¸¦ Á¶È¸
-	// ¿¹) °­³²±¸, ÃÖ±Ù 12°³(12½Ã°£)ÀÇ µ¥ÀÌÅÍ
-	// ¿¹) WHERE city_name='°­³²±¸' ORDER BY data_time DESC LIMIT 12
-	// @Cacheable(value = "Ä³½ÃÀÌ¸§", key = "Å°ÀÌ¸§") °æ·Î°¡ µÉ ¸Å°³º¯¼ö´Â ¾Õ¿¡ #À» ºÙ¿©ÁÜ(pathVariable)
+	// íŠ¹ì • êµ¬ì˜ ìµœê·¼ 12ê°œì˜ ë°ì´í„°ë¥¼ ì¡°íšŒ
+	// ì˜ˆ) ê°•ë‚¨êµ¬, ìµœê·¼ 12ê°œ(12ì‹œê°„)ì˜ ë°ì´í„°
+	// ì˜ˆ) WHERE city_name='ê°•ë‚¨êµ¬' ORDER BY data_time DESC LIMIT 12
+	// @Cacheable(value = "ìºì‹œì´ë¦„", key = "í‚¤ì´ë¦„") ê²½ë¡œê°€ ë  ë§¤ê°œë³€ìˆ˜ëŠ” ì•ì— #ì„ ë¶™ì—¬ì¤Œ(pathVariable)
 	@Cacheable(value = cachName, key = "#city")
 	@GetMapping(value = "/sido/current/{city}")
 	public List<AirSigunguHour> getAirSidoCurrent(@PathVariable String city) {

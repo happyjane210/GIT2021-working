@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AirSigunguHourRepository extends JpaRepository<AirSigunguHour, Long> {
 
-	// findByÇÊµå¸í
-	// ÇÊµå¸íÀº Pascal-Case·Î ´ë¼Ò¹®ÀÚ Àß ¸ÂÃç¾ßÇÔ
-	// ¿¹) ÇÊµå¸í findBy ¸Þ¼­µå¸í findByCityName
+	// findByí•„ë“œëª…
+	// í•„ë“œëª…ì€ Pascal-Caseë¡œ ëŒ€ì†Œë¬¸ìž ìž˜ ë§žì¶°ì•¼í•¨
+	// ì˜ˆ) í•„ë“œëª… findBy ë©”ì„œë“œëª… findByCityName
 	// -> WHERE city_name = :city ORDER BY ... LIMIT ...
 	List<AirSigunguHour> findByCityName(Pageable page, String city);
 }

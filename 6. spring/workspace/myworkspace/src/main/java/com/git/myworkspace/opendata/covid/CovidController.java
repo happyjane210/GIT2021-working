@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/opendata/covid")
 public class CovidController {
 
-	// ÀÇÁ¸ ÁÖÀÔ
+	// ì˜ì¡´ ì£¼ì…
 	private CovidSidoDailyRepository repo;
 	private final String cachName = "covid-daily";
 
@@ -29,23 +29,23 @@ public class CovidController {
 		this.repo = repo;
 	}
 
-	// 1. Àü±¹ µ¥ÀÌÅÍ Á¶È¸
-	// page size¸¦ 19°³, Á¤·ÄÀº std_day desc
+	// 1. ì „êµ­ ë°ì´í„° ì¡°íšŒ
+	// page sizeë¥¼ 19ê°œ, ì •ë ¬ì€ std_day desc
 	@Cacheable(value = cachName, key = "'all'")
 	@GetMapping(value = "/sido/daily")
 	public List<CovidSidoDaily> getCovidSidoDailies() {
 
-		// ¿©·¯°³ÀÇ ÇÊµå·Î Á¤·Ä
+		// ì—¬ëŸ¬ê°œì˜ í•„ë“œë¡œ ì •ë ¬
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(new Order(Sort.Direction.DESC, "stdDay"));
 		orders.add(new Order(Sort.Direction.ASC, "gubun"));
 
-		return repo.findAll(PageRequest.of(0, 18, Sort.by(orders))).toList(); // 0¹øÂ° ÆäÀÌÁö¿¡¼­ 19°³¾¿ Ãâ·Â
+		return repo.findAll(PageRequest.of(0, 18, Sort.by(orders))).toList(); // 0ë²ˆì§¸ í˜ì´ì§€ì—ì„œ 19ê°œì”© ì¶œë ¥
 	}
 
-	// 2. Æ¯Á¤ ½ÃµµÀÇ µ¥ÀÌÅÍ Á¶È¸
-	// °Ë»öÁ¶°ÇÀÇ ÇÊµå¸í (gubun) , pagesize (limit)¸¦ 7ÀÏ, Á¤·ÄÀº std_day desc
-	// ¿¹) WHERE gubun='¼­¿ï' ORDER BY std_day DESC LIMIT 7;
+	// 2. íŠ¹ì • ì‹œë„ì˜ ë°ì´í„° ì¡°íšŒ
+	// ê²€ìƒ‰ì¡°ê±´ì˜ í•„ë“œëª… (gubun) , pagesize (limit)ë¥¼ 7ì¼, ì •ë ¬ì€ std_day desc
+	// ì˜ˆ) WHERE gubun='ì„œìš¸' ORDER BY std_day DESC LIMIT 7;
 	@Cacheable(value = cachName, key = "#gubun")
 	@GetMapping(value = "/sido/daily/{gubun}")
 	public List<CovidSidoDaily> getCovidSidoDailies(@PathVariable String gubun) {
