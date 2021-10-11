@@ -97,7 +97,9 @@ const AirLine = () => {
               {barData
                 .map((item) => item.cityName)
                 .map((item) => (
-                  <option value={item}>{item}</option>
+                  <option key={`sel-${item}`} value={item}>
+                    {item}
+                  </option>
                 ))}
             </select>
           </div>

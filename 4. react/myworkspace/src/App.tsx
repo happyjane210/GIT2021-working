@@ -49,6 +49,7 @@ import Profile from "./features/profile/Profile";
 //import Navigation from "./Navigation";
 import Progress from "./components/progress/Progress";
 import AlertStack from "./components/alert/AlertStack";
+import EventMessage from "./components/EventMessage";
 
 // SPA ( Single Page Application)
 // - 페이지 파일이 1개, index.html
@@ -174,6 +175,7 @@ function App() {
 
             <Progress />
             <AlertStack />
+            <EventMessage />
           </main>
         </div>
       </Router>
