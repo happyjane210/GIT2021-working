@@ -1,0 +1,79 @@
+2021-10-08 금 Server Sent Event
+
+
+
+// 어휘 찾아서 정리하기
+
+어노테이션
+@Service
+
+tcp handshake
+
+네트워크 4계층 (전송계층, transport layer)
+  - TCP  :  접속을 3번의 handshake로 접속을 맺음. 에러 보정
+	=> 데이터통신, 파일통신
+  - UDP  :  상대방에게 그냥 보냄 (접속 여부는 중요하지 않음, 일단보냄)
+	=> VoIP (Voice over Internet Protocol) : 인터넷 전화
+	=> 실시간 스트리밍 (시간 흐름에 따라서 데이터가 계속 변함)
+		RTMP - Real-Time Messaging Protocol
+		HLS - HTTP Live Streaming (apple 개발)
+
+네트워트 7계층 (응용계층, application layer)
+  - HTTP, WS, FTP, SSH, SCP
+
+
+// emit 이밋
+emit 이벤트를 발생시킬때
+emmiter 라는 객체를 리턴해줌
+
+
+// REST API
+  - HTTP protocol  (http://~~~)
+  - GET POST 
+
+
+// web soket API
+  - webSoket protocol (ws://~~~)
+  - 웹에서의 실시간 통신
+
+
+// TCP handshake
+
+
+
+// Server Sent Event
+   - client server가 server에 GET으로 요청을 보냄
+'
+        REACT                     Client (server) 
+
+  get 요청보냄     ----->     [controller]
+                                      -get 메서드 받을수있는 컨트롤러                               
+
+                                      [server] 생성됨        <---- 큐 받음 que
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
