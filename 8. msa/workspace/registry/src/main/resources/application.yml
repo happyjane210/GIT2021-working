@@ -1,12 +1,10 @@
 server:
   port: 8761
-
-spring:  
-application:    
-name: registry #서비스명
+  
+spring:
+  application:
+    name: registry
 eureka:
-  server:    
-  renewal-percent-threshold: 0.85
-  client:    
-  register-with-eureka: false
+  client:
+    register-with-eureka: false
     fetch-registry: false
