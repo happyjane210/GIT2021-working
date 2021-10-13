@@ -128,7 +128,7 @@ Ctrl + C
 @
 커멘드 창 꺼도 서버 유지되도록 하는 명령어
 nohup 실행명령어 &
-nohup java -jar myworkspace-0.0.1-SNAPSHOT.jar &
+nohup java -jar service2-0.0.1-SNAPSHOT.jar &
    ->  nohup : no hang-up     - 접속을 끊어도 작동되게 함          hang-up(끊다)
    ->  & : background 실행    - 쉘창 뒤에서 실행, 백그라운드에서 실행
 
