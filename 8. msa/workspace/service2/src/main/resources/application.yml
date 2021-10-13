@@ -13,6 +13,7 @@ management:
   endpoints:
     web:
       exposure:
+<<<<<<< HEAD
         include: "*"
         
         
@@ -25,3 +26,6 @@ eureka:
       defaultZone: http://ec2-3-34-216-213.ap-northeast-2.compute.amazonaws.com:8761/eureka/
   instance:
     hostname: ec2-15-165-17-21.ap-northeast-2.compute.amazonaws.com
+=======
+        include: "*"
+>>>>>>> 3b5904d61b63e66ddf9d8cb1a8cb00680bdfa2f0

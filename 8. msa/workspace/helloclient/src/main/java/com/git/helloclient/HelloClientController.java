@@ -15,6 +15,7 @@ public class HelloClientController {
 
 	private HelloClientService service;
 
+	@SuppressWarnings("unused")
 	private Map<String, String> clientConnectedMap = new HashMap<String, String>();
 
 	// 의존주입
