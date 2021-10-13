@@ -1,23 +1,27 @@
 server:
   port: 8000
 spring:
+  profiles:    active: default
   application:
     name: gateway
-  cloud:      gateway:
-      # https://stackoverflow.com/questions/58714918/spring-cloud-gateway-auto-routing-with-eureka
-      
-      # http(s)://gateway주소/서비스명 
+  cloud:
+    gateway:
+      # http(s)://gateway주소/서비스명
       # -> http(s)://서비스명
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
-              
-#      # 서비스별 경로 개별 등록#      routes:#      - id: service1
+          
+    # 서비스별 경로 개별 등록
+#      routes:
+#      - id: service1
 #        uri: lb://SERVICE-1
-#        predicates: # 조건식#        - Path=/service-1/**
-#        filters: #/service-1/ 경로 제거#        - RewritePath=/service-1/(?<path>.*),/$\{path}
-    
+#        predicates:
+#        - Path=/service-1/**
+#        filters:
+#        - RewritePath=/service-1/(?<path>.*),/$\{path}
+        
 eureka:
   client:
     service-url:
@@ -29,3 +33,10 @@ management:
     web:
       exposure:
         include: "*"
+        
+        
+---
+spring:  profiles: dev
+eureka:  client:    service-url:
+      defaultZone: http://ec2-3-34-216-213.ap-northeast-2.compute.amazonaws.com:8761/eureka/    instance:
+      hostname: ec2-3-34-216-213.ap-northeast-2.compute.amazonaws.com    

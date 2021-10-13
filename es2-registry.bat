@@ -1,0 +1,1 @@
+ssh -i "registry.pem" ubuntu@ec2-3-34-216-213.ap-northeast-2.compute.amazonaws.com
