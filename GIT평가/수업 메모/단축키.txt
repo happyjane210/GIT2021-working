@@ -1,0 +1,4 @@
+단축키
+
+alt + 위아래 방향키 = 줄 통째로 이동하기
+alt + L + O = live server open

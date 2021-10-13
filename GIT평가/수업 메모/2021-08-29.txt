@@ -1,0 +1,7 @@
+2021-08-29 일
+
+tsx 파일은 두번 컴파일함
+tsx -> ts -> js
+
+sass 파일도 node,js 컴파일러 통해서 css 로 바뀜
+sass -> scc

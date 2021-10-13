@@ -1,0 +1,73 @@
+2021-10-07 목  팀프로젝트 환경 셋팅 1
+
+
+PPT//  MSA 및 이벤트 기반 통합구현
+MSA - Microsoft Architecther
+
+
+
+6// 메시지큐 (Message Queue)
+큐 : first in fisrt out 자료구조
+
+
+7// pub / sub 메시징
+publisher : 메시지 게시자
+subscriber :메시지 구독자 - topic구독함
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

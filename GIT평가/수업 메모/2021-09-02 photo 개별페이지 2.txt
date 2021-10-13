@@ -1,0 +1,206 @@
+2021-09-02 목   포토
+
+
+// React, Front엔드에서의 얘기
+타입스크립트에서 데이터를 유연하게 다루려면
+map( ) 써야함
+
+key-value pair
+	: associative array
+	: in-memory 데이터 구조에 최적화
+	: RAM (Random Access Memory)
+
+1건의 데이터 찾기,
+1건 데이터 수정 등
+key로 데이터 삭제에 최적화 되어있음
+Map -> arrary변환 - 약간의 손실 있음
+          value 값을 참조하는 array 만듬
+Map은 일반 반복문만 가능, find, filter, findIndex 사용불가
+
+
+let map = new Mao( );
+map.set(1, {...});
+map.set(2, {...});
+
+1 => {...}
+2 => {...}
+
+
+find : 배열의 아이템의 아이디를 가지고 오는것,
+그래서 find 로 가지고 오면 수정도 가능함
+
+
+
+만들기 전에 뭐부터 해야하는지 구상하고, 정리하고
+시작하면 훨씬 수월함
+
+
+
+
+필요할때만 서버랑 통신하는 케이스
+
+
+===============================
+구글 포토 기능 만들기
+
+. 요구사항
+- 목록조회: 4열 그리드화면으로 목록조회(프로필, 타이틀, 이미지)
+- 사진추가: 추가버튼으로 제목, 설명, 이미지파일 선택 후 추가, 목록버튼
+- 사진상세조회: 목록에서 사진클릭하면 나오게 
+             필요한 데이터: 타이틀, 설명, 이미지 
+             기능: 삭제, 수정, 목록버튼
+- 사진삭제: 상세조회화면에서 삭제버튼을 클릭하면 삭제
+- 사진수정: 상세조회화면에서 수정버튼을 누르면 수정화면으로 이동
+          타이틀, 설명, 이미지 수정, 이미지 프리뷰
+
+
+
+. 구현
+
+
+
+// 메뉴넣고 기본화면 띄우기
+- 메뉴 목록에 photos 추가, photo 목록 컴포넌트를 출력
+
+
+
+// photo state를 공유할 것이다 
+- slice를 생성하고 store에 넣기
+---------------------------------------------
+   1) photoSlice
+
+      const photoSlice = createSlice({
+         name: "photo"
+         initialState: { },
+         reducers: { }
+      })
+
+      export default photoSlice.reducer;
+-----------
+   2) stroe > index    => global state (전역 저장소)
+
+      import photoReducer from "../domain/photo/photoSlice"; 
+
+      export const sotre = configureStore({
+         reducer: {                                          각 state 별로 처리할 reducer 등록
+             profile: profileReducer,
+             photo: photoReducer,
+          },
+          devTools: ture,
+       });
+---------------------------------------------
+
+
+
+// photo state를 조회해봐야함 (제대로 작동하는지 확인)
+- 초기값(사진목록데이터)을 넣고, photo 목록 컴포넌트에서 출력
+
+
+
+// 추가기능 만들기 1
+- 추가버튼 만들고, 추가컴포넌트 만들기, 
+const history = useHistory( );
+onClick, history.push( "경로" )
+
+- 추가화면으로 이동(App Route추가) exact
+
+
+
+// 추가기능 만들기 2
+- 입력폼 및 버튼 만들기
+table 안에 
+제목 : input - text
+설명: textarea
+이미지: input - file
+
+버튼:
+목록: history.push( "경로" )
+저장: clickAdd( )
+
+
+
+// 추가기능 만들기 3
+- 입력폼에 ref 객체 연결 및 ref값 받아오기
+titleInput
+descrTxta
+fileInput
+
+
+
+// 추가기능 만들기 4       ???????
+- ref.current 데이터를 기준으로 데이터 객체(redux state구조)를 생성
+----------------------------------------
+//추가할 객체 생성
+        const item: PhotoItem = {
+          // 기존 데이터의 id 중에서 가장 큰 것 +1
+          id: photoData.length ? photoData[0].id + 1 : 1,
+          // 프로필 정보
+          profileUrl: profile.image ? profile.image : "",
+          username: profile.username ? profile.username : "",
+          // 입력 정보
+          title: titleInput.current ? titleInput.current.value : "",
+          description: descrTxta.current?.value,
+          photoUrl: reader.result ? reader.result.toString() : "",
+          // 시스템 값 (작성일시, 수정일시, 수정한사람...)
+          createTime: new Date().getTime(),
+        };
+----------------------------------------
+
+
+
+// 추가기능 만들기 5
+- 데이터 객체를 redux state에 추가(dispatch(action함수))
+  -> reducer 함수를 생성하고, action을 export 해야함
+- 목록화면으로 이동
+
+
+
+// 추가기능 만들기 6
+- 목록 버튼을 클릭하면 목록화면으로 넘어가기
+
+===============================
+
+id 생성방법
+uuid :  범용 고유 식별자
+문자열을 잘라서 id로 사용함, 랜덤으로 생성되고, 순차적으로 생성되지 않음
+속도가 느리고 효율성이 떨어짐
+  => id 를 숫자로 처리하는 이유
+  => id 기준으로 정렬을 시키기 위함
+   즉, id는 숫자이거나, 증가되는 문자열이 가장 좋음
+
+
+
+
+===============================
+
+다음주 화요일에 이거 과제로 나옴
+
+
+
+
+연락처관리에서 메모필드 추가 (textarea)
+목록에서 안보이고, 상세보기, 수정화면에만 보임
+목록화면에서는 수정, 삭제버튼 필요없음, 
+리트스 클릭하면 상세보기로 넘어감
+
+
+스테이트 컴포넌트(로컬 스테이트)는 나갔다 들어오면 초기화됨
+리덕스로 연결시키면 나갔다 들어와도 작업 유지
+글로벌 스테이트의 필요성: 컴포넌트 데이터 공유, 컴포넌트 유지
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,106 @@
+2021-09-15 수 Spring 프론트, 벡엔드 연동
+
+
+
+////useEffect:특정조건일때 작동하는 코드를 작성할 수 있게 하는 React Hook
+  // React Hook: 클래스컴포넌트에서만 할 수 있었던작업을 함수형 컴포넌트에서 사용할 수 있게함
+  // -> 클래스 컴포넌트 state, 컴포넌트 라이프사이클을 처리할 수 있음stateful
+  // -> 함수형 컴포넌트 다른 컴포넌트로 부터 받은 prop으로 화면에 렌더링만 stateless
+
+  // useEffect(처리할 함수, [조건변수]):
+  // 의존변수가
+  useEffect(() => {
+    // 특정조건일때 처리되는 코드를 작성
+  }, []);
+
+
+
+
+// CORS ( Corss Origin Resource Sharing )
+  : 웹에 리소스 (자원) 공유에 대한 표준 정책
+  : 기본적으로 같은 프로토콜(https://www), 도메인, 포트 (3000)의 리소스만 공유가 가능함
+	ex) https://www.naver.com
+	React : http://localhost:3000
+	Spring : http://localhost:8080
+
+해결방법 : 서버측에 Access-Control-Allow-Origin 헤더를 넣어서 처리해줘야함
+              -> CORS정책에 예외로 처리할 주소를 처리해줘야함
+
+
+//----------------ES6 버전 fetch 방식----------------------------------------------------------------------------
+
+  //useEffect:특정조건일때 작동하는 코드를 작성할 수 있게 하는 React Hook
+  // React Hook: 클래스컴포넌트에서만 할 수 있었던작업을 함수형 컴포넌트에서 사용할 수 있게함
+  // -> 클래스 컴포넌트 state, 컴포넌트 라이프사이클을 처리할 수 있음stateful
+  // -> 함수형 컴포넌트 다른 컴포넌트로 부터 받은 prop으로 화면에 렌더링만 stateless
+
+  // useEffect(처리할 함수, [조건변수]):
+  // 의존변수의 값/참조가 바뀔때마다 함수가 처리됨
+  // 예) props, state바뀌면 추가적인 처리
+
+  // 의존변수 목록이 빈배열 []
+  //  ->  컴포넌트가 처음 렌더링 되고 마운팅 된 후에 시점에 처리가 됨
+  useEffect(() => {
+    // 특정조건일때 처리되는 코드를 작성
+    // [] zjavhsjsxm fheld gndp qkfh cjflehlsms zhem
+    console.log("--1. mounted--");
+
+    //백엔드에서 데이터를 받아옴
+    // ES6 style 로 Promise 기법을 이용해서 데이터를 조회해옴
+    fetch("http://localhost:8080/todos") //promise 객체
+      // fetch 함수를 실행하고 네트워크 통신이 완료되면 then에 있는 콜백함수(callback)를 실행함
+      // then에 있는 callback 함수의 매개변수로 처리 결과를 넘겨줌
+      // body가 json이면 js object(array)로 변환
+      .then((res) => res.json())
+
+      // 응답데이터를 js object로 변환이 완료되면 다음 then에 있는 함수(callback)를 실행함
+      // then에 있는 callback함수의 매개변수로 변환된 결과를 넘겨줌
+      .then((data: TodoItemReponse[]) => {
+        console.log("--2. fetch completed--");
+        // 백엔드에서 오는 데이터구조와 state의 데이터 구조가 동이랗다면
+        // state 객체로 바로 업데이트 하면됨
+        console.log(data);
+
+        // 서버로 부터 받은 데이터를 state 객체로 변환함
+        const todos = data.map((item) => ({
+          id: item.id,
+          memo: item.memo,
+          createdTime: item.createdTime,
+        })) as TodoItemState[];
+
+        setLoading(false); // 로딩중이 state 업데이트
+        setTodoList(todos); // todoState 업데이트
+      });
+
+    console.log("--3. complete--");
+  }, []);
+
+
+//------------------ES7 버전 fetch 방식-------promise-------------------------------------------------------------------
+
+코드가 직렬로 내려감
+
+
+
+  // es7 버전 방식
+  // async (어싱크) 비동기 처리를 할 수 있는 함수
+
+
+
+// on progress
+on progress => 데이터 전송 등, 웹 서버 상황이 퍼센트 막대로 나타나는 것,     0%ㅁㅁㅁㅁㅁㅁㅁ=====100%
+이건 promise fetch로 나타낼수없음
+
+
+// fetch / XHR 
+fetch - 요즘 나옴
+XHR  - 예전에 나옴  ( XML Http Request )
+
+
+
+// axios
+** 설치  - 리액트 터미널에
+npm install axios
+
+
+

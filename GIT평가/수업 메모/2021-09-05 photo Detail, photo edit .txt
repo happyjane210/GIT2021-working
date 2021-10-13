@@ -1,0 +1,163 @@
+2021-09-05 일
+
+자바에서 소스 단위는 .class 다
+
+자바스크립트 js
+타입스크립트 ts
+HTML  html
+CSS    css
+
+sysout  +  ctrl + space
+=>
+System.out.println(" 출력값 입력 ");
+
+
+자바는 코드가 장황함
+
+
+=======상세, 수정페이지==========================
+
+. 구현 - 2단계
+1. // 상세 컴포넌트 만들고 보여주기
+- 컴포넌트 생성, Route경로 추가해줘야함, id매개변수 받을 수 있게해야함
+PhotoDetail.tsx 만들고
+App.tsx 에서 
+<Route path="/Photo/edit/:id" component={PhotoEdit} />
+
+아이디 값 받아서 넘어가게
+
+
+
+2. // 목록에서 1건 클릭하면 상세화면으로 이동하게
+- 목록 1건의 사진에 이벤트처리기(함수) -> 히스토리객체로 이동  
+                                   -> 유일값(id) 물고 이동해야됨
+Photo.tsx 에서
+        <div
+            // key={`photo-item-${index}`}
+            onClick={() => {
+              history.push(`/Photo/Detail/${item.id}`);
+            }}
+
+
+
+3. // 상세컴포넌트에서 id값을 가져와야함
+- useParam 훅으로 매개변수 가져와함.
+const { id } = useParams<{ id: string }>( );
+
+
+
+4. // id값으로 redux store의 state에서 1건의 데이터를 가져옴
+- selector로 data배열에서 1건을 find함
+
+const photoItem = useSelector((state: RootState) =>
+    state.photo.data.find((item) => item.id === +id)
+  );					id 가 문자열이기 때문에 숫자로 바꿔서 비교
+
+
+
+5. // 목록, 수정, 삭제 버튼 만들기
+- 목록버튼은 목록화면으로 이동 ( useHistory )
+            onClick={() => {
+              history.push("/Photo");
+            }}
+- 수정은 수정화면으로 이동(id값물고)
+            onClick={() => {
+              history.push(`/Photo/edit/${id}`);
+            }}
+- 삭제 id값으로 store에서 삭제
+            onClick={() => {
+              handleDelete();
+            }}
+-------
+            const handleDelete = ( ) => {
+               dispatch(removePhoto(+id));
+               history.push("/Photo");
+            };
+photoSlice------- 
+       removePhoto: (state, action: PayloadAction<number>) => {
+            const id = action.payload;
+            // id에 해당하는 아이템의 index를 찾고 그 index로 splice 를 한다.
+            state.data.splice(
+              state.data.findIndex((item) => item.id === id),
+              1
+            );
+          },
+
+
+
+5-1 // 삭제기능 만들기 1
+- 삭제버튼에 이벤트 처리기 추가
+            onClick={() => {
+              handleDelete();
+            }}
+
+
+
+5-2 // 삭제기능 만들기 2 
+- store state 배열에서 삭제하는 reducer 만들고, action creator export
+
+       removePhoto: (state, action: PayloadAction<number>) => {
+            const id = action.payload;
+            // id에 해당하는 아이템의 index를 찾고 그 index로 splice 를 한다.
+            state.data.splice(
+              state.data.findIndex((item) => item.id === id),
+              1
+            );
+          },
+export const { addPhoto, removePhoto } = photoSlice.actions;
+
+
+
+5-3 // 삭제기능 만들기 3
+- 삭제버튼 이벤트 처리기에서 삭제 action을 dispatch하고 목록으로 이동
+            const handleDelete = ( ) => {
+               dispatch(removePhoto(+id));
+               history.push("/Photo");
+            };
+
+
+-------------------------------------------
+
+
+// 수정기능 만들기 1
+- 수정 컴포넌트를 만들고 수정버튼을 클릭하면 id값 물고 이동하게 (photoDetail에서)
+            onClick={() => {
+              history.push(`/Photo/edit/${id}`);
+            }}
+- Route에 추가해야함 ( App.tsx )
+const PhotoEdit = lazy(() => import("./domain/photo/PhotoEdit"));
+<Route path="/Photo/Edit/:id" component={PhotoEdit} />
+
+
+
+
+// 수정기능 만들기 2
+- 생성화면과 비슷하게 만들기 (photoCreate)
+
+
+
+// 수정기능 만들기 3
+- 상세보기 기능처럼 id로 데이터를 가져온 후 출력
+
+
+
+// 수정기능 만들기 4
+- 입력박스에 대한 ref 객체 생성 및 연결
+
+
+****
+// 수정기능 만들기 5
+- 저장버튼을 클릭하면 ref.current 값들을 가져와서 변경할 객체를 생성
+
+
+
+// 수정기능 만들기 6
+- 수정 처리를 하는 reducer를 만들고, action creator를 내보기함
+
+
+
+// 수정기능 만들기 7
+- 변경할 객체를 dispatch하여 reducer 보냄
+- 목록화면으로 이동함
+
+============================================

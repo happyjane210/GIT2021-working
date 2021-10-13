@@ -1,0 +1,84 @@
+2021-09-30 목
+
+
+
+Native : 실제 운영체제에 가까운 프로그램
+
+
+
+
+
+// 공공데이터
+우리가 원하는 데이터 구조로 변환 해야함 (transfer)
+
+// 데이터 추출, 변환, 적재
+ETL ( Extract, Transfer, load )
+
+
+
+
+
+
+// 취업 순위
+
+1순위 자체 서비스개발 운영  - 실력 쌓기 좋음 
+서비스 기획 -> 개발 -> 운영
+
+2순위 대형 SI (system Integration 시스템통확) 회사
+  실제로는 엉성하지만, 나름 체계적인 개발방법을 사용함 - 플젝이 크고 사람이 많음
+
+
+
+
+// 네트워크 7 계층 (네트워크 계층모델)
+1 Layer ( Physical Layer ) : 네트워크 전송선로, 선로, 중개기
+
+2 Layer ( DataLink Layer ) : 내부 네트워크 , 프라이빗 네트워크( 이더넷, 내부 공유기 )           ex) [1개 부서]
+
+3 Layer ( Network Layer ) : Router  내부 네트워크(Lv2) 끼리 묶어줌, 공공 IP주소 등을 사용   ex) [1개 부서] --- [1개 부서]
+											회사			회사
+4 Layer ( Transport Layer ) : 통신망 수준  (csu dsu통함), KT중개기 등, 이 시점에 암호화가 일어남      ex)  { [부서] [부서] [부서] }   ----   { [부서] [부서] [부서] }
+
+5 Layer ( Session Layer ) : 브라우저 (Lv5-Lv7)
+
+6 Layer ( Presentation Layer ) : 데이터 포멧, 형식 (img, video, json, xml)
+   => 메시지 레벨 암호화 없음 -> xml, json 데이터 평문이다, 암호화 없음
+
+7 Layer ( Application Layer ) :
+
+
+** 통신망에서 브라우저로 나갈때 TLS (TCP) 암호화가 일어남
+
+
+
+
+// REST (GET)  - 매개변수값을 querystring 으로 넣는 방식
+GET http://......?parm=value&parm=value&.....
+                    매개   값       매개   값
+
+** 코로나는 XML 밖에 없어서 xml -> json-> object(java) 로 변환 해줘야함
+    최근 12시간 데이터가 보여지게끔 할것임
+
+GET 요청URL?serviceKey=.......&sidoName=서울&serchCondition=HOUR
+
+ex) API 요청 예시
+  서울 (요청) -> 강남구 ~ 중랑구
+  대전 (요청) -> 서구~유성구
+
+
+
+
+
+
+
+
+-------DBeaver-----------------------------------
+-- 현재 쿼리창에서 사용할 스키마 선택
+-- myworkspace 라는 스키마 공간에서 작업을 함.
+   =>    set schema 'myworkspace';
+
+
+
+
+
+

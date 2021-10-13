@@ -1,0 +1,63 @@
+2021-08-17  수업 필기
+
+localStorage & sessionStorage
+
+서버를 안쓰는 앱도 꽤있음. 하드디스크(폰)에만 저장하는 경우
+
+cookie - 사용자 행위, 접속 정보
+local storag
+ - 문자열로만 5메가, 꽤 큰공간임. 최근데이터, 네트워크 연결이 끊겼을때 임시데이터 (오프라인 모드)
+web SQL
+
+웹보안 작동 단계
+프로토콜/도메인(ip주소)/포트번호  - 이 세가지가 맞아야 쓸수있는 것임.
+
+1. add 할때 
+localStorage 에 데이터 추가
+ - setItem
+ - id는 가장 마지막에 추가한 데이터의 id + 1
+ - tr 태그에 id 를 데이터 속성으로
+ - localStorage 에서 가져온 후 추가
+
+2. remove 할때 localstorage 에서 특정 데이터를 삭제
+ - filter
+ - tr.dataset.id
+ - setItem
+
+3. 페이지 로딩할 때 localsStorage에서 데이터 가져오기.
+ - map, join
+ - getItem
+
+. 배열구조의 데이터를 setItem, getItem
+. 배열번호, id값 같은 것들이 있어야함. (삭제할때.) data 속성 <tr data-id="1">
+ 
+contact = [ ] 
+
+
+
+
+======================평가 지필고사==========================================
+1. Material Design (머터리얼 디자인)
+2. 접근성 (Accessbility, Robust)
+  - 시맨틱 태그
+  - alt 속성
+3. Cross Browsing (크로스 브라우징)
+  - Can I use
+4. 이모지 (emoji)
+5. 시멘틱 테그
+6. MySQL Workbench
+  - 데이터 베이스 환경
+7. Extensions
+8. Jest
+  - 자동화된 테스트: 테스트코드, 구현코드 실행
+   : JUnit - 자바
+   : ZAP -  웹 보안성 테스트
+   : JMeter - 성능테스트(웹, 백엔드)
+
+9. table 태그 작성
+   table, thead, th, tbody, tr, td, border
+
+10. 이벤트 처리
+
+
+

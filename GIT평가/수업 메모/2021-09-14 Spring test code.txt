@@ -1,0 +1,104 @@
+2021-09-14 
+
+
+HashMap은 정렬이 안됨
+동시성 처리 기능
+
+treeMap< k, v >
+2중 트리 형식으로 정렬
+
+ConcurrentSkipListMap<Long, Todo>
+
+// 추가
+put ( key, value )
+// 삭제
+remove ( key )
+
+
+insert - 테이블잠금
+update, delete - 행 잠금
+
+
+----------------------
+
+// TDD ( Test Driven Development ) 개발 스타일   - 구현 순서
+사용자 needs ( user story )
+->  요구사항 ( requirement, backlog )
+->  설계 ( spec )  
+	->  코드 stub ( 뼈대 )  -> 테스트케이스( 유즈케이스, 코드 )  ->  구현 ->  테스트케이스 통과
+				- 액터(수행자)
+				- 이벤트흐름 (처리절차)
+				- 사전조건, 예상결과
+
+// 테스트
+애플리케이션, 시스템의 품질을 측정할 수 있는 유일한 방법
+
+test coverage
+
+
+// integration test 통합테스트
+  - 백엔드 관점으로 봤을 때는 API를 테스트 하는 것
+  - 서버를 띄우고, 네트워크로 데이터를 보내고 처리 결과까지 확인
+
+// unit test 단위테스트
+  - 자바 관점에서 작성한 클래스의 매서드들을 수행하는 것, 코드에서 오류가 안나는지 돌려보기
+
+
+POST
+GET
+DEL
+PUT ( 전체수정 )
+PATCH ( 부분수정 )
+
+
+
+// jacoco gradle 플러그인으로 환경구성
+
+__1. build.gradle 에 아래 추가
+
+plugins {
+	// 커버리지 리포트용 플러그인
+	id 'jacoco'   
+}
+
+test {	
+	// report is always generated after tests run
+	 finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    // tests are required to run before generating the report
+    dependsOn test 
+}
+
+
+__2. build.gradle 우클릭 > Gradle > Refresh Gradle Project
+
+__3. lombok.config 를 프로젝트 root에 생성 (최상위 파일)
+
+__4. Window > Show View > Other > Gradle > Gradle Tasks  추가
+
+__5. Gradle Tasks > verification > test
+
+__6. 프로젝트 폴더 > build > reports > jacoco > test > html
+	- index.html 테스트 커버지리 리포트 파일 보일것임
+
+
+
+// 테스트 커버리지
+  - statement coverage (구문 커버리지)
+      매서드의 각 행들이 커버가 되는지에 대한 비율
+
+  - branch coverage (분기 커버리지)
+      조건문이 커버되는 비율
+
+      최대한 쉬운 코드들은 커버리지 100% 만들어 놓는게 좋음
+
+
+테스트는 소프트웨어 품질을 측정할 수 있는 유일한 방법
+  - QA ( quality attribute )  : 성능, 보안, 확장가능성, 상호연동성, 유지보수성 ....
+
+
+
+
+

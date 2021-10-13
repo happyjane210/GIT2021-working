@@ -1,0 +1,7 @@
+server:
+  port: 9091
+spring:
+  rabbitmq:
+    host: ec2-52-79-232-8.ap-northeast-2.compute.amazonaws.com
+    username: rabbitmq
+    password: password123
