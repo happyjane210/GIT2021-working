@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <title>문자열 비교하기</title>
+</head>
+
+<body>
+    <script>
+        console.log("a" > "A"); //true
+
+        console.log("a".codePointAt(0)); // 97 => utf 코드 반환
+        console.log("A".codePointAt(0)); // 65
+        // 소문자가 대문자 뒤에 위치해 있어서 소문자가 더 큼
+
+        console.log("Hello\tJaNe".codePointAt(0)); // 72
+        console.log("Hello\tJaNe".codePointAt(1)); // 101
+        console.log("Hello\tJaNe".codePointAt(2)); // 108
+        console.log("Hello\tJaNe".codePointAt(3)); // 108
+        console.log("Hello\tJaNe".codePointAt(4)); // 111
+        console.log("Hello JaNe".codePointAt(5)); // 32   , 10 = \n 다음줄
+        console.log("Hello\tJaNe".codePointAt(6)); // 74
+        console.log("Hello\tJaNe".codePointAt(7)); // 97
+        console.log("Hello\tJaNe".codePointAt(8)); // 78
+        console.log("Hello\tJaNe".codePointAt(9)); // 101
+
+        console.log(String.fromCodePoint(72, 101, 108, 108, 111, 32, 74, 97, 78, 101));
+        console.log('============================');
+
+        let str = "";
+        for (let i = 0; i <= 1000; i++) {
+            str += String.fromCodePoint(i);
+        }
+        console.log(str);
+    </script>
+</body>
+
+</html>

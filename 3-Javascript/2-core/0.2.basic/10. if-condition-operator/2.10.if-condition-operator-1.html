@@ -1,0 +1,31 @@
+<html>
+
+<body>
+
+    <script>
+        // 어떤 조건에 따라 코드를 분기하고 싶을 때
+
+        let year = prompt('ES2015 명세는 몇년도 인가?', ' ')
+
+        if (year == 2015) alert('정답입니다!');
+        // if (Number(year) === 2015) alert('정답입니다!');   strict
+
+        if (year == 2015) {    // <= 이 중괄호 담줄로 내리지 않음, if문 에서 띄어쓰기 하지 않음.
+            alert('정답입니다!')
+            alert('아주 똑똑하시네요!')
+        }
+
+    </script>
+
+</body>
+
+</html>
+
+
+<!-- 
+    if(조건문) 실행문
+    조건식이 true 이면 실행문이 실행됨
+    조건식이 false 면 실행문 실행안됨
+
+
+ -->

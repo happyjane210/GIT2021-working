@@ -1,0 +1,68 @@
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+
+<table border="1" cellspacing="0" width="300">
+  <!-- html4에 있던 기능 -->
+  <thead>
+    <tr>
+      <th>이름</th>
+      <th>연락처</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <!-- row 행, 가로축    span 늘려라 -->
+      2칸만큼 셀을 먹는 것,
+      <td rowspan="2">홍길동</td>
+      <td>010-1234-5678</td>
+    </tr>
+
+    <tr>
+      <td>010-6741-2771</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <!-- colspan(column span)
+      column 열, 세로축
+      span 늘려라 스판 -->
+      <td colspan="2">총 2건</td>
+    </tr>
+  </tfoot>
+</table>
+
+<div>
+
+</div>
+
+
+
+</body>
+
+</html>
+
+
+<!-- 수업내용 필기 21-07-20
+
+<td> 실제 내용이 들어가는 부분 </td>
+표에 넣을 내용(컨텐츠)은 무조건 td에 들어가야함, tr에 있으면 암됨.
+
+tbody 는 table 의 시멘틱 테크, 무조건 써줘야함.
+내가 안써도 웹상에서 그렇게 나옴
+
+thead 표 머릿말
+tbody 표 본문 꼭써야함
+tfoot 잘 안씀.
+
+현재는 html 스타일 넣는 태그는 거의 꾸미기 속성으로 넣음 태그는 많이 사라짐
+
+모바일 일때 등을 고려하면 가로 표 4개 이상 잘 안넣음.
+이럴때는 클릭하면 밑에 열리게끔 만듬.
+
+
+-->

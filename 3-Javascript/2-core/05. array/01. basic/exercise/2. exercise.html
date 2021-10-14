@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배열과 관련된 연산</title>
+</head>
+
+<body>
+    <script>
+        //1
+        let styles = ["jazz", "Blues"];
+        console.log(styles);
+        //2
+        styles.push("Rock-n-Roll");
+        console.log(styles);
+        //3
+        styles[Math.floor((styles.length - 1) / 2)] = "Classics";
+        console.log(styles);
+        //4
+        console.log(styles.shift(0));
+        console.log(styles);
+        //5
+        styles.unshift("Rap", "Reggae");
+        console.log(styles);
+
+        for (let style of ["Rap", "Reggae"]) {
+            styles.unshift
+        }
+    </script>
+</body>
+
+</html>
+
+<!-- 
+Jazz, Blues
+Jazz, Blues, Rock-n-Roll
+Jazz, Classics, Rock-n-Roll
+Classics, Rock-n-Roll
+Rap, Reggae, Classics, Rock-n-Roll
+
+    pop : 배열 끝 요소 제거 , 제거 할때 창에 한번 띄워줌, 그리고 제거
+    push :  배열 끝에 요소 추가
+    shift : 배열 앞 요소 제거 0번부터 , 제거 할때 창에 한번 띄워줌
+    unshift : 배열 앞 요소 추가 0번부터
+
+    * shift/unshift: 앞에서 추가제거 하면 뒤에 딸린 요소 전체가 밀리거나 당겨야해서
+                    처리에 시간이 오래걸림, pop/push보다 비효율적임.
+
+
+ -->

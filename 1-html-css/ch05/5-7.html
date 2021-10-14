@@ -1,0 +1,53 @@
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    .container {
+      display: flex;
+      margin: 20px 0px;
+      border: solid 1px red;
+
+    }
+
+    .item {
+      border: 1px solid black;
+      flex-basis: 100px;
+      text-align: center;
+    }
+
+    .item.shrink {
+      flex-shrink: 1;
+    }
+
+    .item.first {
+      flex-shrink: 2;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" style="width: 200px;">
+    <div class="item-shrink">1</div>
+    <div class="item-shrink">2</div>
+    <div class="item-shrink">3</div>
+  </div>
+
+  <div class="container" style="width: 200px;">
+    <div class="item-first">1</div>
+    <div class="item-shrink">2</div>
+    <div class="item-shrink">3</div>
+  </div>
+
+</body>
+
+</html>
+
+
+<!-- 수업내용 필기 21-07-
+
+
+
+
+
+-->

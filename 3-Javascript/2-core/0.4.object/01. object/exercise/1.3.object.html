@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+
+        let obj = {
+            name: "jake",
+        };
+
+        function isEmpty(obj) {
+            for (let prop in obj) {
+                return false;
+            }
+            return true;
+        }
+
+        console.log(isEmpty(obj));
+
+        //else if , else는 오류가 많이 나기 때문에 많이 안써주는게 좋음
+
+        //===============================================
+
+        let people = {};
+
+        function isThere(people) {
+            for (someone in people) {
+                return false;
+            }
+            return true;
+        }
+
+        console.log(isThere(people));
+
+
+
+
+        //============================
+        // let people = {};
+
+        // function isEmpty(people) {
+           // for (let someone in people){
+        //     if (someone in people == undefined) {
+
+        //         console.log(true);
+        //     } else {
+        //         console.log(false);
+        //     }
+         //   }
+
+
+        // }
+
+        // isEmpty(people);
+        // console.log(isEmpty());
+//====================================================
+    </script>
+</body>
+
+</html>

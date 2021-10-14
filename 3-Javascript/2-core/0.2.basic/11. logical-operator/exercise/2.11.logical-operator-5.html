@@ -1,0 +1,44 @@
+<html>
+
+<body>
+
+    <script>
+        let login = prompt("사용자 아이디을 입력해주세요.", "");
+
+
+
+        if (login == "" || login == null) {
+            alert("취소되었습니다.");
+
+        } else if (login == "Admin") {
+            let password = prompt("비밀번호를 입력해주세요.", "");
+            if (password == "" || password == null) {
+                alert("취소되었습니다.")
+            } else if (password == "TheMaster") {
+                alert("환영합니다!")
+            } else {
+                alert("인증에 실패했습니다.")
+            }
+
+        } else {
+            alert("인증되지 않은 사용자 입니다.");
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+
+<!-- 
+
+14번 줄
+let password = prompt("비밀번호를 입력해주세요.", "여기"); 여기에 공백 입력하지 말것
+프롬트 입력 창에 디폴트 값으로 반영됨.
+
+중첩 if문 
+
+
+
+ -->

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function min(a, b) {
+        //     if (a < b) {
+        //         return a;
+        //     } else {
+        //         return b;
+        //     }
+        // }
+
+        // min(1, 5);
+        // min(4, -9);
+        // min(1, 1);
+
+        // console.log(min);
+
+
+
+        function checkAge(age) {
+            if (age > 18) {
+                return alert("확인되었습니다.");
+            } else {
+                confirm("보호자의 동의를 받았나요?");
+            }
+        }
+        let age = +prompt("나이를 입력해주세요", "");
+        checkAge(age);
+
+        //=============================================
+
+        function checkAge(age) {
+            age = age > 18 || confirm("보호자의 동의를 받으셨나요?");
+
+            return (age > 18) ? true : confirm(보호자의 동의를 받으셨나요)
+            // if (age > 18) {
+            //     return true;
+            // } else {
+            //     return confirm('보호자의 동의를 받으셨나요?');
+            // }
+        }
+
+        let age = +prompt("나이를 입력해주세요", "");
+        checkAge(age);
+
+
+
+    </script>
+</body>
+
+</html>
+
+<!-- 
+
+
+
+ -->

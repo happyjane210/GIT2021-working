@@ -1,0 +1,34 @@
+<html>
+
+<head>
+    <title>(쌤)숫자만 추출하기</title>
+</head>
+
+<body>
+    <script>
+        function extractValue(str) {
+            let result = "";
+
+            for (let chr of str) {
+                if (!isNaN(+chr)) {
+                    result += chr;
+                }
+            }
+            return +result;
+        }
+
+        console.log(extratValue("$120"));
+        console.log(extratValue("$120") === 120);
+
+
+        // let currencyValue = (value) => {
+        //     return Number(value.slice(-3))
+        // };
+
+        // console.log(currencyValue('$120'));
+        // console.log(currencyValue('$120') === 120);
+        // console.log(typeof currencyValue('$120'));
+    </script>
+</body>
+
+</html>

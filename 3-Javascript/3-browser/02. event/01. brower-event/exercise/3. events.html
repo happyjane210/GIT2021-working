@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <title>Which handlers run?</title>
+</head>
+
+<body>
+
+    <input type="button" id="button" value="here here">
+
+    <script>
+        button.addEventListener("click", () => alert("1"));
+
+        button.removeEventListener("click", () => alert("1"));
+
+        button.onclick = () => alert(2);
+        // alert(1) & alert(2) 모두 실행됨. 왜냐면
+        // addEventListener 이랑 removeEventListener 이 가리키는 함수가 각자 다른거임
+        // 써준거 지우려면 한개의 함수로 합쳐서 실행해야됨
+
+        //===============================================
+
+        function handler() {
+            alert(1);
+        }
+
+        button.addEventListener("click", handler);
+        button.removeEventListener("click", handler);
+        // 이벤트 지우기 위한 코드, 이렇게 해야 지워짐.
+    </script>
+</body>
+
+</html>
+
+<!-- 2021-- 
+
+
+ -->

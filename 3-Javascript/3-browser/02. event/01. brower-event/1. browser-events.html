@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>브라우저 이벤트 소개</title>
+</head>
+
+<body>
+    <p>
+        마우스 이벤트 <br>
+        click<br>
+        contextmenu<br>
+        mouseover / mouseout<br>
+        mousedown / mouseup<br>
+        mousemove<br>
+    </p>
+
+    <p>
+        폼 요소 이벤트:<br>
+        submit – 사용자가<br>
+        {form}을 제출할 때 발생합니다.<br>
+        focus – 사용자가 {input}과 같은 요소에 포커스 할 때 발생합니다.<br>
+    </p>
+
+    <p>
+        키보드 이벤트:<br>
+        skeydown과 keyup – 사용자가 키보드 버튼을 누르거나 뗄 때 발생합니다.<br>
+    </p>
+
+    <!-- 속성에 바로 이벤트 삽임 / html 만 사용-->
+    <input type="button" value="클릭해주세요." onclick="prompt('이름을 입력')"><br><br>
+
+    <!-- 함수로 이벤트 호출 / js사용 -->
+    <input type="button" onclick="countRabbits()" value="토끼를 세볼까요?"><br><br>
+
+    <!-- id값으로 .onclick = 함수() 호출 / js사용 -->
+    <input type="button" id="elem" value="클릭클릭"><br><br>
+
+    <!-- 핸들러 하나 더 추가하면 뒤에 추가한게 나옴, 덮어쓰기 -->
+    <input type="button" id="after" value="클릭" onclick="alert('before')"><br><br>
+
+
+    <!-- this로 요소접근 / this : button / 여기여기 얼럿-->
+    <button onclick="alert(this.innerHTML)">여기여기</button>
+
+    <script>
+        // 토끼 10마리 될때까지 반복
+        function countRabbits() {
+            for (let i = 1; i <= 10; i++) {
+                alert(`토끼 ${i} 마리!`);
+            }
+        }
+        //=========================
+        elem.onclick = function () {
+            alert('띠용');
+        };
+        //========================= 위에 onclick말고 아래꺼 나옴
+        after.onclick = function () {
+            alert('after');
+        };
+    </script>
+</body>
+
+</html>

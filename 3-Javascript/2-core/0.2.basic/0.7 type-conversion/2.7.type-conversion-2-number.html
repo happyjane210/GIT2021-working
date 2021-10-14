@@ -1,0 +1,57 @@
+<html>
+
+<body>
+
+  <script>
+    // 1. 문자열을 숫자로 변환
+    // 문자인데 수학연산(+빼고)을 하면 자동으로 숫자로 바뀜
+    console.log("6" / "2");
+    console.log(typeof ("6" / "2"));
+
+    // infinity
+    console.log("6" / "0");
+    console.log(typeof ("6" / "0"));
+
+    // NaN
+    console.log("ㅇㅇ" / "0");
+    console.log(typeof ("ㅇㅇ" / "0"));
+
+
+    //2. 문자열 숫자로 변환
+    let num;  // 할당하지 않음 = undefined
+
+    console.log(Number("2"));        // 숫자 2
+
+    console.log(Number(undefined));  // NaN
+    console.log(Number(num));        // NaN
+
+    console.log(Number(null));       // 0
+
+    console.log(Number(true));       // 1
+    console.log(Number(false));      // 0
+
+    console.log(Number("  123  "));      // 123 앞뒤 공백 제거됨
+    console.log(Number("  ㅇㅇ123  "));  //NaN
+  </script>
+
+</body>
+
+</html>
+
+
+<!-- 
+
+  형 변환(type conversion)
+  문자 -> 숫자 -> 불린 -> 문자
+  number, string, boolean, undefined, null
+
+  사용자 입력값 문자 -> 숫자로 변환
+  사용자 입력값 숫자 -> 불린 (t/f)
+
+  콘솔창에 파란 글자로 나오면 number, boolean
+  일반 검은색이면 string
+
+
+  NaN, infinity 둘다 number 데이터 타입에 속함
+
+ -->

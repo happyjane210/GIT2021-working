@@ -1,0 +1,21 @@
+<html>
+
+<head>
+    <title>(쌤)문자열 줄이기</title>
+</head>
+
+<body>
+    <script>
+        // 말줄임표라는 특수문자가 있음
+
+        function truncate(str, maxlength) {
+            return str.length > maxlength - 1 ?
+                str.substr(0, maxlength) + "…"
+        }
+
+        console.log(truncate("What I'd like to tell on this topic is", 20));
+        console.log(truncate("Hi everyone!", 20));
+    </script>
+</body>
+
+</html>

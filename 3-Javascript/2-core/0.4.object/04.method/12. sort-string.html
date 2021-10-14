@@ -1,0 +1,22 @@
+<html>
+
+<body>
+
+    <script>
+        let arr = ['Österreich', 'Andorra', 'Vietnam'];
+        arr.sort((a, b) => {
+            if (a > b) return 1; // 첫 번째 값이 두 번째 값보다 큰 경우
+            if (a == b) return 0; // 두 값이 같은 경우
+            if (a < b) return -1; //  첫 번째 값이 두 번째 값보다 작은 경우
+        });
+        // 원본문자열 .localeCompare(비교문자열)
+        // 원본문자열이 비교문자열보다 작으면 음수를 반환
+        // 원본 문자열이 비교문자열보다 크면 양수를 반환
+        // 원본 문자열이 비교문자열이 같으면 0을 반환
+        arr.sort((a, b) => a.localeCompare(b));
+
+        console.log(arr);
+    </script>
+</body>
+
+</html>

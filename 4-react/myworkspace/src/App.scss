@@ -1,0 +1,27 @@
+@import "./styles/bootstrap-custom.scss";
+@import "./styles/app-variables.scss";
+
+//css 클래스 형태로 디자인 줌
+.app-bar {
+  height: $app-bar-height;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+// 값에" " 들어가면 안됨 nav
+.drawer-menu {
+  width: $drawer-menu-width;
+  height: 100vh;
+  top: $app-bar-height;
+}
+
+//main
+.content-container {
+  padding: 1rem;
+  margin-left: $drawer-menu-width;
+  margin-top: $app-bar-height;
+}
+
+//실제로 클래스를 잘 먹었는지 확인해야함,

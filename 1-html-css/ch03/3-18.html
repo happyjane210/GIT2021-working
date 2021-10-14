@@ -1,0 +1,57 @@
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    * {
+      /* 태그 크기를 쉽게 가늠하게 함 */
+      box-sizing: border-box;
+    }
+
+    .box {
+      margin: 10px;
+      padding: 10px;
+      width: 250px;
+      height: 200px;
+      border: 1px solid black;
+    }
+
+    .one {
+      background-color: red;
+      box-sizing: content-box;
+    }
+
+    /*box-sizing: content-box; 기본으로 border-box 넣고 필요한 경우에 content-box 넣는다. */
+
+    .two {
+      background-color: orange;
+      box-sizing: border-box;
+    }
+
+    /* border-box 는 width, height가 border포함 안쪽영역크기 */
+  </style>
+</head>
+
+<body>
+  <div class="box one">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Praesentium unde aperiam ducimus
+    eveniet quidem? Dicta
+    aliquid magnam libero! Eos quaerat aliquid architecto eveniet dolores, repellat quod impedit incidunt dicta
+    voluptates.
+  </div>
+  <div class="box two">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci facere perferendis labore
+    repellat tempore
+    veritatis quasi totam impedit suscipit consequuntur quas similique, excepturi, provident sequi culpa sit numquam
+    magnam eligendi!
+  </div>
+</body>
+
+</html>
+
+
+<!-- 수업내용 필기 21-07-22
+
+
+
+
+
+-->

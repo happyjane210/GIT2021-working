@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title>스팸 문자열 걸러내기</title>
+</head>
+
+<body>
+    <script>
+        let checkSpam = (str) => {
+            str = str.toUpperCase()
+            if (str == "XXX" || str == "VIAGRA") {
+                return true
+            };
+            return false
+        };
+        console.log(checkSpam("XXX"));
+        console.log(checkSpam('VIAGRA'));
+        console.log(checkSpam('free xxxxx'));
+        console.log(checkSpam("innocent rabbit"));
+    </script>
+</body>
+
+</html>

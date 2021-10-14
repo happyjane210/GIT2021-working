@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [
+            { id: 1, name: "kim" },
+            { id: 2, name: "john" },
+            { id: 3, name: "park" },
+            { id: 4, name: "moon" },
+            { id: 5, name: "hong" },
+        ];
+
+        // for(요소변수 of 배열)
+        // 요소 개수 만큼 반복
+        // 요소 번수에는 각 반복에 맞는 요소가 대입
+        for (let elm of arr) {
+            console.log(elm);
+            // 해당 요소가 몇번째 인덱스인지?
+            // 배열.indexOf(요소)
+            console.log(arr.indexOf(elm));
+        }
+    </script>
+</body>
+
+</html>

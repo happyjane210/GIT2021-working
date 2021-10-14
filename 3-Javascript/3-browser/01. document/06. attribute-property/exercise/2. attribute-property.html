@@ -1,0 +1,50 @@
+<html>
+
+<body>
+    <a name="list">the list</a>
+    <ul>
+        <li><a href="http://google.com">http://google.com</a></li>
+        <li><a href="/tutorial">/tutorial.html</a></li>
+        <li><a href="local/path">local/path</a></li>
+        <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li>
+        <li><a href="http://nodejs.org">http://nodejs.org</a></li>
+        <li><a href="http://internal.com/test">http://internal.com/test</a></li>
+    </ul>
+
+    <script>
+        // ul>a 요소 모두 선택
+        let link = document.querySelectorAll('ul a');
+
+        // 한번씩 반복
+        for (let change of link) {
+            let href = change.getAttribute("href");  //href 의 요소내용을 가져옴
+            console.log(href);
+            if (href.includes("://") && !href.includes("http://internal.com")) {
+                change.style.color = "orange";
+            };
+        };
+
+
+
+
+
+
+
+
+
+
+
+        // const links = document.querySelectorAll("ul a");
+        // console.log(links);
+
+        // for (let link of links) {
+        //     const href = link.getAttribute("href");
+        //     console.log(href);
+        //     if (href.includes("://") && !href.includes("http://internal.com/test")) {
+        //         link.style.color = "orange";
+        //     }
+        // }
+    </script>
+</body>
+
+</html>

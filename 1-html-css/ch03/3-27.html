@@ -1,0 +1,57 @@
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    ul {
+      list-style-type: none;
+      padding: 0px;
+      /* list-style: none; 똑같음 */
+    }
+
+
+    /* 모든 테그에 다 가능 태그 앞뒤에 이모지 삽임 */
+    ul>li::before {
+      content: "✔";
+      margin-right: 0.5rem;
+      color: violet;
+    }
+
+    ul>li::after {
+      content: "😂";
+      margin-right: 0.5rem;
+      color: rgb(130, 216, 238);
+    }
+
+    /* 이모지마다 색 바꿀수 있고 못바꾸는 것도 있음  / 쌍따옴표 써야함*/
+
+    .txt::before {
+      content: "🙄";
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>to do</h1>
+  <ul>
+    <li>html 공부</li>
+    <li>CSS 연습</li>
+  </ul>
+  <div class="txt">
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae maxime vero nobis totam voluptates pariatur ad
+    possimus odio eius exercitationem fugit voluptatum nam nesciunt, rerum quos corporis aperiam asperiores velit.
+  </div>
+</body>
+
+</html>
+
+
+<!-- 수업내용 필기 21-07-
+
+  ul에 이모지 넣어보기
+
+
+
+
+-->

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //함수: 어떤 기능을 수행하는 코드블럭
+        //누구한테 어떤메시지를 출력하는 함수
+        // from: 누구 text: 어떤 메시지
+
+        // funcion 함수명 (매개변수1, 매개변수2 ...)
+        // 매개: 서로 연결해줌
+        // 변수: 이름이 있는 값을 저장하는 곳
+
+        // 매개변수: 어떤 값이 입력되는 곳
+        // 함수에서는 매개변수의 값을 갖고 뭔가 처리함.
+        function showMessage(from, text) {
+            alert(`${from}: ${text}`);
+
+        }
+
+        showMessage("Ann", "Hello!");
+        showMessage("Ann", "What's up");
+
+        //===============================
+
+        let name = "Jueun";
+
+        function changeName() {
+            name = "JANE";  // 선언하지 않고 변수의 값만 바꿔줌
+
+            let message = "Hello~ " + name;
+            console.log(message);
+        }
+
+        console.log(name);  // 33번줄 외부 변수 받음 (함수 내부 변수 영향없음)
+
+        changeName();  // 함수 안에서 변수값 바뀜
+
+        console.log(name); // 함수 실행되고 나와서 바뀐변수값
+
+        //==========================================
+
+
+        let anotherName = "Sunmin"; // 함수 내부 변수와 값 공유하지 않음
+
+        function secondName() {
+            let anotherName = "John";   // 변수 새로 선언
+
+            let hi = "hey, " + anotherName; // 내부 변수만 받음
+            console.log(hi);
+        }
+
+        console.log(anotherName); //  외부 변수만 받음
+        secondName();
+        console.log(anotherName);
+        //===================================================
+
+        //The TEST result is undefined
+
+        function result(a, b) {
+            console.log(a + b);
+        }
+
+        result("The TEST result is ");
+
+    </script>
+</body>
+
+</html>
