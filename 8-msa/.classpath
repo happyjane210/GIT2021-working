@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="workspace/commerce/src/main/java"/>
+	<classpathentry kind="src" path="workspace/commerce/src/test/java"/>
+	<classpathentry kind="src" path="workspace/gateway/src/main/java"/>
+	<classpathentry kind="src" path="workspace/gateway/src/test/java"/>
+	<classpathentry kind="src" path="workspace/helloclient/src/main/java"/>
+	<classpathentry kind="src" path="workspace/helloclient/src/test/java"/>
+	<classpathentry kind="src" path="workspace/helloproducer/src/main/java"/>
+	<classpathentry kind="src" path="workspace/helloproducer/src/test/java"/>
+	<classpathentry kind="src" path="workspace/registry/src/main/java"/>
+	<classpathentry kind="src" path="workspace/registry/src/test/java"/>
+	<classpathentry kind="src" path="workspace/sales/src/main/java"/>
+	<classpathentry kind="src" path="workspace/sales/src/test/java"/>
+	<classpathentry kind="src" path="workspace/service1/src/main/java"/>
+	<classpathentry kind="src" path="workspace/service1/src/test/java"/>
+	<classpathentry kind="src" path="workspace/service2/src/main/java"/>
+	<classpathentry kind="src" path="workspace/service2/src/test/java"/>
+	<classpathentry kind="src" path="workspace/service3/src/main/java"/>
+	<classpathentry kind="src" path="workspace/service3/src/test/java"/>
+	<classpathentry kind="lib" path="workspace/commerce/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="workspace/gateway/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="workspace/helloclient/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="workspace/helloproducer/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="workspace/registry/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="workspace/sales/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="workspace/service1/build/libs/service1-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="workspace/service1/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="workspace/service2/build/libs/service2-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="workspace/service2/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="workspace/service3/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="output" path="workspace/commerce/bin/main"/>
+</classpath>
