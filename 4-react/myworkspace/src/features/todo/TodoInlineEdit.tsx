@@ -239,7 +239,7 @@ const Todo = () => {
 
       <ul className="list-group list-group-flush mt-3" ref={ulRef}>
         {/* 로딩중 처리 표시 */}
-        {isLoading && (
+        {/* {isLoading && (
           <li className="list-group-item text-center">
             <div
               className="spinner-border text-primary text-center"
@@ -248,7 +248,7 @@ const Todo = () => {
               <span className="visually-hidden">Loading...</span>
             </div>
           </li>
-        )}
+        )} */}
         {/* 빈데이터 표시 */}
         {!isLoading && todoList.length === 0 && (
           <li className="list-group-item">데이터가 없어요😓</li>
