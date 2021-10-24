@@ -1,0 +1,31 @@
+2021-10-24 일 WBS 작성
+
+
+
+
+
+redux => store 임
+
+프론트엔드 상태조회 구현 : 전역 상태에서 프론트
+store 에서 products 로 useEffect (dispatch) 써서
+
+
+
+cloudfront
+
+
+=========================================================
+** 공부
+HelloClientController =>
+
+
+serverSentEvent  -> 백엔드끼리 통신          /         웹소켓 (양방향 통신)   => http 통신방식 아님 (ws)
+서버 -> 클라이언트					서버 -> 클라이언트
+단방향						클라이언트 -> 서버
+가벼워서 비용절감 , http 통신방식임
+  => 메세지큐랑 같이 써야함
+
+
+
+메세지큐
+큐자료구조 (first in first out) 에 넣어놓고 빼서 보는거
