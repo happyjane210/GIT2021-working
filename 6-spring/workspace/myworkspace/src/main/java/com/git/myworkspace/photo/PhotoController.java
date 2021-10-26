@@ -147,4 +147,14 @@ public class PhotoController {
 		return photoSaved;
 	}
 
+	@GetMapping(value = "/photos/{photoId}/comments")
+	public PhotoComment addPhotoComment(@PathVariable long photoId, @RequestBody PhotoComment comment) {
+		// 값검증...
+		// content 가 빈값인지
+		// photoId 해당 id 데이터가 있는지 확인
+
+		return null;
+
+	}
+
 }
