@@ -25,54 +25,56 @@ import com.git.myworkspace.lib.TextProcesser;
 public class PhotoController {
 
 	private PhotoRepository repo;
+	private PhotoCommentRepository cmtRepo;
 
-	// 의존성 주입
+	// 의존 주입 처리
 	@Autowired
-	public PhotoController(PhotoRepository repo) {
+	public PhotoController(PhotoRepository repo, PhotoCommentRepository cmtRepo) {
 		this.repo = repo;
+		this.cmtRepo = cmtRepo;
 	}
 
 	@GetMapping(value = "/photos")
 	public List<Photo> getPhotos() throws InterruptedException {
 		// repository.findAll();
 		// select * from photo;
-		// 기본적으로 PK 순정렬 (asc, ascending) 되고있는상황
+		// 湲곕낯�쟻�쑝濡� PK �닚�젙�젹 (asc, ascending) �릺怨좎엳�뒗�긽�솴
 		// 1, 2, 3///
 		// return repo.findAll();
 
-		// id 컬럼 역정렬
-		// Sort.by("정렬칼럼").descending() 역정렬
-		// Sort.by("정렬칼럼").ascending() 순정렬
+		// id 而щ읆 �뿭�젙�젹
+		// Sort.by("�젙�젹移쇰읆").descending() �뿭�젙�젹
+		// Sort.by("�젙�젹移쇰읆").ascending() �닚�젙�젹
 		return repo.findAll(Sort.by("id").descending());
 	}
 
-	// ----------- paging 처리, 한페이지 2개, 1번째 페이지 ----------
+	// ----------- paging 泥섎━, �븳�럹�씠吏� 2媛�, 1踰덉㎏ �럹�씠吏� ----------
 
-	// 0번째 페이지에, 사진 2개씩
+	// 0踰덉㎏ �럹�씠吏��뿉, �궗吏� 2媛쒖뵫
 	// ex) GET/photos/paging?page=0&size=2
 	@GetMapping("/photos/paging")
 	public Page<Photo> getPhotoPaging(@RequestParam int page, @RequestParam int size) {
-		// findAll()함수에 Pageable page 객체를 넣음
-		// page 객체에 PageRequest.of() 함수로 page, size, Sort.by("id").descending() 를 넣음
+		// findAll()�븿�닔�뿉 Pageable page 媛앹껜瑜� �꽔�쓬
+		// page 媛앹껜�뿉 PageRequest.of() �븿�닔濡� page, size, Sort.by("id").descending() 瑜� �꽔�쓬
 		return repo.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
 	}
 
 	@PostMapping(value = "/photos")
 	public Photo addPhoto(@RequestBody Photo photo, HttpServletResponse res) throws InterruptedException {
 
-		// 타이틀 빈값
+		// ���씠�� 鍮덇컪
 		if (TextProcesser.isEmptyText(photo.getTitle())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
 
-		// 파일 url이 빈값
+		// �뙆�씪 url�씠 鍮덇컪
 		if (TextProcesser.isEmptyText(photo.getPhotoUrl())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
 
-		// 객체 생성
+		// 媛앹껜 �깮�꽦
 		Photo photoItem = Photo.builder().title(photo.getTitle())
 				.description(TextProcesser.getPlainText(photo.getDescription())).photoUrl(photo.getPhotoUrl())
 				.fileType(photo.getFileType()).fileName(photo.getFileType()).createdTime(new Date().getTime()).build();
@@ -80,26 +82,26 @@ public class PhotoController {
 		// insert into photo(...) values(...)
 		Photo photoSaved = repo.save(photoItem);
 
-		// 리소스 생성됨
+		// 由ъ냼�뒪 �깮�꽦�맖
 		res.setStatus(HttpServletResponse.SC_CREATED);
 
-		// 추가된 객체를 반환
+		// 異붽��맂 媛앹껜瑜� 諛섑솚
 		return photoSaved;
 	}
 
 	@DeleteMapping(value = "/photos/{id}")
 	public boolean removePhotos(@PathVariable Long id, HttpServletResponse res) throws InterruptedException {
 
-		// id에 해당하는 객체 가 없으면
-		// Optional null-safe 용으로 자바 1.8에 나온 방식
-		// 옵셔널 객체를 얻어옴
+		// id�뿉 �빐�떦�븯�뒗 媛앹껜 媛� �뾾�쑝硫�
+		// Optional null-safe �슜�쑝濡� �옄諛� 1.8�뿉 �굹�삩 諛⑹떇
+		// �샃�뀛�꼸 媛앹껜瑜� �뼸�뼱�샂
 		Optional<Photo> photo = repo.findById(id);
 		if (photo.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return false;
 		}
 
-		// 삭제 수행
+		// �궘�젣 �닔�뻾
 		// delete from photo where id = ?
 		repo.deleteById(id);
 
@@ -110,20 +112,20 @@ public class PhotoController {
 	public Photo modifyPhotos(@PathVariable long id, @RequestBody Photo photo, HttpServletResponse res)
 			throws InterruptedException {
 
-		// id에 해당하는 객체가 없으면
+		// id�뿉 �빐�떦�븯�뒗 媛앹껜媛� �뾾�쑝硫�
 		Optional<Photo> photoItem = repo.findById(id);
 		if (photoItem.isEmpty()) {
 			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
 
-		// 타이틀이 빈값
+		// ���씠���씠 鍮덇컪
 		if (TextProcesser.isEmptyText(photo.getTitle())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
 
-		// 파일 URL이 빈값
+		// �뙆�씪 URL�씠 鍮덇컪
 		if (TextProcesser.isEmptyText(photo.getPhotoUrl())) {
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
@@ -138,7 +140,7 @@ public class PhotoController {
 		photoItem.get().setFileName(photo.getFileType());
 
 		// repository.save(entity)
-		// id가 있으면 UPDATE, 없으면 INSERT
+		// id媛� �엳�쑝硫� UPDATE, �뾾�쑝硫� INSERT
 		// UPDATE
 		// SET title=?, description=?
 		// where ...
@@ -147,14 +149,32 @@ public class PhotoController {
 		return photoSaved;
 	}
 
-	@GetMapping(value = "/photos/{photoId}/comments")
+	// 포토 하위에 댓글 추가
+	@PostMapping(value = "/photos/{photoId}/comments")
 	public PhotoComment addPhotoComment(@PathVariable long photoId, @RequestBody PhotoComment comment) {
-		// 값검증...
+		// 값 검증
 		// content 가 빈값인지
-		// photoId 해당 id 데이터가 있는지 확인
+		// photoId 해당 데이터가 있는지 확인 (FK외래키 제약조건으로 처리가능)
 
-		return null;
+		// 상위테이블
+		comment.setPhotoId(photoId);
+		comment.setCreatedTime(new Date().getTime());
+		
+		// 저장하고 저장한 객체 리턴
+		return cmtRepo.save(comment);
 
 	}
+	
+	// 포토 하위 댓글 목록 조회
+	// GET  /photos/{photoId}/comments
+	@GetMapping(value = "/photos/{photoId}/comments")
+	public List<PhotoComment> getComments(@PathVariable long photoId) {
+		
+		// 상위테이블 id로 하위테이블 목록 조회
+		// select * from photo_comment where photo_id = :photoId
+		return cmtRepo.findByPhotoId(photoId);
+	}
 
+	
+	
 }

@@ -83,8 +83,19 @@ fuction component (함수형 컴포넌트)
 
 
 
+=============하위테이블=======================================
+
+// photo
+id	title	photo_url
+1	펭귄	penguin.jpg
+2	코알라	koala.jpg
 
 
+// photo_comment
+id	content		photo_id
+1	펭귄이 댓글	1   (펭귄)
+2	펭귄이 댓글	1   (펭귄)
+3	코알라 댓글	2   (코알라)
 
 
 
