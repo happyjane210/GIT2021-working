@@ -91,6 +91,7 @@ function App() {
           <header className="app-bar d-flex justify-content-end bg-primary shadow position-fixed">
             <Profile />
           </header>
+          
           <nav className="drawer-menu position-fixed bg-light shadow-sm">
             <h4 className="ms-2 my-2">MY WORKSPACE</h4>
             <ul>

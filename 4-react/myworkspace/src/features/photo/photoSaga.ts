@@ -377,7 +377,7 @@ function* modifyData(action: PayloadAction<PhotoItem>) {
     createdTime: result.data.createdTime,
   };
 
-  // state 변경
+  // state 변경 , put = ts 의 디스패치
   yield put(modifyPhoto(photoItem));
 
   // completed 속성 삭제 - 초기화

@@ -1,0 +1,88 @@
+2021-10-29 금 클래스다이어그램, next.js
+
+// 클래스 설계
+
+스프링기준으로 만들면됨
+
+프로젝트 마일스톤
+
+-----------------------------------------------
+// ORM Persistable - 엔티티 객체임        - 문자열비교보다 숫자 비교가 훨씬 빠름
+
+필수값은 int  - null 값 없음
+integer는 객체라서 null값있음
+
+날짜는 string
+Date, Datetime 
+
+assosiation : 클래스에서 필드로 참조함
+aggregation : association 이면서, 논리적으로 집합관계
+composition : aggregation이면서 하위클래스 생명주기 관리
+
+
+포토 -> 커멘트 = 댓글 없을수도 있음
+   0..*
+
+주문 -> 주문제품 항상 필수로 있음
+   1..*
+
+
+부모 : JpaRepository
+자식 : ProjectRepository
+extends : 확장
+부모꺼를 그대로 가져다가 쓰고 나(자식)는 추가를 해서 씀
+상속은 자식기존: 자식이 부모로부터 extends해서 상속받음
+일반화 : 
+
+
+보내주는거
+order -> orderDetail [ ]
+
+받는거
+product
+notice
+
+
+
+--------------------------
+
+1. SSR (서버사이드렌더링), SSG , CSR 선택
+2. 라우팅 경로 맵핑 자동화
+3. 이미지, 폰트 크기 최적화
+
+--------next.js----------------------------------------------
+
+CRA: create-react-app
+
+A Single Page Application is a web app created out of a single HTML page
+ that “virtually” involves many other pages created dynamically on the frontend side.
+
+SEO  의 기능이 있음
+Search engine optimization (검색 엔진 최적화)
+
+
+_app.tsx
+왠만하면 건드리지 않기, 자동처리
+
+/todo       둘중하나가 열리는거임
+=> /page/todo.tsx
+=> /page/todo/index.tsx
+
+
+as 타입 => 타입단언
+
+useEffect로 넘어온애들은 무조건 client 쪽에서 처리됨
+
+next.js 작업순서
+1. /pasges 에 tsx를 넣으면서 나오는 것을 확인
+2. /components에 layout파일들을 만들어서 page 컴포넌트 들에 넣어봄
+
+
+
+
+
+
+
+
+
+
