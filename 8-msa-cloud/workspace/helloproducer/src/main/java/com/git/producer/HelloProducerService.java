@@ -21,6 +21,7 @@ public class HelloProducerService {
 		System.out.println(message);
 		// 받는 쪽 번호 (내번호 말고 다른거)
 		rabbit.send("test.hello.1", new Message(message));
+		rabbit.send("test.hello.2", new Message(message));
 		rabbit.send("test.hello.3", new Message(message));
 	}
 }

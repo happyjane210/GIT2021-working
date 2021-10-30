@@ -1,5 +1,7 @@
 package com.git.producer;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +18,10 @@ public class HelloProducerController {
 	}
 
 	@PostMapping(value = "/send-message")
-	public boolean sendMessage(@RequestBody String message) {
+	public boolean sendMessage(@RequestBody String message, HttpServletRequest req) {
+		
+		System.out.println(req.getHeader("content-type"));
+		
 		System.out.println(message);
 		service.sendMessage(message.getBytes());
 		return true;
