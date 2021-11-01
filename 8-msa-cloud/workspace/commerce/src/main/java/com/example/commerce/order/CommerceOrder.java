@@ -36,17 +36,22 @@ public class CommerceOrder {
 	
 	private int totalAmount;	// 총 주문금액
 	
-	// 하위 레코드 개수
+	// 주문목록조회에 띄울 상세정보 요약 (사진, 제품이름, ..외 건, 판매처) 등
+	
+	// 하위 레코드 개수  (주문 한건에 함께 주문한 제품 개수)
 	@Formula("(SELECT COUNT(1) FROM commerce_order_detail d WHERE d.commerce_order_id = id)")
 	private int detailCnt;
 
-	// 하위 레코드 중 첫번째 레코드의 정보
+	// 하위 레코드 중 첫번째 레코드의 정보										LIMIT 1	: id 순으로 맨 위에 있는 제품
 	@Formula("(SELECT d.product_name FROM commerce_order_detail d WHERE d.commerce_order_id = id LIMIT 1)")
 	private String firstProductName;	
+	
+	
 	
 	// 주문 제품 정보 목록
 	// Entity Relationship 어노테이션을 넣으면 같이 조회됨
 	// 기본적으로 FetchType.Lazy
+	// - 코드 돌릴때 가져오지 않고, 실제로 조회할때, 실제로 데이터를 쓸려고 할때 조회해옴
 	@OneToMany
 	@JoinColumn(name="commerceOrderId")
 	private List<CommerceOrderDetail> details;

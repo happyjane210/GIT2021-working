@@ -1,7 +1,50 @@
-2021-11-01 월
+2021-11-01 월 플젝 시작
 
 수/금: 주2회 조별로 30분 (인당 10분 리뷰)
 
 11/29-12/3 포트폴리오, 이력서, 면접자료 준비
 12/6 프로젝트 발표 (개별)
 12/8 작품발표회 (6-8교시), 업체 
+
+
+------재윤님 클래스 설계 분석----------------------------------------
+// User
+
+User
+UserRepository
+UserController
+
+// PartnerRegistration
+
+PartnerRegistration
+PartnerRegistrationController
+PartnerRegistrationRepository
+PartnerRegistrationService
+
+// Partner
+
+Partner
+PartnerController
+PartnerRepository
+PartnerService
+
+
+// Product
+
+Product
+ProductRepository
+ProductService
+
+// Order
+
+Order
+OrderDetail
+OrderRepository
+OrderService
+
+
+find By Id Containing(A : long) : List<>
+
+
+----------------------------------------------
+

@@ -45,10 +45,14 @@ public class CommerceOrderController {
 	
 	// ** 엔티티 객체가 연관관계를 맵핑할 때(@OneToMany, @ManyToOn)
 	// ** 기본적으로 FetchType.Lazy 전략으로 하위 객체를 접근하는 시점에 테이블 데이터를 읽어옴
+	// FetchType.Lazy - 코드 돌릴때 가져오지 않고, 실제로 조회할때, 실제로 데이터를 쓸려고 할때 조회해옴
 	
-	// ** findAll을 실행한다고 실제 sql 쿼리가 실행되는 것임
+	// ** findAll을 실행하는 시점에 실제 SQL 쿼리를 실행되는 것이 아님
 	// 즉, Controller로 반환된 다음에 JSON객체로 변환되기 위해서 읽어 들이는 시점에 SQL 쿼리 실행
 	// 스프링 프레임워크에서 JSON으로 변환할 때 하위 객체 null이기 때문에 조회를 해오지 않음
+	
+	// ** findAll 로 조회하고 return 까지 된다음 JSON 객체로 변환되면, 그 시점에 SQL쿼리 실행
+	// 그때 디테일 객체가 없음(null)임, 그래서 디테일객체는 조회를 안함
 	@GetMapping("/orders")
 	public List<CommerceOrder> getOrders(){
 //		// 하위 테이블까지 조회함
