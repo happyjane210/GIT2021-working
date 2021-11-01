@@ -9,4 +9,5 @@
     <fullyQualifiedTypeName name="com.git.myworkspace.photo.PhotoComment"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
     <fullyQualifiedTypeName name="org.hibernate.annotations.Formula"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,62 @@
+2021-10-21 목 S3 파일 업로드 처리
+
+
+//
+RabbitMQ EC2에서 설치해서 스프링으로 연동하는걸 배움
+프로젝트 할때 Amazon MQ  관리형 서비스로 RabbitMQ를 썼음
+버전업그레이드 및 서버관리 AWS에서 해주는 관리형 서비스다.
+
+
+AWS - VPC - 인터넷 게이트웨이
+  - 일종의 공유기,
+  - 서버에 접속할때 이곳을 통해서 접속을 한다.
+
+
+
+S3 : Simple Storage Service
+EC2 : Elastic Computing Cloud
+RDS : Relational Database Service
+
+
+IT 3대 인프라 (infrastructure , 기반/기반시설)
+  - 컴퓨팅 (컴퓨터, 서버)
+  - 네트워크 (선로, 스위치/라우터)
+  - 스토리지 (디스크, NAS, SAN)
+
+S3 - cloudfront
+S3에 파일을 올려놓고
+해당 파일 경로를 통해 cloudfront에서 파일을 가져감
+ - 아마존에서 가장많이 쓰는 서비스임
+    => 개발하기 편하고, 요금이 저렴하고, 동시처리 성능빠름, 디스크를 구입하지 않아도 필요한 데이터 만큼만 돈을 내는 구조
+
+  - S3 는 파일 저장소(block storage)가 아니고 객체 저장소임  - object storage
+	object storage = 폴더+파일명을 key라고 함 (public/index.html  == object key   *이건 유일해야함)
+			ex ) sdfjfjwlkfljo2e42oif2398  랜덤 문자열로 생성함
+	block storage = SSD, HDD, DVD, Blue-Ray, USB메모리, 블록단위로 저장됨
+  - 버킷 : 실제 파일 저장소
+  - 모든퍼블릭 엑세스 차단
+
+
+// CloudFront : CDN (Contents Delivery Network)
+  - 컨텐츠 캐싱 및 전송하는 서비스
+	S3에 올려놓은 데이터 파일들을 cloudFront에 캐싱을 해놓고 빠르게 꺼내서 쓸수있게함
+  - 이미지파일, 동영상파일
+  - 클라이언트 요청 지리적으로 가까운 서버에서 컨텐츠를 전송해줌
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

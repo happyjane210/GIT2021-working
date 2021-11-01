@@ -1,0 +1,47 @@
+2021-10-22 금  intelliJ 설치
+
+클라우드 서버에 파일올리기
+
+
+
+설치할때 모두 다 클릭
+
+인텔제이 단축키
+ctrl + shift + A    = 명령어창
+
+
+
+
+1. 프론트 뼈대만 만들어
+2. 기능 넣기 (프론트, 백엔드)
+3. 기능 다 되면 마지막으로 꾸미기
+
+UI프레임
+피피티, 제플린
+
+
+// AWS - IAM (Identity and Access Management)
+   - 인증, 권한처리 하는 계정관리
+
+
+--------------------------------------------------------
+
+// postman 에서 파일 올리기
+- 경로
+http://localhost:8080/files
+- Body -> form-data -> KEY = File 선택 
+- key 밑에 file 입력
+    @PostMapping("/files") 중에  
+    uploadFile(@RequestPart("file")) -> file 이게 키임
+- select Files 버튼 눌러서 사진 추가
+
+
+
+
+
+
+
+
+
+
+
