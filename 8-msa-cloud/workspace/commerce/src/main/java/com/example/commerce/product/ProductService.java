@@ -12,15 +12,17 @@ public class ProductService {
 	public void receiveSalesProduct(SalesProduct salesProduct) {
 		System.out.println(salesProduct);
 
-		saveProduct(salesProduct);
+		// 미작성부분
+//		saveProduct(salesProduct);
 	}
 
-	public Product saveProduct(SalesProduct salesProduct) {
-		Product product = Product.builder().id(1).productCode(salesProduct.getCode())
-				.productName(salesProduct.getName()).salesProductId(salesProduct.getId()).build();
-
+	// 미작성부분
+//	public Product saveProduct(SalesProduct salesProduct) {
+//		Product product = Product.builder().id(1).productCode(salesProduct.getCode())
+//				.productName(salesProduct.getName()).salesProductId(salesProduct.getId()).build();
+//
 		// repo.save(product);
 
-		return product;
-	}
+//		return product;
+//	}
 }

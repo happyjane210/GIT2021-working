@@ -7,3 +7,18 @@ spring:
     addresses: amqps://b-2c76102e-2ad9-459d-b4f8-9656a169070f.mq.ap-northeast-2.amazonaws.com:5671
     username: rabbitmq
     password: password123!
+  datasource:    driver-class-name: org.postgresql.Driver  #postgresql
+    #    driver-class-name: com.mysql.cj.jdbc.Driver #mysql
+    
+    # jdbc - java databse connector
+    # :postresql - 데이터베이스 엔진
+    # //url - 데이터베이스 주소
+    # :5432 - 데이터베이스 접속 포트
+    # /postgres - 접속할 데이터베이스
+    
+    url: jdbc:postgresql://database-1.caipcwydwewo.ap-northeast-2.rds.amazonaws.com:5432/postgres?currentSchema=commerce
+    username: postgres
+    password: password123!
+  jpa:    show-sql: true
+    generate-ddl: true
+    
