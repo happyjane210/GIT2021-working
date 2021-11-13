@@ -1,0 +1,203 @@
+2021-11-10 수 SQL 쿼리
+
+SQL 데이터베이스 쿼리짜는거 배우기
+백엔드 매우 부족함
+배포하는거까지 연습하기 - 프로젝트 배포할때 기록 잘 해두기
+
+
+// join table  걸때
+  - 왼쪽테이블이 기준이 되는 테이블임
+  - 부가적인 테이블을 오른쪽에 결합함
+
+
+// 테이블 옆에 붙는 이름 alias (별칭)이라고 한다.
+테이블 이름이 기니까 짧게 쓰는것임
+
+
+// 범위 검색은 between 으로 한다.
+ex)
+selet * from sales_order_detail sod
+      join szales_order so on sod.sales_order_id = so.id
+where so.date between '1997-02-01' and '1997-02-99'
+	컬럼명	       첫번째값             두번째값
+
+
+// 특정기간 일별 주문금액 합계 (매일 얼마 벌였는지)  - group by  를 씀
+
+selet so.date, sum(quantity * unit_price)
+ from sales_order_detail sod
+      join sales_order so on sod.sales_order_id = so.id
+where so.date between '1997-02-01' and '1997-02-99'
+group by so.date;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
