@@ -1,4 +1,4 @@
-package com.git.myworkspace.configuration;
+package com.git.myworkspace.configuration;ㅀㅎㅇㅎ
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

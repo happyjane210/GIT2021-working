@@ -1,0 +1,19 @@
+
+1. happyjane210@gmail.com
+                                                                                                                                                   
+ 
+------------------------------------------------------------------------ 
+
+2. techjane210@gmail.com
+
+인스턴스 퍼블릭 IP
+ec2-15-165-17-21.ap-northeast-2.compute.amazonaws.com
+ - myworkspace 배포
+
+------------------------------------------------------------------------
+
+3. jjoon021012@gmail.com
+
+- Spring cloud gateway 용 EC2인스턴스 (배포된 것 없음)
+ec2-3-34-216-213.ap-northeast-2.compute.amazonaws.com
+

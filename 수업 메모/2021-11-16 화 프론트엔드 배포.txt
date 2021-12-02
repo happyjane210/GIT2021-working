@@ -1,0 +1,93 @@
+2021-11-16 화 프론트엔드 배포
+
+EC2 서버에서 nginx 지우기
+
+
+ps -ef | grep nginx
+
+sudo systemctl status nginx
+
+sudo systemctl stop nginx
+
+sudo systemctl status nginx
+
+sudo apt-get purge nginx
+
+sudo apt autoremove
+
+
+---------------------------node.js 설치 16버전으로 맞춤
+
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+
+node.js 설치
+sudo apt-get install nodejs
+
+버전확인
+node --version
+
+sudo iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 3000
+
+
+
+
+ rm -rf
+
+
+npm install
+
+배포
+npm run build
+
+.next 안에 json 파일들이 있어야함
+
+배포시작 => local 
+npm start
+
+
+
+
+pull
+
+npm run build
+
+npm start
+
+
+
+
+node : 자바스크립트 등을 서버로 돌려주는 것
+
+
+
+{
+    "subscribeId":1,
+    "partnerId":1,
+    "subscriberId":1,
+    "subscriberName":"JANE LEE",
+    "subscriberPhone":"01067412771",
+    "location":"253, Cheongsa-ro205-1006",
+    "deliveryMemo":"두번째 판매자",
+        "subscribeDetails":[{
+            "seq":1,
+            "beanAmount":1,
+            "term":2,
+            "groundPoint":"에스프레소",
+            "orderQuantity":1,
+            "productPrice":23000,
+            "productId":1,
+            "productImageUrl":"https://d15u18gvocrbio.cloudfront.net/e4921e2a64f1f5676bdd5e2facecc4bc9d3536f19934b4b43aa1534d9c49a997",
+            "productName":"2제품이요",
+            "companyName":"엘카페",
+            "partnerId":1
+        }]
+}
+
+
+
+
+
+
+
+
+

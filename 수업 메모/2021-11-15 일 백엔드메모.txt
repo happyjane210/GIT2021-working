@@ -1,0 +1,17 @@
+
+controller : 프론트와 연결하는 곳
+  -  프론트엔드에 데이터를 넘겨줌
+
+Repository : 해당 DB 테이블
+ex) ProductRepository - Product의 DB
+
+service :  데이터(DB)를 가공하는 곳
+  - 메시지 큐를 보낸다던가, 뒷단에서 무언가 처리 하는거
+
+
+-------------------------------
+
+Request : 보내는거
+
+Response : 받는거
+

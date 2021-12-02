@@ -1,0 +1,34 @@
+
+** 
+1. 스키마 삭제
+2.  create chema
+3. 
+
+** 메시지큐 안되는 이유
+1. 판매자 쪽에서 없는 제품을 큐로 보내면 판매자 쪽에 에러가 뜸
+2. productId, partId 도 맞아야함
+
+
+
+   "subscribeDate":"2021-11-15",
+    "totalPayment":178500,  - 제품단가만 보내주면되
+
+
+**********
+ subscribe detail 에서 "productPrice":- 이 계산 한 숫자가 아니고, 제품 한개의 단가여야함
+
+
+// cart state
+
+재윤님이 보내준 데이터로 주문 프론트에서 보내는거까지
+  - saga , api 작성
+
+product, subscribe, mypage
+
+반응형레이아웃
+
+
+notice
+
+
+
